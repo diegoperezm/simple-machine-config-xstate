@@ -1,0 +1,16 @@
+{
+  "name": "simple-machine-config-xstate",
+  "version": "1.0.0",
+  "description": "> A simple dsl (?) to write machine configurations for xstate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jison": "^0.4.18",
+    "xstate": "^4.8.0"
+  }
+}
