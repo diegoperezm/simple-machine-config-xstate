@@ -1,4 +1,4 @@
-/* description:  */     
+		/* description:  */     
 
 %{
 let initialArr =[];
@@ -8,6 +8,10 @@ let inputs     =[];
 let targets    =[];
 let actions    =[];
 let assigns    =[];
+let z          ={};
+z.initial      ="";
+z.context      ={};
+z.states       ={};
 %}
 
 			
@@ -41,9 +45,19 @@ let assigns    =[];
 
 %% /* language grammar */
 
-
 assigns
 : ':' ASSIGN '(' LOWERCASE LOWERCASE ')' {$$=[$2, $4, $5]}
+;
+
+initial
+: INITIAL ':'
+| initial UPPERCASE            {z.initial = $2}
+;
+
+context
+: CONTEXT ':' mdata       {z.context[$3[0]] = $3[1]; } 
+| context     mdata       {z.context[$2[0]] = $2[1]; }
+| CONTEXT ':' " "              
 ;
 
 data
@@ -57,50 +71,48 @@ mdata
 : LOWERCASE ':' data    {$$=[$1,...$3]}
 ;
 
-context
-: CONTEXT ':' mdata              {ctx.push($3)} 
-| context     mdata              {ctx.push($2)} 
-| CONTEXT ':' " "              
-;
-
-initial
-: UPPERCASE                   {$$=[$1]} 
-| initial   '.'  UPPERCASE    {$$=[...$1, $3]} 
-;
-
-minitial
-: INITIAL ':'
-| minitial initial             {initialArr.push($2)}
-;
-
-input
-: LOWERCASE 
-;
-
 states
-: UPPERCASE     LOWERCASE  UPPERCASE             {
-		                                               $$=[$1,$3];
-		                                               targets.push([$1,$2]);
-																									 inputs.push([$1,$2])
-																									} 
+: UPPERCASE   LOWERCASE  UPPERCASE {
+		if(z.states[$1] != undefined) {
+				console.log($1,$2);
+        z.states[$1].on[$2] = {};
+        z.states[$1].on[$2].target = $3;
+		}else {
+		z.states[$1] = {};
+		z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+		}
+ }
 
-| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE  {
-		                                               $$=[[$1,$3],$5];
-																									 targets.push([$1,$4]);
-																									 inputs.push([$1,$3,$4])
-																									}
+| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE
 
-| states mactions {
-		                 $$=[...$1,$2];
-										 actions.push([...$1,$2]);
-									}
+| UPPERCASE     LOWERCASE  UPPERCASE  mactions
+{
+		if(z.states[$1] != undefined) {
+      z.states[$1].on[$2] = {};
+      z.states[$1].on[$2].target = $3;
+      z.states[$1].on[$2].actions = $4;
 
-| states assigns  {
-		                  $$=[...$1,$2]
-										  assigns.push([...$1,$2]);
-									}
+		}else {
+		  z.states[$1] = {};
+		  z.states[$1].on = {};
+      z.states[$1].on[$2] = {};
+      z.states[$1].on[$2].target = $3;
+      z.states[$1].on[$2].actions = $4;
+		}
+ }
+
+
+}
+
+| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE  mactions {
+                                                  $$=[[$1,$3],$5];
+}
+
+| UPPERCASE     LOWERCASE  UPPERCASE  assigns            {assigns.push([$1,$2,$3,$4])}
+| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE  assigns {assigns.push( [$1,$3,$4,$5,$6])}
 ;
-
 
 mstates
 : states            {states.push($1)}  // 
@@ -120,85 +132,32 @@ mactions
 
 
 expressions
-: minitial  context 
+: initial  context //: minitial  context 
 | expressions mstates 
 {
 
 
-let a = {};
-
-    for(let i = 0 ; i < initialArr.length ; i++ ) {
-
-		  // initial 
-		  if(initialArr[i].length === 1 ) {
-				a.initial =	 initialArr[i][0];
-		  }
-    }
-
-    // context
-    if(ctx.length > 0) {
-				a.context = {};
-				for(let i = 0; i < ctx.length ; i++  ){
-				  a.context[ctx[i][0]] = ctx[i][1];
-				}
-		}    
-
-
-    a.states = {};
-
-    for(let i = 0 ; i < states.length ; i++ ) {
-      
-		  // atomic states
-				if( !Array.isArray(states[i][0])) {
-						 for(let j = 0; j < states[i].length; j++) {
-					  	  a.states[states[i][j]] = {};
-						  	a.states[states[i][j]].on = {};
-
-      // inputs
-					    for(let k = 0; k < inputs.length; k++) {
-                if(states[i][0] === inputs[k][0]){
-                 a.states[states[i][0]].on[inputs[k][1]] = {};
-
-      // targets
- 								 a.states[states[i][0]].on[inputs[k][1]].target = {}; 
-                 if(states[i][0] === targets[i][0] ) {
-                     a.states[states[i][0]].on[inputs[k][1]].target = targets[i][0];
-								 }
-	 //    actions 
-
-		   			    }
-
-				      }	
-			      }
-					
-      // nested states
-				} else {
-						 a.states[states[i][0][0]]   = {};
-             a.states[states[i][0][0]].on = {};
-
-					  for(let k = 0; k < inputs.length; k++) {
-                if(states[i][0][0] === inputs[k][0]){
-                    a.states[states[i][0][0]].on[inputs[k][2]] = {};
-		   			    }
-				    }
-			}
-
-   }// top for
-
 console.log("\n ------------------------------- \n");
-console.log(a);
-console.log(a.states);
-//console.log("\n ------------------------------- \n");
-console.log("initial ", initialArr );
-console.log("ctx     ", ctx        );
-console.log("states  ", states     );
-console.log("inputs  ", inputs     );
-console.log("actions ", actions    );
-console.log("targets ", targets    );
-console.log("assigns ", assigns    );
+console.log("\n", z);
+console.log("\n", z.states.A);
+console.log("\n", z.states.B);
+//console.log("\n",a);
+//console.log("\n",a.states);
+//console.log("\n B",a.states.B);
+//console.log("\n",a.states.B.on);
+//console.log("\n click", a.states.B.on.click);
+//console.log("\n clock", a.states.B.on.clock);
+console.log("\n ------------------------------- \n");
+//console.log("initial ", initialArr );
+//console.log("ctx     ", ctx        );
+//console.log("\nstates  ", states     );
+//console.log("\ninputs  ", inputs     );
+//console.log("\nactions ", actions    );
+//console.log("\ntargets ", targets    );
+//console.log("assigns ", assigns    );
 //console.log("B", a.states.B);
 //console.log("A", a.states.A);
-
+console.log("\n ------------------------------- \n");
+//console.log("\n", z);
 }
-
 ; 
