@@ -10,12 +10,10 @@ function exec(input) {
 
 let z  =
 `
-initial:  GREEN
-
 context:
     color: ""
 
-  GREEN      time     YELLOW   :setcolorgreen
+  *GREEN      time     YELLOW   :setcolorgreen
                                :displaycolor
 
   YELLOW     time     RED      :setcoloryellow
