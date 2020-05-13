@@ -13,7 +13,7 @@ z.states       ={};
 
 %%
 \s+                       /* skip whitespace */
-"initial"                 return 'INITIAL'
+"*"                       return 'INITIAL'
 "context"                 return 'CONTEXT'
 [a-z]+                    return 'LOWERCASE'
 [A-Z]+                    return 'UPPERCASE'
@@ -37,11 +37,6 @@ z.states       ={};
 
 %% /* language grammar */
 
-
-initial
-: INITIAL ":" UPPERCASE       {z.initial = $3}
-;
-
 data
 : '[' ']'              {$$=[[]]}
 | '"' '"'              {$$=[""]}
@@ -60,10 +55,23 @@ context
 ;
 
 states
-: UPPERCASE   LOWERCASE  UPPERCASE
+: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE  {
+   z.initial = $2
+
+   if(z.states[$2] != undefined) {
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].target = $4;
+   }else {
+    z.states[$2] = {};
+    z.states[$2].on = {};
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].target = $4;
+  }
+
+	 }
+| UPPERCASE   LOWERCASE  UPPERCASE
 {
   if(z.states[$1] != undefined) {
-    console.log($1,$2);
     z.states[$1].on[$2] = {};
     z.states[$1].on[$2].target = $3;
   }else {
@@ -77,6 +85,22 @@ states
 {
 		// TODO
 }
+| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+{
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+   z.states[$2].on[$3].actions = $5;
+
+  }else {
+   z.states[$2] = {};
+   z.states[$2].on = {};
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+   z.states[$2].on[$3].actions = $5;
+  }
+}
 | UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
   if(z.states[$1] != undefined) {
@@ -89,14 +113,7 @@ states
    z.states[$1].on = {};
    z.states[$1].on[$2] = {};
    z.states[$1].on[$2].target = $3;
-
-   if( Array.isArray($4[0])) {
-    let aaa = $4[0].reduce((acc,val) => acc.concat(val), []);
-    aaa.push($4[1])
-     z.states[$1].on[$2].actions = aaa;
-   }else {
      z.states[$1].on[$2].actions = $4;
-   }
   }
 }
 | UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE  mactions
@@ -117,13 +134,26 @@ actions
 
 
 mactions
-: ':' actions       {$$=$2}
-| mactions actions  {$$=[$1,$2]}
+: ':' actions       {
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| mactions actions  {
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
 ;
 
+
 expressions
-: initial  context mstates
+: context mstates
 {
+console.log('\nSTART--------------------------');
+console.log(z);
+console.log('\n--------------------------');
+//console.log('GREEN',z.states.GREEN);
+console.log('GREEN',z.states.GREEN.on);
+console.log('YELLOW',z.states.YELLOW.on);
+console.log('RED',z.states.RED.on);
+console.log('\n--------------------------END');
 return z;
 }
 ;
