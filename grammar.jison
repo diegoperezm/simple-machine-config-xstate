@@ -54,7 +54,8 @@ mdata
 ;
 
 context
-: CONTEXT ':'
+: 
+| CONTEXT ':'
 | context   mdata {z.context[$2[0]] = $2[1]}
 ;
 
