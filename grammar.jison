@@ -39,8 +39,7 @@ z.states       ={};
 
 
 initial
-: INITIAL ':'
-| initial UPPERCASE       {z.initial = $2}
+: INITIAL ":" UPPERCASE       {z.initial = $3}
 ;
 
 data
