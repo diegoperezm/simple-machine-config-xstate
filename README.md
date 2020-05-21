@@ -70,12 +70,10 @@ let trafficLight = {
 - Using this project:
 
 ``` 
-initial:  GREEN
-
 context:
     color: ""
 
-  GREEN      time     YELLOW   :setcolorgreen
+ *GREEN      time     YELLOW   :setcolorgreen
                                :displaycolor
 
   YELLOW     time     RED      :setcoloryellow
@@ -83,7 +81,6 @@ context:
 
   RED        time     GREEN    :setcolorred
                                :displaycolor
-
 ```
 
 
