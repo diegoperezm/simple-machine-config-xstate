@@ -85,6 +85,58 @@ context:
 
 
 
+### Syntax
+
+- Initial state:
+
+``` javascript
+ *STATENAME
+```
+
+- Context (context: lowercaser:+ )
+
+``` javascript
+context:
+  propertyname: ""  
+```
+
+
+- State (uppercase)
+
+``` javascript
+STATENAME 
+```
+
+
+- Input (lowercase)
+
+``` javascript
+ input
+```
+
+- Invoke (invoke: lowercase+) 
+
+``` javascript
+invoke:
+```
+
+- Entry (entry: lowercase+)
+
+``` javascript
+entry:
+```
+
+- actions (:lowercase+)
+
+``` javascript
+:actionname
+```
+
+
+
+
+
+
 ### Initial Configuration
 
 
