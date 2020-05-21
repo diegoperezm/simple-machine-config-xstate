@@ -1,10 +1,11 @@
 		/* description:  */
 
 %{
-let z          ={};
-z.initial      ="";
-z.context      ={};
-z.states       ={};
+let invokes        =[];
+let z              ={};
+z.initial          ="";
+z.context          ={};
+z.states           ={};
 %}
 
 
@@ -15,19 +16,19 @@ z.states       ={};
 \s+                       /* skip whitespace */
 "*"                       return 'INITIAL'
 "context"                 return 'CONTEXT'
+"invoke:"                 return 'INVOKE'
+"id:"                     return 'ID'
+"src:"                    return 'SRC'
+"ondone:"                 return 'ONDONE'
+"onerror:"                return 'ONERROR'
 [a-z]+                    return 'LOWERCASE'
 [A-Z]+                    return 'UPPERCASE'
 [0-9]+                    return 'NUMBER'
 ":"                       return ':'
-"."                       return '.'
 '"'                       return '"'
-"$"                       return '$'
-","                       return ','
-"("                       return '('
-")"                       return ')'
+"@"                       return '@'
 "["                       return '['
 "]"                       return ']'
-"E"                       return 'E'
 //<<EOF>>                 return 'EOF'
 
 /lex
@@ -55,9 +56,9 @@ context
 ;
 
 states
-: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE  {
+: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+{
    z.initial = $2
-
    if(z.states[$2] != undefined) {
     z.states[$2].on[$3] = {};
     z.states[$2].on[$3].target = $4;
@@ -67,8 +68,7 @@ states
     z.states[$2].on[$3] = {};
     z.states[$2].on[$3].target = $4;
   }
-
-	 }
+}
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
   if(z.states[$1] != undefined) {
@@ -81,9 +81,30 @@ states
     z.states[$1].on[$2].target = $3;
   }
 }
-| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE
+| INITIAL UPPERCASE   minvokes
 {
-		// TODO
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
+   z.states[$2] = {};
+   z.states[$2].invoke = invokes[invokeIndex]; 
+  }
+}
+| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes
+{
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+  }else {
+   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$5); 
+   z.states[$2] = {};
+   z.states[$2].invoke = invokes[invokeIndex]; 
+   z.states[$2].on = {};
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+  }
 }
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
@@ -92,7 +113,6 @@ states
    z.states[$2].on[$3] = {};
    z.states[$2].on[$3].target = $4;
    z.states[$2].on[$3].actions = $5;
-
   }else {
    z.states[$2] = {};
    z.states[$2].on = {};
@@ -107,18 +127,65 @@ states
    z.states[$1].on[$2] = {};
    z.states[$1].on[$2].target = $3;
    z.states[$1].on[$2].actions = $4;
-
   }else {
    z.states[$1] = {};
    z.states[$1].on = {};
    z.states[$1].on[$2] = {};
    z.states[$1].on[$2].target = $3;
-     z.states[$1].on[$2].actions = $4;
+   z.states[$1].on[$2].actions = $4;
   }
 }
-| UPPERCASE '.' UPPERCASE  LOWERCASE  UPPERCASE  mactions
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE 
 {
-		// TODO
+  let objInvoke             = {}; 
+  objInvoke.id              = $3;
+  objInvoke.src             = $5;
+  objInvoke.onDone          = {};
+  objInvoke.onDone.target   = $7;
+  objInvoke.onError         = {};
+  objInvoke.onError.target  = $9;
+  invokes.push(objInvoke);
+}
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE mactions ONERROR LOWERCASE 
+{
+  let objInvokeOnDoneAct             = {}; 
+  objInvokeOnDoneAct .id              = $3;
+  objInvokeOnDoneAct .src             = $5;
+  objInvokeOnDoneAct .onDone          = {};
+  objInvokeOnDoneAct .onDone.target   = $7;
+  objInvokeOnDoneAct .onDone.actions  = [];
+  objInvokeOnDoneAct .onDone.actions.push(...$8);
+  objInvokeOnDoneAct .onError         = {};
+  objInvokeOnDoneAct .onError.target  = $10;
+  invokes.push(objInvokeOnDoneAct);
+}
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE   mactions
+{
+  let objInvokeOnErrorAct              = {}; 
+  objInvokeOnErrorAct .id              = $3;
+  objInvokeOnErrorAct .src             = $5;
+  objInvokeOnErrorAct .onDone          = {};
+  objInvokeOnErrorAct .onDone.target   = $7;
+  objInvokeOnErrorAct .onError         = {};
+  objInvokeOnErrorAct .onError.target  = $9;
+  objInvokeOnErrorAct .onError.actions = [];
+  objInvokeOnErrorAct .onError.actions.push(...$10);
+  invokes.push(objInvokeOnErrorAct);
+}
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  LOWERCASE mactions ONERROR LOWERCASE  mactions
+{
+  let objInvokeOnDoneErrorAct              = {}; 
+  objInvokeOnDoneErrorAct .id              = $3;
+  objInvokeOnDoneErrorAct .src             = $5;
+  objInvokeOnDoneErrorAct .onDone          = {};
+  objInvokeOnDoneErrorAct .onDone.target   = $7;
+  objInvokeOnDoneErrorAct .onDone.actions  = [];
+  objInvokeOnDoneErrorAct .onDone.actions.push(...$8);
+  objInvokeOnDoneErrorAct .onError         = {};
+  objInvokeOnDoneErrorAct .onError.target  = $10;
+  objInvokeOnDoneErrorAct .onError.actions = [];
+  objInvokeOnDoneErrorAct .onError.actions.push(...$11);
+  invokes.push(objInvokeOnDoneErrorAct);
 }
 ;
 
@@ -132,28 +199,35 @@ actions
 | ':' LOWERCASE    {$$=$2}
 ;
 
-
 mactions
-: ':' actions       {
+: ':' actions
+{
   $$=[$2].reduce((acc,val) => acc.concat(val),[]);
 }
-| mactions actions  {
+| mactions actions
+{
   $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
 }
 ;
 
+invokes
+: LOWERCASE        {$$=$1}
+| '@' LOWERCASE    {$$=$2}
+;
+
+minvokes
+: '@' invokes
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| minvokes invokes  {
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
 
 expressions
 : context mstates
 {
-console.log('\nSTART--------------------------');
-console.log(z);
-console.log('\n--------------------------');
-//console.log('GREEN',z.states.GREEN);
-console.log('GREEN',z.states.GREEN.on);
-console.log('YELLOW',z.states.YELLOW.on);
-console.log('RED',z.states.RED.on);
-console.log('\n--------------------------END');
 return z;
 }
 ;
