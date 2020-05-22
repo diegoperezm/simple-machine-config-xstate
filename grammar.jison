@@ -71,6 +71,19 @@ states
     z.states[$2].on[$3].target = $4;
   }
 }
+| INITIAL    UPPERCASE   LOWERCASE  mactions
+{
+   z.initial = $2
+   if(z.states[$2] != undefined) {
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].actions = $4;
+   }else {
+    z.states[$2] = {};
+    z.states[$2].on = {};
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].actions = $4;
+  }
+}
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
    z.initial = $2
@@ -342,6 +355,21 @@ states
    z.states[$2].on[$3].actions = $6;
   }
 }
+
+| UPPERCASE  LOWERCASE  mactions
+{
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }
+}
+
+
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
 {
   if(z.states[$1] != undefined) {
