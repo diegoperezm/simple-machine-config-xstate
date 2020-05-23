@@ -1,8 +1,8 @@
 const fs            = require('fs');
 const { interpret } = require('xstate');
-const actions       = require('./actions.js');
-const statechart    = require('./statecharts.js');
-const diagram       = fs.readFileSync('diagram.txt', 'utf8');
+const actions       = require('./statecharts/actions.js');
+const statechart    = require('./statecharts/statecharts.js');
+const diagram       = fs.readFileSync('./statecharts/diagram.txt', 'utf8');
 const counterMachine  = statechart(diagram, actions);
 
 /*
