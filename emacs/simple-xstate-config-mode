@@ -1,0 +1,41 @@
+(define-generic-mode 'simple-xstate-config-mode
+      '("#")
+      ;'("invoke" "context" "entry" "exit")
+      '("invoke" "context" )
+      '( 
+         ;; initial state  
+         ("\*[A-Z]+"     . 'font-lock-constant-face)     
+
+         ;; states
+         ("[A-Z]+"       . 'font-lock-variable-name-face)
+
+         ;; invoke
+			   ("@[a-z]+"      . 'font-lock-function-name-face)
+
+         ;; invoke.id
+         ( "id:.+[a-z]+" . 'font-lock-function-name-face)
+
+			   ;; actions  (":[a-z]+"      . 'font-lock-variable-name-face)
+       )
+			nil
+      nil
+      "Major mode for simple xstate config.")
+
+
+; '(font-lock-constant-face      ((t (:foreground "yellow"))))
+; '(font-lock-function-name-face ((t (:foreground "green"))))
+; '(font-lock-builtin-face       ((t (:foreground "orange"))))
+;  font-lock-builtin-face
+;  font-lock-comment-face 
+;  font-lock-constant-face
+;  font-lock-doc-string-face 
+;  font-lock-function-name-face 
+;  font-lock-keyword-face 
+;  font-lock-preprocessor-face 
+;  font-lock-reference-face 
+;  font-lock-string-face 
+;  font-lock-negation-char-face ?
+;  font-lock-type-face          ?
+;  font-lock-variable-name-face ?
+;  font-lock-warning-face       ?
+
