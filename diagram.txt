@@ -1,6 +1,0 @@
-context:
-   color: "green"
-
-  *GREEN  time YELLOW :display :assigncoloryellow
-   YELLOW time RED    :display :assigncolorred
-   RED    time GREEN  :display :assigncolorgreen
