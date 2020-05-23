@@ -1,18 +1,12 @@
+const { assign } = require('xstate');
+
+
 let actions = {
 		actions: {
-				increment: increment,
-				decrement: decrement 
+				increment: assign({count: ctx =>  ctx.count + 1 }),
+				decrement: assign({count: ctx =>  ctx.count - 1 })
 	}
 };
-
-function increment(ctx) {
-		return ctx.count = ctx.count + 1; 
-}
-
-function decrement(ctx) {
-		return ctx.count = ctx.count - 1; 
-    
-}
 
 
 
