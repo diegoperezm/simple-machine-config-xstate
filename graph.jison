@@ -64,10 +64,8 @@ states
 | INITIAL    UPPERCASE   LOWERCASE  mactions
 {
  x =  x +
-     'initial => ' +
-		  $2 + ';' + '\n' +
-			$2 + ' => ' + $4  + ': ' +
-			$3 + ';' ;
+     'initial => ' + $2 + ';' + '\n' +
+			$2 + ' => '  + $2  + ': ' + $3 + ';' ;
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
@@ -200,7 +198,7 @@ states
 
 | UPPERCASE  LOWERCASE  mactions
 {
- x = x + '\n' + $1 + ': ' + $2 + ';' ;
+ x = x + '\n' + $1 +  ' => ' +  $1 +  ': ' +  $2 + ';' ;
 }
 
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
