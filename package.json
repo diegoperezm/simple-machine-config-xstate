@@ -15,5 +15,8 @@
     "lodash.isobject": "^3.0.2",
     "lodash.transform": "^4.6.0",
     "xstate": "^4.8.0"
+  },
+  "devDependencies": {
+    "state-machine-cat": "^7.0.0"
   }
 }
