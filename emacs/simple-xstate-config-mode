@@ -1,7 +1,7 @@
 (define-generic-mode 'simple-xstate-config-mode
       '("#")
-      ;'("invoke" "context" "entry" "exit")
-      '("invoke" "context" )
+      '("invoke" "context" "entry" "exit")
+      ;'("invoke" "context" )
       '( 
          ;; initial state  
          ("\*[A-Z]+"     . 'font-lock-constant-face)     
