@@ -1,6 +1,7 @@
 const { Machine } = require('xstate');
 const fs          = require('fs');
-const bnf         = fs.readFileSync('../../grammar.jison', 'utf8');
+const path        = require('path');
+const bnf         = fs.readFileSync(path.resolve(__dirname, '../../../grammar.jison'), 'utf8');
 const jison       = require('jison');
 const parser      = new jison.Parser(bnf);
 
