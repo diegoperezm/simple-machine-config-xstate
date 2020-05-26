@@ -13,8 +13,9 @@ try {
 
 	let doc = `<!doctype html><html lang="en"><head><meta charset="UTF-8"/><title>Diagram</title></head><body><div style="width:100%;text-align:center"><div style="display:inline-block">${lSVGInAString}</div></div></body></html>`;
 
-		fs.writeFileSync(path.resolve(__dirname,'index.html'), doc, 'utf8');
-
+  fs.writeFileSync(path.resolve(__dirname,'index.html'), doc, 'utf8');
+  fs.writeFileSync(path.resolve(__dirname,'../../currentExample/index.html'), doc, 'utf8');
+	
 }
 
 catch (pError) {
