@@ -1,0 +1,4 @@
+
+  *GREEN  time YELLOW
+   YELLOW time  RED
+	 RED    time  GREEN

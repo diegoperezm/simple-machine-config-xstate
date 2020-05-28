@@ -1,0 +1,9 @@
+initial,
+GREEN,
+YELLOW,
+RED;
+
+initial => GREEN;
+GREEN => YELLOW: time;
+YELLOW => RED: time;
+RED => GREEN: time;

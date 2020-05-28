@@ -1,0 +1,1 @@
+{"transitions":[{"from":"initial","to":"GREEN"},{"from":"GREEN","to":"YELLOW","label":"time","event":"time"},{"from":"YELLOW","to":"RED","label":"time","event":"time"},{"from":"RED","to":"GREEN","label":"time","event":"time"}],"states":[{"name":"initial","type":"initial"},{"name":"GREEN","type":"regular"},{"name":"YELLOW","type":"regular"},{"name":"RED","type":"regular"}]}
