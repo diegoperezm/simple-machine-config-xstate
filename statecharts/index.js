@@ -22,15 +22,50 @@ dotNodeAttrs <string>   node attributes to pass to the dot render engine
 dotEdgeAttrs <string>   edge attributes to pass to the dot render engine
 */
 
-const statecharts  = (diagram,actions,options) =>  {
+const statecharts  = (diagram, actions, options ={outputType: "svg"}) =>  {
     const diagramDone    = execGraph(diagram); 
     const machine        = execConf(diagram);
-    const defaultOptions = (options === undefined) ? {outputType: "svg",} : options;
+		let fileExtension;
+    let lSVGInAString; 
 
     try {
-      const lSVGInAString = smcat.render(diagramDone, defaultOptions );
-      fs.writeFileSync('./statecharts/graph.svg', lSVGInAString, 'utf8');
+    switch (options.outputType) {
+     case "dot":
+ 			 fileExtension = 'dot';
+       lSVGInAString = smcat.render(diagramDone, options);
+       break;
+		case "smcat":
+ 			 fileExtension = 'smcat';
+       lSVGInAString = smcat.render(diagramDone, options);
+       break;
+		case "json":
+    	 fileExtension = 'json';
+			 lSVGInAString = JSON.stringify(smcat.render(diagramDone, options));
+       break;
+		case "ast":
+	     fileExtension  = 'ast';
+			 lSVGInAString = JSON.stringify(smcat.render(diagramDone, options));
+       break;
+		case "scxml":
+	     fileExtension  = 'scxml';
+       lSVGInAString = smcat.render(diagramDone, options);
+       break;
+		case	"scjson":
+	     fileExtension  = 'scjson';
+			 lSVGInAString = JSON.stringify(smcat.render(diagramDone, options));
+       break;
+		case "svg":
+			 fileExtension  =  'svg';
+       lSVGInAString = smcat.render(diagramDone, options);
+       break;
+		default:
+			 fileExtension  =  'svg';
+       lSVGInAString = smcat.render(diagramDone, options);
+       break;
       }
+
+      fs.writeFileSync(`./statecharts/graph.${fileExtension}`, lSVGInAString, 'utf8');
+    }
     catch (pError) {
      console.error(pError);
     }
