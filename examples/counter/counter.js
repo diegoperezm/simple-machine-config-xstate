@@ -1,10 +1,11 @@
 const fs            = require('fs');
 const path          = require('path');
 const { interpret } = require('xstate');
+const statechart    = require('../../statecharts/index.js');
 const actions       = require('./statecharts/actions.js');
-const statechart    = require('./statecharts/statecharts.js');
+const options       = {outputType: "dot"};
 const diagram       = fs.readFileSync(path.resolve(__dirname,'./statecharts/diagram.txt'), 'utf8');
-const counterMachine  = statechart(diagram, actions);
+const counterMachine  = statechart(diagram, actions, options);
 
 /*
 const increment = context => context.count + 1;
