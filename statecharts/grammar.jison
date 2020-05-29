@@ -23,6 +23,7 @@ z.states           ={};
 "onerror:"                return 'ONERROR'
 "entry:"                  return 'ENTRY'
 "exit:"                   return 'EXIT'
+"final"                   return 'FINAL'
 [a-z]+                    return 'LOWERCASE'
 [A-Z]+                    return 'UPPERCASE'
 [0-9]+                    return 'NUMBER'
@@ -433,6 +434,11 @@ states
    z.states[$1].on[$2].target = $3;
    z.states[$1].on[$2].actions = $5;
   }
+}
+| UPPERCASE  FINAL
+{
+   z.states[$1] = {};
+   z.states[$1].type = "final";
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE 
 {

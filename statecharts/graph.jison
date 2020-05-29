@@ -18,6 +18,7 @@ let x = '';
 "onerror:"                return 'ONERROR'
 "entry:"                  return 'ENTRY'
 "exit:"                   return 'EXIT'
+"final"                   return 'FINAL'
 [a-z]+                    return 'LOWERCASE'
 [A-Z]+                    return 'UPPERCASE'
 [0-9]+                    return 'NUMBER'
@@ -217,6 +218,10 @@ states
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
  x = x + '\n' + $1 + ' => ' + $3 + ': ' + $2 + ';' ;
+}
+| UPPERCASE FINAL
+{
+ x = x + '\n' + $1 + ' => ' + $2 + ';'  ;
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE 
 {
