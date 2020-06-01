@@ -7,6 +7,8 @@ According to the  [xstate](https://github.com/davidkpiano/xstate) documentation 
 
 The idea of this project is to write a simplified version of an xstate machine config.
 
+> 🚧 Still Work in progress 🚧 
+
 - Example of xstate machine config:
 
 ``` javascript
@@ -34,106 +36,53 @@ The idea of this project is to write a simplified version of an xstate machine c
 
 
 ``` javascript
-let trafficLight = {
+let trafficlight = {
    initial: "GREEN",
     context: {
-       color:""},
+       color:"green"},
     states: {
        GREEN: {
+	      entry: ['displaycolor'],
+	       exit: ['setcoloryellow'],
           on: {
 	   time: {
-	    target: "YELLOW",
-            actions: ["setcolorgreen","displaycolor"]
+	    target: "YELLOW"
 	    }
          }
        },
       YELLOW: {
+          entry: ['displaycolor'],
+	       exit: ['setcolorred'],
        on: {
         time: {
-	  target: "RED",
-          actions: ["setcoloryellow","displaycolor"]
-	  }
+	  target: "RED"
+	    }
         }
       },
       RED: {
+          entry: ['displaycolor'],
+	       exit: ['setcolorgreen'],
         on: {
 	 time: {
-	   target: "GREEN",
-           actions:["setcolorred","displaycolor"]
-	   }
+	   target: "GREEN"
+	 } 
 	 }
-      }
-   }
+    }
+  }
 };
 ```
 
 - Using this project:
 
-``` 
-context:
-    color: ""
 
- *GREEN      time     YELLOW   :setcolorgreen
-                               :displaycolor
+ - Code:
 
-  YELLOW     time     RED      :setcoloryellow
-                               :displaycolor
+![diagram code](diagram_code.png)
 
-  RED        time     GREEN    :setcolorred
-                               :displaycolor
-```
+ - Graph (png): 
 
 
-
-### Syntax
-
-- Initial state:
-
-``` javascript
- *STATENAME
-```
-
-- Context (context: lowercaser:+ )
-
-``` javascript
-context:
-  propertyname: ""  
-```
-
-
-- State (uppercase)
-
-``` javascript
-STATENAME 
-```
-
-
-- Input (lowercase)
-
-``` javascript
- input
-```
-
-- Invoke (invoke: lowercase+) 
-
-``` javascript
-invoke:
-```
-
-- Entry (entry: lowercase+)
-
-``` javascript
-entry:
-```
-
-- actions (:lowercase+)
-
-``` javascript
-:actionname
-```
-
-
-
+![graph image](graph.png)
 
 
 
