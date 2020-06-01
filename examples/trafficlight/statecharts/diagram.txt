@@ -1,4 +1,11 @@
+context:
+  color: "green"
 
-  *GREEN  time YELLOW
-   YELLOW time  RED
-	 RED    time  GREEN
+  *GREEN  time YELLOW entry: displaycolor
+	                     exit: setcoloryellow
+
+   YELLOW time  RED   entry: displaycolor
+	                     exit: setcolorred
+
+    RED   time  GREEN entry: displaycolor
+	                     exit: setcolorgreen
