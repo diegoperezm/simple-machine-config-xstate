@@ -11,29 +11,6 @@ The idea of this project is to write a simplified version of an xstate machine c
 
 - Example of xstate machine config:
 
-``` javascript
-// ...
-{
-  states: {
-    // state node
-    idle: {
-      on: {
-        FETCH: 'pending';
-      }
-    }
-  }
-}
-```
-
-- Using this project:
-
-```
- IDLE   fetch   PENDING  
-```
-
-
-- Another example of xstate machine config:
-
 
 ``` javascript
 let trafficlight = {
@@ -75,11 +52,11 @@ let trafficlight = {
 - Using this project:
 
 
- - Code:
+  - Code:
 
 ![diagram code](diagram_code.png)
 
- - Graph (png): 
+  - Graph (png): 
 
 
 ![graph image](graph.png)
