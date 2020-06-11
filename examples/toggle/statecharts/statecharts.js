@@ -1,7 +1,7 @@
          
 const fs          = require('fs');
 const path        = require('path');
-const statecharts = require('../../../statecharts/client.js'); 
+const statecharts = require('../../../statecharts/index.js').client; 
 const options     = {outputType: "dot"};
 const diagram     = fs.readFileSync(path.resolve(__dirname, './diagram.txt'),'utf8');
 

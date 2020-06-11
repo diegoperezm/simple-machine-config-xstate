@@ -1,7 +1,7 @@
 const fs            = require('fs');
 const path          = require('path');
 const { interpret } = require('xstate');
-const statechart    = require('../../statecharts/index.js');
+const statechart    = require('../../statecharts/index.js').statecharts;
 const actions       = require('./statecharts/actions.js');
 const options       = {outputType: "dot"};
 const diagram       = fs.readFileSync(path.resolve(__dirname,'./statecharts/diagram.txt'), 'utf8');
