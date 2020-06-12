@@ -22,9 +22,14 @@ const execGraph   = input => parserGraph.parse(input);
 const diagram     = fs.readFileSync(
 	                   	process.argv[2],
                    		'utf8');
-
 const options = process.argv[3]; 
 
+/**
+  * @description            - Side effect: write a file
+  * @param {string} diagram - A statechart description       
+  * @param {string} options - Set output type of the file (sm-cat)
+  * 
+  */
 const graph  = (diagram, options ="svg") =>  {
     const diagramDone    = execGraph(diagram); 
     let fileExtension;
