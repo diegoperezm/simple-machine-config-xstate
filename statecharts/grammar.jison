@@ -25,7 +25,7 @@ z.states           ={};
 "exit:"                   return 'EXIT'
 "final"                   return 'FINAL'
 [a-z]+                    return 'LOWERCASE'
-[A-Z]+                    return 'UPPERCASE'
+[A-Z0-9]+                 return 'UPPERCASE'
 [0-9]+                    return 'NUMBER'
 ":"                       return ':'
 '"'                       return '"'
