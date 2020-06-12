@@ -1,0 +1,122 @@
+digraph "state transitions" {
+  fontname="Helvetica" fontsize=12 penwidth=2.0 splines=true ordering=out compound=true overlap=scale nodesep=0.3 ranksep=0.1
+  node [shape=plaintext style=filled fillcolor=transparent fontname=Helvetica fontsize=12 penwidth=2.0]
+  edge [fontname=Helvetica fontsize=10]
+
+    "initial" [shape=circle style=filled fillcolor=black fixedsize=true height=0.15 label=""]
+    "START" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">START</td></tr>
+      </table>
+    >]
+    "OPERAND1AFTERDECIMAL" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND1AFTERDECIMAL</td></tr>
+      </table>
+    >]
+    "OPERAND1ZERO" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND1ZERO</td></tr>
+      </table>
+    >]
+    "OPERAND1BEFOREDECIMAL" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND1BEFOREDECIMAL</td></tr>
+      </table>
+    >]
+    "NEGSTART" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">NEGSTART</td></tr>
+      </table>
+    >]
+    "RESULT" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">RESULT</td></tr>
+      </table>
+    >]
+    "OPERATORENTERED" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERATORENTERED</td></tr>
+      </table>
+    >]
+    "OPERAND1" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND1</td></tr>
+      </table>
+    >]
+    "OPERAND2ZERO" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND2ZERO</td></tr>
+      </table>
+    >]
+    "OPERAND2BEFOREDECIMAL" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND2BEFOREDECIMAL</td></tr>
+      </table>
+    >]
+    "OPERATORENTEREDOPERATOR" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERATORENTEREDOPERATOR</td></tr>
+      </table>
+    >]
+    "NEGOPERATOR" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">NEGOPERATOR</td></tr>
+      </table>
+    >]
+    "OPERAND2AFTERDECIMAL" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND2AFTERDECIMAL</td></tr>
+      </table>
+    >]
+    "OPERAND2" [margin=0 label= < 
+      <table align="center" cellborder="0" border="2" style="rounded" width="48">
+        <tr><td width="48" cellpadding="7">OPERAND2</td></tr>
+      </table>
+    >]
+
+    "initial" -> "START" [label=" "]
+    "START" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "START" -> "OPERAND1ZERO" [label="zero   \l"]
+    "START" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
+    "START" -> "NEGSTART" [label="minus   \l"]
+    "START" -> "START" [label="ce   \l"]
+    "RESULT" -> "OPERATORENTERED" [label="operator   \l"]
+    "RESULT" -> "OPERATORENTERED" [label="minus   \l"]
+    "RESULT" -> "START" [label="ce   \l"]
+    "OPERAND1" -> "START" [label="ce   \l"]
+    "OPERAND1" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND1" -> "OPERATORENTERED" [label="minus   \l"]
+    "OPERAND1ZERO" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
+    "OPERAND1ZERO" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="zero   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND1AFTERDECIMAL" -> "OPERAND1AFTERDECIMAL" [label="number   \l"]
+    "OPERAND1AFTERDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="zero   \l"]
+    "NEGSTART" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
+    "NEGSTART" -> "OPERAND1ZERO" [label="zero   \l"]
+    "NEGSTART" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "NEGSTART" -> "START" [label="ce   \l"]
+    "OPERATORENTERED" -> "START" [label="ce   \l"]
+    "OPERATORENTERED" -> "OPERAND2ZERO" [label="zero   \l"]
+    "OPERATORENTERED" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
+    "OPERATORENTERED" -> "OPERATORENTEREDOPERATOR" [label="operator   \l"]
+    "OPERATORENTERED" -> "NEGOPERATOR" [label="minus   \l"]
+    "OPERATORENTEREDOPERATOR" -> "OPERATORENTERED" [label="placeholder   \l"]
+    "NEGOPERATOR" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
+    "NEGOPERATOR" -> "OPERAND2ZERO" [label="zero   \l"]
+    "NEGOPERATOR" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
+    "NEGOPERATOR" -> "START" [label="ce   \l"]
+    "OPERAND2" -> "START" [label="ce   \l"]
+    "OPERAND2" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND2" -> "OPERATORENTERED" [label="minus   \l"]
+    "OPERAND2" -> "RESULT" [label="equals   \l"]
+    "OPERAND2ZERO" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
+    "OPERAND2ZERO" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="zero   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND2AFTERDECIMAL" -> "OPERAND2AFTERDECIMAL" [label="number   \l"]
+    "OPERAND2AFTERDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="zero   \l"]
+}

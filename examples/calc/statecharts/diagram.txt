@@ -1,0 +1,60 @@
+  
+  *START                dot          OPERAND1AFTERDECIMAL
+   START                zero         OPERAND1ZERO
+   START                number       OPERAND1BEFOREDECIMAL
+   START                minus        NEGSTART
+   START                ce           START 
+
+   RESULT               operator     OPERATORENTERED
+   RESULT               minus        OPERATORENTERED
+   RESULT               ce           START
+
+   OPERAND1             ce           START
+   OPERAND1             operator     OPERATORENTERED
+   OPERAND1             minus        OPERATORENTERED
+
+   OPERAND1ZERO          number     OPERAND1BEFOREDECIMAL
+   OPERAND1ZERO          dot        OPERAND1AFTERDECIMAL
+
+   OPERAND1BEFOREDECIMAL  number    OPERAND1BEFOREDECIMAL  
+   OPERAND1BEFOREDECIMAL  zero      OPERAND1BEFOREDECIMAL  
+   OPERAND1BEFOREDECIMAL  dot       OPERAND1AFTERDECIMAL  
+
+   OPERAND1AFTERDECIMAL   number    OPERAND1AFTERDECIMAL   
+   OPERAND1AFTERDECIMAL   zero      OPERAND1BEFOREDECIMAL
+ 
+   NEGSTART               number    OPERAND1BEFOREDECIMAL
+   NEGSTART               zero      OPERAND1ZERO
+   NEGSTART               dot       OPERAND1AFTERDECIMAL
+   NEGSTART               ce        START
+  
+   OPERATORENTERED        ce        START
+   OPERATORENTERED        zero      OPERAND2ZERO 
+   OPERATORENTERED        number    OPERAND2BEFOREDECIMAL
+   OPERATORENTERED        operator  OPERATORENTEREDOPERATOR
+   OPERATORENTERED        minus     NEGOPERATOR
+
+   OPERATORENTEREDOPERATOR  placeholder OPERATORENTERED
+
+   NEGOPERATOR            number    OPERAND2BEFOREDECIMAL
+   NEGOPERATOR            zero      OPERAND2ZERO
+   NEGOPERATOR            dot       OPERAND2AFTERDECIMAL
+   NEGOPERATOR            ce        START
+
+   OPERAND2             ce           START
+   OPERAND2             operator     OPERATORENTERED
+   OPERAND2             minus        OPERATORENTERED
+   OPERAND2             equals       RESULT  
+
+   OPERAND2ZERO          number     OPERAND2BEFOREDECIMAL
+   OPERAND2ZERO          dot        OPERAND2AFTERDECIMAL
+
+   OPERAND2BEFOREDECIMAL  number    OPERAND2BEFOREDECIMAL  
+   OPERAND2BEFOREDECIMAL  zero      OPERAND2BEFOREDECIMAL  
+   OPERAND2BEFOREDECIMAL  dot       OPERAND2AFTERDECIMAL  
+
+   OPERAND2AFTERDECIMAL   number    OPERAND2AFTERDECIMAL   
+   OPERAND2AFTERDECIMAL   zero      OPERAND2BEFOREDECIMAL
+ 
+
+
