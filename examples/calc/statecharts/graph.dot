@@ -39,11 +39,6 @@ digraph "state transitions" {
         <tr><td width="48" cellpadding="7">OPERATORENTERED</td></tr>
       </table>
     >]
-    "OPERAND1" [margin=0 label= < 
-      <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND1</td></tr>
-      </table>
-    >]
     "OPERAND2ZERO" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
         <tr><td width="48" cellpadding="7">OPERAND2ZERO</td></tr>
@@ -52,11 +47,6 @@ digraph "state transitions" {
     "OPERAND2BEFOREDECIMAL" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
         <tr><td width="48" cellpadding="7">OPERAND2BEFOREDECIMAL</td></tr>
-      </table>
-    >]
-    "OPERATORENTEREDOPERATOR" [margin=0 label= < 
-      <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERATORENTEREDOPERATOR</td></tr>
       </table>
     >]
     "NEGOPERATOR" [margin=0 label= < 
@@ -69,11 +59,6 @@ digraph "state transitions" {
         <tr><td width="48" cellpadding="7">OPERAND2AFTERDECIMAL</td></tr>
       </table>
     >]
-    "OPERAND2" [margin=0 label= < 
-      <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND2</td></tr>
-      </table>
-    >]
 
     "initial" -> "START" [label=" "]
     "START" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
@@ -84,14 +69,20 @@ digraph "state transitions" {
     "RESULT" -> "OPERATORENTERED" [label="operator   \l"]
     "RESULT" -> "OPERATORENTERED" [label="minus   \l"]
     "RESULT" -> "START" [label="ce   \l"]
-    "OPERAND1" -> "START" [label="ce   \l"]
-    "OPERAND1" -> "OPERATORENTERED" [label="operator   \l"]
-    "OPERAND1" -> "OPERATORENTERED" [label="minus   \l"]
+    "OPERAND1ZERO" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND1ZERO" -> "OPERATORENTERED" [label="minus   \l"]
+    "OPERAND1ZERO" -> "START" [label="ce   \l"]
     "OPERAND1ZERO" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
     "OPERAND1ZERO" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "START" [label="ce   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND1BEFOREDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
     "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
     "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="zero   \l"]
     "OPERAND1BEFOREDECIMAL" -> "OPERAND1AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND1AFTERDECIMAL" -> "START" [label="ce   \l"]
+    "OPERAND1AFTERDECIMAL" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND1AFTERDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
     "OPERAND1AFTERDECIMAL" -> "OPERAND1AFTERDECIMAL" [label="number   \l"]
     "OPERAND1AFTERDECIMAL" -> "OPERAND1BEFOREDECIMAL" [label="zero   \l"]
     "NEGSTART" -> "OPERAND1BEFOREDECIMAL" [label="number   \l"]
@@ -101,22 +92,26 @@ digraph "state transitions" {
     "OPERATORENTERED" -> "START" [label="ce   \l"]
     "OPERATORENTERED" -> "OPERAND2ZERO" [label="zero   \l"]
     "OPERATORENTERED" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
-    "OPERATORENTERED" -> "OPERATORENTEREDOPERATOR" [label="operator   \l"]
+    "OPERATORENTERED" -> "OPERATORENTERED" [label="operator   \l"]
     "OPERATORENTERED" -> "NEGOPERATOR" [label="minus   \l"]
-    "OPERATORENTEREDOPERATOR" -> "OPERATORENTERED" [label="placeholder   \l"]
     "NEGOPERATOR" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
     "NEGOPERATOR" -> "OPERAND2ZERO" [label="zero   \l"]
     "NEGOPERATOR" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
     "NEGOPERATOR" -> "START" [label="ce   \l"]
-    "OPERAND2" -> "START" [label="ce   \l"]
-    "OPERAND2" -> "OPERATORENTERED" [label="operator   \l"]
-    "OPERAND2" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND2" -> "RESULT" [label="equals   \l"]
+    "OPERAND2ZERO" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND2ZERO" -> "OPERATORENTERED" [label="minus   \l"]
+    "OPERAND2ZERO" -> "START" [label="ce   \l"]
     "OPERAND2ZERO" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
     "OPERAND2ZERO" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "START" [label="ce   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND2BEFOREDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
     "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="number   \l"]
     "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="zero   \l"]
     "OPERAND2BEFOREDECIMAL" -> "OPERAND2AFTERDECIMAL" [label="dot   \l"]
+    "OPERAND2AFTERDECIMAL" -> "START" [label="ce   \l"]
+    "OPERAND2AFTERDECIMAL" -> "OPERATORENTERED" [label="operator   \l"]
+    "OPERAND2AFTERDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
     "OPERAND2AFTERDECIMAL" -> "OPERAND2AFTERDECIMAL" [label="number   \l"]
     "OPERAND2AFTERDECIMAL" -> "OPERAND2BEFOREDECIMAL" [label="zero   \l"]
 }
