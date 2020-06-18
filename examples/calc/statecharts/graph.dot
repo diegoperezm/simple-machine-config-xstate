@@ -1,5 +1,5 @@
 digraph "state transitions" {
-  fontname="Helvetica" fontsize=12 penwidth=2.0 splines=true ordering=out compound=true overlap=scale nodesep=0.3 ranksep=0.1
+  fontname="Helvetica" fontsize=12 penwidth=2.0 splines=true ordering=out compound=true overlap=scale nodesep=0.3 ranksep=0.1 rankdir=LR 
   node [shape=plaintext style=filled fillcolor=transparent fontname=Helvetica fontsize=12 penwidth=2.0]
   edge [fontname=Helvetica fontsize=10]
 
@@ -9,24 +9,24 @@ digraph "state transitions" {
         <tr><td width="48" cellpadding="7">START</td></tr>
       </table>
     >]
-    "OPERAND1AFTERDECIMAL" [margin=0 label= < 
+    "OPND1AFTRPOINT" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND1AFTERDECIMAL</td></tr>
+        <tr><td width="48" cellpadding="7">OPND1AFTRPOINT</td></tr>
       </table>
     >]
-    "OPERAND1ZERO" [margin=0 label= < 
+    "OPND1ZERO" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND1ZERO</td></tr>
+        <tr><td width="48" cellpadding="7">OPND1ZERO</td></tr>
       </table>
     >]
-    "OPERAND1BEFOREDECIMAL" [margin=0 label= < 
+    "OPND1BFRPOINT" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND1BEFOREDECIMAL</td></tr>
+        <tr><td width="48" cellpadding="7">OPND1BFRPOINT</td></tr>
       </table>
     >]
-    "NEGSTART" [margin=0 label= < 
+    "NEG" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">NEGSTART</td></tr>
+        <tr><td width="48" cellpadding="7">NEG</td></tr>
       </table>
     >]
     "RESULT" [margin=0 label= < 
@@ -39,79 +39,79 @@ digraph "state transitions" {
         <tr><td width="48" cellpadding="7">OPERATORENTERED</td></tr>
       </table>
     >]
-    "OPERAND2ZERO" [margin=0 label= < 
+    "OPND2ZERO" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND2ZERO</td></tr>
+        <tr><td width="48" cellpadding="7">OPND2ZERO</td></tr>
       </table>
     >]
-    "OPERAND2BEFOREDECIMAL" [margin=0 label= < 
+    "OPND2BFRPOINT" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND2BEFOREDECIMAL</td></tr>
+        <tr><td width="48" cellpadding="7">OPND2BFRPOINT</td></tr>
       </table>
     >]
-    "NEGOPERATOR" [margin=0 label= < 
+    "NEGOPR" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">NEGOPERATOR</td></tr>
+        <tr><td width="48" cellpadding="7">NEGOPR</td></tr>
       </table>
     >]
-    "OPERAND2AFTERDECIMAL" [margin=0 label= < 
+    "OPND2AFTRPOINT" [margin=0 label= < 
       <table align="center" cellborder="0" border="2" style="rounded" width="48">
-        <tr><td width="48" cellpadding="7">OPERAND2AFTERDECIMAL</td></tr>
+        <tr><td width="48" cellpadding="7">OPND2AFTRPOINT</td></tr>
       </table>
     >]
 
-    "initial" -> "START" [label=" "]
-    "START" -> "OPERAND1AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "START" -> "OPERAND1ZERO" [fontcolor=purple color=purple label="zero   \l"]
-    "START" -> "OPERAND1BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "START" -> "NEGSTART" [label="minus   \l"]
-    "START" -> "START" [label="ce   \l"]
+    "initial" -> "START" [weight=20  label=" "]
+    "START" -> "OPND1AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "START" -> "OPND1ZERO" [fontcolor=purple color=purple label="zero   \l"]
+    "START" -> "OPND1BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "START" -> "NEG" [weight=20 fontcolor=red color=red label="minus   \l"]
+    "START" -> "START" [fontcolor=black color=black label="ce   \l"]
     "RESULT" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "RESULT" -> "OPERATORENTERED" [label="minus   \l"]
-    "RESULT" -> "START" [label="ce   \l"]
-    "OPERAND1ZERO" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND1ZERO" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND1ZERO" -> "START" [label="ce   \l"]
-    "OPERAND1ZERO" -> "OPERAND1BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND1ZERO" -> "OPERAND1AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "START" [label="ce   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "OPERAND1BEFOREDECIMAL" [fontcolor=purple color=purple label="zero   \l"]
-    "OPERAND1BEFOREDECIMAL" -> "OPERAND1AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "OPERAND1AFTERDECIMAL" -> "START" [label="ce   \l"]
-    "OPERAND1AFTERDECIMAL" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND1AFTERDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND1AFTERDECIMAL" -> "OPERAND1AFTERDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND1AFTERDECIMAL" -> "OPERAND1BEFOREDECIMAL" [fontcolor=purple color=purple label="zero   \l"]
-    "NEGSTART" -> "OPERAND1BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "NEGSTART" -> "OPERAND1ZERO" [fontcolor=purple color=purple label="zero   \l"]
-    "NEGSTART" -> "OPERAND1AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "NEGSTART" -> "START" [label="ce   \l"]
-    "OPERATORENTERED" -> "START" [label="ce   \l"]
-    "OPERATORENTERED" -> "OPERAND2ZERO" [fontcolor=purple color=purple label="zero   \l"]
-    "OPERATORENTERED" -> "OPERAND2BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
+    "RESULT" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "RESULT" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND1ZERO" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND1ZERO" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND1ZERO" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND1ZERO" -> "OPND1BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND1ZERO" -> "OPND1AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "OPND1BFRPOINT" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND1BFRPOINT" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND1BFRPOINT" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND1BFRPOINT" -> "OPND1BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND1BFRPOINT" -> "OPND1BFRPOINT" [fontcolor=purple color=purple label="zero   \l"]
+    "OPND1BFRPOINT" -> "OPND1AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "OPND1AFTRPOINT" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND1AFTRPOINT" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND1AFTRPOINT" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND1AFTRPOINT" -> "OPND1AFTRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND1AFTRPOINT" -> "OPND1BFRPOINT" [fontcolor=purple color=purple label="zero   \l"]
+    "NEG" -> "OPND1BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "NEG" -> "OPND1ZERO" [fontcolor=purple color=purple label="zero   \l"]
+    "NEG" -> "OPND1AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "NEG" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPERATORENTERED" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPERATORENTERED" -> "OPND2ZERO" [fontcolor=purple color=purple label="zero   \l"]
+    "OPERATORENTERED" -> "OPND2BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
     "OPERATORENTERED" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERATORENTERED" -> "NEGOPERATOR" [label="minus   \l"]
-    "NEGOPERATOR" -> "OPERAND2BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "NEGOPERATOR" -> "OPERAND2ZERO" [fontcolor=purple color=purple label="zero   \l"]
-    "NEGOPERATOR" -> "OPERAND2AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "NEGOPERATOR" -> "START" [label="ce   \l"]
-    "OPERAND2ZERO" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND2ZERO" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND2ZERO" -> "START" [label="ce   \l"]
-    "OPERAND2ZERO" -> "OPERAND2BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND2ZERO" -> "OPERAND2AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "START" [label="ce   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "OPERAND2BEFOREDECIMAL" [fontcolor=purple color=purple label="zero   \l"]
-    "OPERAND2BEFOREDECIMAL" -> "OPERAND2AFTERDECIMAL" [fontcolor=orange color=orange label="dot   \l"]
-    "OPERAND2AFTERDECIMAL" -> "START" [label="ce   \l"]
-    "OPERAND2AFTERDECIMAL" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
-    "OPERAND2AFTERDECIMAL" -> "OPERATORENTERED" [label="minus   \l"]
-    "OPERAND2AFTERDECIMAL" -> "OPERAND2AFTERDECIMAL" [fontcolor=red color=red label="number   \l"]
-    "OPERAND2AFTERDECIMAL" -> "OPERAND2BEFOREDECIMAL" [fontcolor=purple color=purple label="zero   \l"]
+    "OPERATORENTERED" -> "NEGOPR" [fontcolor=red color=red label="minus   \l"]
+    "NEGOPR" -> "OPND2BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "NEGOPR" -> "OPND2ZERO" [fontcolor=purple color=purple label="zero   \l"]
+    "NEGOPR" -> "OPND2AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "NEGOPR" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND2ZERO" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND2ZERO" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND2ZERO" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND2ZERO" -> "OPND2BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND2ZERO" -> "OPND2AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "OPND2BFRPOINT" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND2BFRPOINT" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND2BFRPOINT" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND2BFRPOINT" -> "OPND2BFRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND2BFRPOINT" -> "OPND2BFRPOINT" [fontcolor=purple color=purple label="zero   \l"]
+    "OPND2BFRPOINT" -> "OPND2AFTRPOINT" [fontcolor=orange color=orange label="dot   \l"]
+    "OPND2AFTRPOINT" -> "START" [fontcolor=black color=black label="ce   \l"]
+    "OPND2AFTRPOINT" -> "OPERATORENTERED" [fontcolor=green color=green label="operator   \l"]
+    "OPND2AFTRPOINT" -> "OPERATORENTERED" [fontcolor=red color=red label="minus   \l"]
+    "OPND2AFTRPOINT" -> "OPND2AFTRPOINT" [fontcolor=grey color=grey label="number   \l"]
+    "OPND2AFTRPOINT" -> "OPND2BFRPOINT" [fontcolor=purple color=purple label="zero   \l"]
 }
