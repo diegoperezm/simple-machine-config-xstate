@@ -2,9 +2,19 @@
 var path           = require('path');
 var exec           = require("child_process").exec;
 var gulp           = require("gulp");
+var browserSync    = require("browser-sync").create();
 var parallel       = gulp.parallel; 
 var watcherDiagram = gulp.watch('./examples/**/statecharts/*.txt');
 var isFehRunning = false;
+
+function server() {
+		browserSync
+				.init({
+			   		watch: true,
+						server: "./APP"
+				});
+}
+
 
 function graph(done) {
   watcherDiagram.on('change', (path,stats) => {
@@ -73,6 +83,7 @@ function graphMod(done) {
 
 exports.start      = parallel(graph);
 exports.graphMod   = parallel(graphMod);
+exports.server     = parallel(server);
 
 
 
