@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Simple xstate config</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/zoomsvg.css">
+</head>
+<body>
+ <div class="content">  
+    <div class="container-fluid">
+			<div class="row">
+        <div class="col-12">
+<svg class="img-fluid" id="graph" width="1666pt" height="724pt"
+ viewBox="0.00 0.00 1666.00 723.83" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 719.8335)">
+<title>state transitions</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-719.8335 1662,-719.8335 1662,4 -4,4"/>
+<!-- initial -->
+<g id="node1" class="node">
+<title>initial</title>
+<ellipse fill="#000000" stroke="#000000" stroke-width="2" cx="35.5" cy="-438.8335" rx="5.5" ry="5.5"/>
+</g>
+<!-- START -->
+<g id="node2" class="node">
+<title>START</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="170,-456.8335 107,-456.8335 107,-420.8335 170,-420.8335 170,-456.8335"/>
+<text text-anchor="start" x="118.5" y="-435.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">START</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M119,-422.3335C119,-422.3335 158,-422.3335 158,-422.3335 163.5,-422.3335 169,-427.8335 169,-433.3335 169,-433.3335 169,-444.3335 169,-444.3335 169,-449.8335 163.5,-455.3335 158,-455.3335 158,-455.3335 119,-455.3335 119,-455.3335 113.5,-455.3335 108,-449.8335 108,-444.3335 108,-444.3335 108,-433.3335 108,-433.3335 108,-427.8335 113.5,-422.3335 119,-422.3335"/>
+</g>
+<!-- initial&#45;&gt;START -->
+<g id="edge1" class="edge">
+<title>initial&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M41.0377,-438.8335C51.5233,-438.8335 75.142,-438.8335 96.5018,-438.8335"/>
+<polygon fill="#000000" stroke="#000000" points="96.7386,-442.3336 106.7386,-438.8335 96.7386,-435.3336 96.7386,-442.3336"/>
+<text text-anchor="middle" x="89" y="-441.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> </text>
+</g>
+<!-- START&#45;&gt;START -->
+<g id="edge6" class="edge">
+<title>START&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M130.135,-456.9338C128.1179,-468.1548 130.9063,-478.8335 138.5,-478.8335 143.7207,-478.8335 146.6701,-473.7861 147.3482,-466.9853"/>
+<polygon fill="#000000" stroke="#000000" points="150.8412,-466.7542 146.865,-456.9338 143.8493,-467.0903 150.8412,-466.7542"/>
+<text text-anchor="start" x="128.5" y="-481.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND1AFTRPOINT -->
+<g id="node3" class="node">
+<title>OPND1AFTRPOINT</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="612,-404.8335 478,-404.8335 478,-368.8335 612,-368.8335 612,-404.8335"/>
+<text text-anchor="start" x="489" y="-383.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND1AFTRPOINT</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M490,-370.3335C490,-370.3335 600,-370.3335 600,-370.3335 605.5,-370.3335 611,-375.8335 611,-381.3335 611,-381.3335 611,-392.3335 611,-392.3335 611,-397.8335 605.5,-403.3335 600,-403.3335 600,-403.3335 490,-403.3335 490,-403.3335 484.5,-403.3335 479,-397.8335 479,-392.3335 479,-392.3335 479,-381.3335 479,-381.3335 479,-375.8335 484.5,-370.3335 490,-370.3335"/>
+</g>
+<!-- START&#45;&gt;OPND1AFTRPOINT -->
+<g id="edge2" class="edge">
+<title>START&#45;&gt;OPND1AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M144.7098,-456.9144C151.1072,-473.6081 162.3521,-498.384 178,-515.8335 193.6365,-533.2703 199.8525,-537.2156 222,-544.8335 305.2829,-573.4796 340.3954,-590.513 420,-552.8335 450.4427,-538.4239 502.975,-456.7254 529.179,-413.5606"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="532.1904,-415.3443 534.3536,-404.9727 526.1947,-411.7316 532.1904,-415.3443"/>
+<text text-anchor="start" x="288.5" y="-574.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO -->
+<g id="node4" class="node">
+<title>OPND1ZERO</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="420,-541.8335 322,-541.8335 322,-505.8335 420,-505.8335 420,-541.8335"/>
+<text text-anchor="start" x="333" y="-520.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND1ZERO</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M334,-507.3335C334,-507.3335 408,-507.3335 408,-507.3335 413.5,-507.3335 419,-512.8335 419,-518.3335 419,-518.3335 419,-529.3335 419,-529.3335 419,-534.8335 413.5,-540.3335 408,-540.3335 408,-540.3335 334,-540.3335 334,-540.3335 328.5,-540.3335 323,-534.8335 323,-529.3335 323,-529.3335 323,-518.3335 323,-518.3335 323,-512.8335 328.5,-507.3335 334,-507.3335"/>
+</g>
+<!-- START&#45;&gt;OPND1ZERO -->
+<g id="edge3" class="edge">
+<title>START&#45;&gt;OPND1ZERO</title>
+<path fill="none" stroke="#a020f0" d="M151.4869,-456.9154C166.1863,-475.7346 192.0239,-504.1898 222,-516.8335 249.9452,-528.6206 283.5063,-531.0878 311.696,-530.2956"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="311.9752,-533.7871 321.8184,-529.8676 311.6794,-526.7933 311.9752,-533.7871"/>
+<text text-anchor="start" x="236" y="-531.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT -->
+<g id="node5" class="node">
+<title>OPND1BFRPOINT</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="799,-476.8335 673,-476.8335 673,-440.8335 799,-440.8335 799,-476.8335"/>
+<text text-anchor="start" x="684" y="-455.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND1BFRPOINT</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M685,-442.3335C685,-442.3335 787,-442.3335 787,-442.3335 792.5,-442.3335 798,-447.8335 798,-453.3335 798,-453.3335 798,-464.3335 798,-464.3335 798,-469.8335 792.5,-475.3335 787,-475.3335 787,-475.3335 685,-475.3335 685,-475.3335 679.5,-475.3335 674,-469.8335 674,-464.3335 674,-464.3335 674,-453.3335 674,-453.3335 674,-447.8335 679.5,-442.3335 685,-442.3335"/>
+</g>
+<!-- START&#45;&gt;OPND1BFRPOINT -->
+<g id="edge4" class="edge">
+<title>START&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M152.9711,-457.0602C168.3301,-475.2958 194.1854,-502.9909 222,-519.8335 375.0775,-612.5263 441.2419,-572.4539 620,-580.8335 639.9781,-581.77 647.6622,-590.8035 665,-580.8335 699.9666,-560.726 719.3198,-516.0425 728.6824,-486.6969"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="732.0636,-487.6062 731.5866,-477.0221 725.3592,-485.5936 732.0636,-487.6062"/>
+<text text-anchor="start" x="350" y="-584.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- NEG -->
+<g id="node6" class="node">
+<title>NEG</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="278,-456.8335 222,-456.8335 222,-420.8335 278,-420.8335 278,-456.8335"/>
+<text text-anchor="start" x="236.5" y="-435.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">NEG</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M234,-422.3335C234,-422.3335 266,-422.3335 266,-422.3335 271.5,-422.3335 277,-427.8335 277,-433.3335 277,-433.3335 277,-444.3335 277,-444.3335 277,-449.8335 271.5,-455.3335 266,-455.3335 266,-455.3335 234,-455.3335 234,-455.3335 228.5,-455.3335 223,-449.8335 223,-444.3335 223,-444.3335 223,-433.3335 223,-433.3335 223,-427.8335 228.5,-422.3335 234,-422.3335"/>
+</g>
+<!-- START&#45;&gt;NEG -->
+<g id="edge5" class="edge">
+<title>START&#45;&gt;NEG</title>
+<path fill="none" stroke="#ff0000" d="M170.1532,-438.8335C182.9554,-438.8335 197.8569,-438.8335 211.2962,-438.8335"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="211.6927,-442.3336 221.6927,-438.8335 211.6926,-435.3336 211.6927,-442.3336"/>
+<text text-anchor="start" x="178" y="-441.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND1AFTRPOINT&#45;&gt;START -->
+<g id="edge21" class="edge">
+<title>OPND1AFTRPOINT&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M505.9575,-368.8211C434.6016,-338.8302 281.0084,-288.1146 178,-353.8335 158.4642,-366.2972 148.44,-391.197 143.3905,-410.8402"/>
+<polygon fill="#000000" stroke="#000000" points="139.9258,-410.2923 141.1236,-420.8192 146.7519,-411.843 139.9258,-410.2923"/>
+<text text-anchor="start" x="290" y="-324.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND1AFTRPOINT&#45;&gt;OPND1AFTRPOINT -->
+<g id="edge24" class="edge">
+<title>OPND1AFTRPOINT&#45;&gt;OPND1AFTRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M528.27,-404.9338C524.2358,-416.1548 529.8125,-426.8335 545,-426.8335 555.4414,-426.8335 561.3402,-421.7861 562.6963,-414.9853"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="566.171,-414.5529 561.73,-404.9338 559.2031,-415.2229 566.171,-414.5529"/>
+<text text-anchor="start" x="524" y="-429.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- OPND1AFTRPOINT&#45;&gt;OPND1BFRPOINT -->
+<g id="edge25" class="edge">
+<title>OPND1AFTRPOINT&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#a020f0" d="M612.1008,-381.1848C630.9133,-382.8195 650.2356,-387.9312 665,-399.8335 673.7535,-406.8901 665.8194,-415.1814 673,-423.8335 676.3598,-427.8818 680.3155,-431.5445 684.5806,-434.839"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="682.8739,-437.9141 693.089,-440.7253 686.8565,-432.1575 682.8739,-437.9141"/>
+<text text-anchor="start" x="628.5" y="-402.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPERATORENTERED -->
+<g id="node8" class="node">
+<title>OPERATORENTERED</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="1010,-466.8335 860,-466.8335 860,-430.8335 1010,-430.8335 1010,-466.8335"/>
+<text text-anchor="start" x="871" y="-445.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPERATORENTERED</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M872,-432.3335C872,-432.3335 998,-432.3335 998,-432.3335 1003.5,-432.3335 1009,-437.8335 1009,-443.3335 1009,-443.3335 1009,-454.3335 1009,-454.3335 1009,-459.8335 1003.5,-465.3335 998,-465.3335 998,-465.3335 872,-465.3335 872,-465.3335 866.5,-465.3335 861,-459.8335 861,-454.3335 861,-454.3335 861,-443.3335 861,-443.3335 861,-437.8335 866.5,-432.3335 872,-432.3335"/>
+</g>
+<!-- OPND1AFTRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge22" class="edge">
+<title>OPND1AFTRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M612.0978,-393.5874C663.45,-399.1668 735.9339,-407.9287 799,-418.8335 815.5306,-421.6918 833.0907,-425.2044 849.9079,-428.8067"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="849.1956,-432.2335 859.7104,-430.9338 850.6801,-425.3927 849.1956,-432.2335"/>
+<text text-anchor="start" x="713.5" y="-421.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND1AFTRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge23" class="edge">
+<title>OPND1AFTRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M612.1882,-378.1145C663.9024,-373.3614 736.8123,-370.9323 799,-384.8335 834.1958,-392.701 871.0273,-410.7268 897.4705,-425.6496"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="895.9586,-428.8178 906.3708,-430.7768 899.4529,-422.7523 895.9586,-428.8178"/>
+<text text-anchor="start" x="718" y="-387.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO&#45;&gt;START -->
+<g id="edge12" class="edge">
+<title>OPND1ZERO&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M321.973,-517.5113C289.1106,-510.7124 247.3628,-496.6819 222,-467.8335 211.75,-456.1748 226.1693,-443.4717 214,-433.8335 204.5068,-426.3147 192.06,-424.8594 180.0181,-426.0757"/>
+<polygon fill="#000000" stroke="#000000" points="179.401,-422.6297 170.0717,-427.6512 180.4962,-429.5435 179.401,-422.6297"/>
+<text text-anchor="start" x="240" y="-506.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO&#45;&gt;OPND1AFTRPOINT -->
+<g id="edge14" class="edge">
+<title>OPND1ZERO&#45;&gt;OPND1AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M378.4315,-505.5661C387.4406,-485.4852 404.4017,-453.4733 428,-433.8335 440.3312,-423.5708 455.1911,-415.3321 470.1213,-408.7997"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="471.508,-412.0137 479.4045,-404.95 468.8265,-405.5477 471.508,-412.0137"/>
+<text text-anchor="start" x="437.5" y="-436.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO&#45;&gt;OPND1BFRPOINT -->
+<g id="edge13" class="edge">
+<title>OPND1ZERO&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M420.2505,-520.6119C479.1459,-516.0028 580.3832,-505.6713 665,-484.8335 670.4171,-483.4995 675.9924,-481.8918 681.524,-480.1381"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="683.0091,-483.3325 691.3903,-476.8513 680.7967,-476.6914 683.0091,-483.3325"/>
+<text text-anchor="start" x="524" y="-517.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO&#45;&gt;OPERATORENTERED -->
+<g id="edge10" class="edge">
+<title>OPND1ZERO&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M382.3299,-541.8856C392.3906,-556.1208 408.5009,-574.9966 428,-583.8335 477.7625,-606.3855 614.567,-719.5952 852,-585.8335 893.102,-562.678 916.1775,-510.0519 927.0687,-477.1811"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="930.5257,-477.8546 930.1841,-467.2653 923.8476,-475.7564 930.5257,-477.8546"/>
+<text text-anchor="start" x="620" y="-652.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND1ZERO&#45;&gt;OPERATORENTERED -->
+<g id="edge11" class="edge">
+<title>OPND1ZERO&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M420.2649,-537.4121C501.4284,-557.3738 667.3735,-587.9647 799,-545.8335 842.8051,-531.8123 884.5304,-497.936 909.9408,-474.1866"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="912.4701,-476.6108 917.2873,-467.1744 907.6369,-471.5472 912.4701,-476.6108"/>
+<text text-anchor="start" x="624.5" y="-569.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;START -->
+<g id="edge15" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M678.5988,-440.6155C676.559,-438.8622 674.6758,-436.9403 673,-434.8335 656.8012,-414.4684 681.3992,-397.0375 665,-376.8335 649.23,-357.4046 636.6537,-362.119 612,-357.8335 439.7163,-327.8856 392.9547,-373.0494 222,-409.8335 204.9983,-413.4917 198.6335,-413.3542 179.7736,-419.535"/>
+<polygon fill="#000000" stroke="#000000" points="178.4582,-416.2863 170.146,-422.8557 180.7407,-422.9037 178.4582,-416.2863"/>
+<text text-anchor="start" x="361" y="-386.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;OPND1AFTRPOINT -->
+<g id="edge20" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;OPND1AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M688.1492,-440.7955C662.2059,-431.0158 629.9548,-418.8583 602.6362,-408.5602"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="603.7892,-405.2545 593.1974,-405.0021 601.32,-411.8046 603.7892,-405.2545"/>
+<text text-anchor="start" x="631" y="-433.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;OPND1BFRPOINT -->
+<g id="edge18" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M727.9836,-476.9338C726.0505,-488.1548 728.7227,-498.8335 736,-498.8335 741.0032,-498.8335 743.8297,-493.7861 744.4795,-486.9853"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="747.973,-486.7621 744.0164,-476.9338 740.9804,-487.0843 747.973,-486.7621"/>
+<text text-anchor="start" x="715" y="-501.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;OPND1BFRPOINT -->
+<g id="edge19" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#a020f0" d="M723.1983,-476.9221C714.3929,-497.3407 718.6602,-520.8335 736,-520.8335 750.6305,-520.8335 755.9544,-504.1086 751.9717,-486.6171"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="755.2363,-485.3391 748.8017,-476.9221 748.5829,-487.5147 755.2363,-485.3391"/>
+<text text-anchor="start" x="722" y="-523.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge16" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M799.0993,-460.7031C801.7684,-460.7531 804.4107,-460.797 807,-460.8335 824.342,-461.0777 830.4456,-461.9772 849.9554,-460.8478"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="850.2083,-464.3388 859.9512,-460.1764 849.7391,-457.3545 850.2083,-464.3388"/>
+<text text-anchor="start" x="807" y="-463.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND1BFRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge17" class="edge">
+<title>OPND1BFRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M799.0427,-448.5518C801.7273,-448.2767 804.3883,-448.0346 807,-447.8335 820.7289,-446.7763 835.3104,-446.2894 849.5275,-446.1588"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="849.8101,-449.6579 859.798,-446.1235 849.786,-442.6579 849.8101,-449.6579"/>
+<text text-anchor="start" x="811.5" y="-450.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- NEG&#45;&gt;START -->
+<g id="edge29" class="edge">
+<title>NEG&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M245.8139,-420.6805C241.0587,-404.6828 231.5668,-382.3367 214,-371.8335 200.2674,-363.6228 191.8927,-363.8966 178,-371.8335 163.2345,-380.269 153.4372,-396.6195 147.2934,-411.056"/>
+<polygon fill="#000000" stroke="#000000" points="143.9363,-410.0343 143.6075,-420.624 150.4684,-412.5507 143.9363,-410.0343"/>
+<text text-anchor="start" x="186" y="-374.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- NEG&#45;&gt;OPND1AFTRPOINT -->
+<g id="edge28" class="edge">
+<title>NEG&#45;&gt;OPND1AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M278.0188,-433.8946C321.1381,-426.2939 405.3034,-411.458 467.6595,-400.4664"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="468.6194,-403.8512 477.86,-398.6683 467.4042,-396.9575 468.6194,-403.8512"/>
+<text text-anchor="start" x="359.5" y="-428.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- NEG&#45;&gt;OPND1ZERO -->
+<g id="edge27" class="edge">
+<title>NEG&#45;&gt;OPND1ZERO</title>
+<path fill="none" stroke="#a020f0" d="M278.2646,-451.9901C289.7236,-457.793 302.8555,-465.0591 314,-472.8335 324.8906,-480.4308 335.9704,-489.8747 345.4298,-498.5633"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="343.2684,-501.3348 352.9549,-505.6269 348.0592,-496.231 343.2684,-501.3348"/>
+<text text-anchor="start" x="286" y="-475.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- NEG&#45;&gt;OPND1BFRPOINT -->
+<g id="edge26" class="edge">
+<title>NEG&#45;&gt;OPND1BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M278.2846,-453.5522C280.8452,-454.4656 283.4391,-455.2503 286,-455.8335 416.0117,-485.4427 572.6821,-476.905 662.6781,-467.9242"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="663.1911,-471.39 672.7809,-466.886 662.4755,-464.4267 663.1911,-471.39"/>
+<text text-anchor="start" x="428" y="-478.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- RESULT -->
+<g id="node7" class="node">
+<title>RESULT</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="71,-73.8335 0,-73.8335 0,-37.8335 71,-37.8335 71,-73.8335"/>
+<text text-anchor="start" x="11.5" y="-52.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">RESULT</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M12,-39.3335C12,-39.3335 59,-39.3335 59,-39.3335 64.5,-39.3335 70,-44.8335 70,-50.3335 70,-50.3335 70,-61.3335 70,-61.3335 70,-66.8335 64.5,-72.3335 59,-72.3335 59,-72.3335 12,-72.3335 12,-72.3335 6.5,-72.3335 1,-66.8335 1,-61.3335 1,-61.3335 1,-50.3335 1,-50.3335 1,-44.8335 6.5,-39.3335 12,-39.3335"/>
+</g>
+<!-- RESULT&#45;&gt;START -->
+<g id="edge9" class="edge">
+<title>RESULT&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M40.3986,-74.0487C56.9363,-135.5431 110.7862,-335.7812 130.8628,-410.4349"/>
+<polygon fill="#000000" stroke="#000000" points="127.5944,-411.7588 133.5714,-420.5067 134.3542,-409.9409 127.5944,-411.7588"/>
+<text text-anchor="start" x="79" y="-284.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- RESULT&#45;&gt;OPERATORENTERED -->
+<g id="edge7" class="edge">
+<title>RESULT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M38.7982,-73.8905C48.6626,-128.2096 78.5214,-294.9259 99,-433.8335 101.0583,-447.795 99.6656,-484.7767 107,-496.8335 156.1524,-577.634 255.6735,-706.8335 449,-706.8335 449,-706.8335 449,-706.8335 736,-706.8335 851.176,-706.8335 909.0245,-543.6309 927.8788,-476.8293"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="931.3116,-477.5446 930.5728,-466.9755 924.5594,-475.6985 931.3116,-477.5446"/>
+<text text-anchor="start" x="348.5" y="-707.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- RESULT&#45;&gt;OPERATORENTERED -->
+<g id="edge8" class="edge">
+<title>RESULT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M71.2509,-55.8335C91.0666,-55.8335 116.1476,-55.8335 138.5,-55.8335 138.5,-55.8335 138.5,-55.8335 736,-55.8335 788.1063,-55.8335 813.8576,-37.3339 852,-72.8335 903.1762,-120.4637 926.1334,-341.2625 932.8208,-420.463"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="929.3518,-420.9857 933.6577,-430.6661 936.3284,-420.4134 929.3518,-420.9857"/>
+<text text-anchor="start" x="353" y="-58.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPERATORENTERED&#45;&gt;START -->
+<g id="edge30" class="edge">
+<title>OPERATORENTERED&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M927.5371,-430.7321C905.9023,-381.5003 838.1275,-248.8335 736,-248.8335 250,-248.8335 250,-248.8335 250,-248.8335 175.9323,-248.8335 150.1189,-357.5625 141.9391,-410.5185"/>
+<polygon fill="#000000" stroke="#000000" points="138.4462,-410.2196 140.4895,-420.6155 145.3752,-411.2144 138.4462,-410.2196"/>
+<text text-anchor="start" x="439" y="-251.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPERATORENTERED&#45;&gt;OPERATORENTERED -->
+<g id="edge33" class="edge">
+<title>OPERATORENTERED&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M917.5729,-466.9338C913.3707,-478.1548 919.1797,-488.8335 935,-488.8335 945.8765,-488.8335 952.021,-483.7861 953.4337,-476.9853"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="956.9062,-476.5352 952.4271,-466.9338 949.9411,-477.2328 956.9062,-476.5352"/>
+<text text-anchor="start" x="912.5" y="-491.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND2ZERO -->
+<g id="node9" class="node">
+<title>OPND2ZERO</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="1296,-439.8335 1198,-439.8335 1198,-403.8335 1296,-403.8335 1296,-439.8335"/>
+<text text-anchor="start" x="1209" y="-418.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND2ZERO</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M1210,-405.3335C1210,-405.3335 1284,-405.3335 1284,-405.3335 1289.5,-405.3335 1295,-410.8335 1295,-416.3335 1295,-416.3335 1295,-427.3335 1295,-427.3335 1295,-432.8335 1289.5,-438.3335 1284,-438.3335 1284,-438.3335 1210,-438.3335 1210,-438.3335 1204.5,-438.3335 1199,-432.8335 1199,-427.3335 1199,-427.3335 1199,-416.3335 1199,-416.3335 1199,-410.8335 1204.5,-405.3335 1210,-405.3335"/>
+</g>
+<!-- OPERATORENTERED&#45;&gt;OPND2ZERO -->
+<g id="edge31" class="edge">
+<title>OPERATORENTERED&#45;&gt;OPND2ZERO</title>
+<path fill="none" stroke="#a020f0" d="M957.0871,-467.1084C1005.346,-504.7577 1121.3585,-582.5447 1190,-521.8335 1200.9013,-512.1917 1190.5612,-469.3422 1198,-456.8335 1200.1942,-453.1439 1202.9451,-449.7374 1206.0178,-446.6181"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="1208.4857,-449.1081 1213.6607,-439.8631 1203.8499,-443.8631 1208.4857,-449.1081"/>
+<text text-anchor="start" x="1085.5" y="-546.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT -->
+<g id="node10" class="node">
+<title>OPND2BFRPOINT</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="1658,-364.8335 1532,-364.8335 1532,-328.8335 1658,-328.8335 1658,-364.8335"/>
+<text text-anchor="start" x="1543" y="-343.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND2BFRPOINT</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M1544,-330.3335C1544,-330.3335 1646,-330.3335 1646,-330.3335 1651.5,-330.3335 1657,-335.8335 1657,-341.3335 1657,-341.3335 1657,-352.3335 1657,-352.3335 1657,-357.8335 1651.5,-363.3335 1646,-363.3335 1646,-363.3335 1544,-363.3335 1544,-363.3335 1538.5,-363.3335 1533,-357.8335 1533,-352.3335 1533,-352.3335 1533,-341.3335 1533,-341.3335 1533,-335.8335 1538.5,-330.3335 1544,-330.3335"/>
+</g>
+<!-- OPERATORENTERED&#45;&gt;OPND2BFRPOINT -->
+<g id="edge32" class="edge">
+<title>OPERATORENTERED&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M948.8082,-467.034C981.7529,-508.1851 1069.5535,-604.8335 1167.5,-604.8335 1167.5,-604.8335 1167.5,-604.8335 1421,-604.8335 1531.0015,-604.8335 1576.0923,-441.6309 1589.9414,-374.8293"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="1593.3832,-375.4662 1591.9009,-364.9755 1586.5176,-374.1008 1593.3832,-375.4662"/>
+<text text-anchor="start" x="1226" y="-607.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- NEGOPR -->
+<g id="node11" class="node">
+<title>NEGOPR</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="1137,-359.8335 1062,-359.8335 1062,-323.8335 1137,-323.8335 1137,-359.8335"/>
+<text text-anchor="start" x="1073.5" y="-338.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">NEGOPR</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M1074,-325.3335C1074,-325.3335 1125,-325.3335 1125,-325.3335 1130.5,-325.3335 1136,-330.8335 1136,-336.3335 1136,-336.3335 1136,-347.3335 1136,-347.3335 1136,-352.8335 1130.5,-358.3335 1125,-358.3335 1125,-358.3335 1074,-358.3335 1074,-358.3335 1068.5,-358.3335 1063,-352.8335 1063,-347.3335 1063,-347.3335 1063,-336.3335 1063,-336.3335 1063,-330.8335 1068.5,-325.3335 1074,-325.3335"/>
+</g>
+<!-- OPERATORENTERED&#45;&gt;NEGOPR -->
+<g id="edge34" class="edge">
+<title>OPERATORENTERED&#45;&gt;NEGOPR</title>
+<path fill="none" stroke="#ff0000" d="M962.9052,-430.6824C990.5204,-412.7199 1032.9293,-385.1348 1063.1618,-365.4699"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1065.2586,-368.2813 1071.7329,-359.8947 1061.4418,-362.4134 1065.2586,-368.2813"/>
+<text text-anchor="start" x="1018" y="-394.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND2ZERO&#45;&gt;START -->
+<g id="edge41" class="edge">
+<title>OPND2ZERO&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M1233.9635,-403.5613C1222.2588,-386.0713 1205.761,-358.4797 1198,-331.8335 1190.7124,-306.8125 1205.0221,-236.1289 1190,-214.8335 1168.4873,-184.3369 1073.3208,-147.8335 1036,-147.8335 250,-147.8335 250,-147.8335 250,-147.8335 198.0779,-147.8335 199.6446,-192.638 178,-239.8335 151.8398,-296.8752 142.9603,-370.9067 139.9791,-410.6511"/>
+<polygon fill="#000000" stroke="#000000" points="136.4837,-410.4648 139.299,-420.6787 143.4677,-410.9385 136.4837,-410.4648"/>
+<text text-anchor="start" x="632.5" y="-150.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND2ZERO&#45;&gt;OPERATORENTERED -->
+<g id="edge39" class="edge">
+<title>OPND2ZERO&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M1218.7442,-440.0079C1211.6662,-445.0908 1204.3004,-450.8673 1198,-456.8335 1193.8672,-460.747 1195.1299,-464.3679 1190,-466.8335 1128.9958,-496.1536 1050.1769,-484.1516 996.4193,-469.6558"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="997.2566,-466.2556 986.6832,-466.9294 995.369,-472.9964 997.2566,-466.2556"/>
+<text text-anchor="start" x="1077" y="-487.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND2ZERO&#45;&gt;OPERATORENTERED -->
+<g id="edge40" class="edge">
+<title>OPND2ZERO&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M1197.8067,-426.0906C1150.2532,-430.2058 1077.2306,-436.5251 1020.2164,-441.459"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="1019.7898,-437.9827 1010.1288,-442.332 1020.3934,-444.9567 1019.7898,-437.9827"/>
+<text text-anchor="start" x="1081.5" y="-439.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND2ZERO&#45;&gt;OPND2BFRPOINT -->
+<g id="edge42" class="edge">
+<title>OPND2ZERO&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M1296.0394,-421.3081C1352.4003,-419.4211 1447.029,-412.2873 1524,-386.8335 1536.1732,-382.8079 1548.6254,-376.6197 1559.6334,-370.3045"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="1561.7071,-373.143 1568.5026,-365.0146 1558.1214,-367.1311 1561.7071,-373.143"/>
+<text text-anchor="start" x="1400" y="-419.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT -->
+<g id="node12" class="node">
+<title>OPND2AFTRPOINT</title>
+<polygon fill="transparent" stroke="transparent" stroke-width="2" points="1488,-260.8335 1354,-260.8335 1354,-224.8335 1488,-224.8335 1488,-260.8335"/>
+<text text-anchor="start" x="1365" y="-239.2335" font-family="Helvetica,sans-Serif" font-size="12.00" fill="#000000">OPND2AFTRPOINT</text>
+<path fill="none" stroke="#000000" stroke-width="2" d="M1366,-226.3335C1366,-226.3335 1476,-226.3335 1476,-226.3335 1481.5,-226.3335 1487,-231.8335 1487,-237.3335 1487,-237.3335 1487,-248.3335 1487,-248.3335 1487,-253.8335 1481.5,-259.3335 1476,-259.3335 1476,-259.3335 1366,-259.3335 1366,-259.3335 1360.5,-259.3335 1355,-253.8335 1355,-248.3335 1355,-248.3335 1355,-237.3335 1355,-237.3335 1355,-231.8335 1360.5,-226.3335 1366,-226.3335"/>
+</g>
+<!-- OPND2ZERO&#45;&gt;OPND2AFTRPOINT -->
+<g id="edge43" class="edge">
+<title>OPND2ZERO&#45;&gt;OPND2AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M1256.0314,-403.6243C1266.0813,-384.4582 1283.616,-354.0446 1304,-331.8335 1327.2841,-306.4625 1358.5263,-283.1116 1382.8694,-266.6996"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="1385.0994,-269.4204 1391.4982,-260.9761 1381.2301,-263.587 1385.0994,-269.4204"/>
+<text text-anchor="start" x="1313.5" y="-334.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;START -->
+<g id="edge44" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M1586.5827,-328.6345C1571.5894,-298.5989 1537.1517,-239.4311 1488,-213.8335 1151.7996,-38.7447 1021.5604,-101.8335 642.5,-101.8335 250,-101.8335 250,-101.8335 250,-101.8335 209.7318,-101.8335 198.3158,-122.0657 178,-156.8335 153.0598,-199.5154 142.9802,-347.6151 139.7634,-410.3748"/>
+<polygon fill="#000000" stroke="#000000" points="136.2505,-410.5557 139.2565,-420.7151 143.2421,-410.8985 136.2505,-410.5557"/>
+<text text-anchor="start" x="819.5" y="-101.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge45" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M1579.3893,-364.9706C1560.2575,-385.7236 1525.7029,-418.6643 1488,-432.8335 1367.1176,-478.2624 1324.7025,-475.7898 1198,-450.8335 1169.2527,-445.1712 1165.7473,-431.4958 1137,-425.8335 1104.295,-419.3917 1095.1997,-422.8515 1062,-425.8335 1048.4413,-427.0513 1034.1654,-428.9865 1020.2762,-431.23"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="1019.5302,-427.8061 1010.247,-432.9122 1020.6882,-434.7097 1019.5302,-427.8061"/>
+<text text-anchor="start" x="1224.5" y="-468.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge46" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M1531.8022,-339.5725C1399.919,-324.8862 1104.0974,-294.5465 1062,-312.8335 1010.8113,-335.0697 970.8744,-389.2291 950.3145,-422.0995"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="947.2508,-420.4011 945.0361,-430.7619 953.2285,-424.0435 947.2508,-420.4011"/>
+<text text-anchor="start" x="1229" y="-318.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;OPND2BFRPOINT -->
+<g id="edge47" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M1587.6806,-364.9338C1585.9157,-376.1548 1588.3555,-386.8335 1595,-386.8335 1599.5681,-386.8335 1602.1488,-381.7861 1602.7422,-374.9853"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="1606.2366,-374.7778 1602.3194,-364.9338 1599.2428,-375.0721 1606.2366,-374.7778"/>
+<text text-anchor="start" x="1574" y="-389.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;OPND2BFRPOINT -->
+<g id="edge48" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#a020f0" d="M1583.3115,-364.9221C1575.2718,-385.3407 1579.168,-408.8335 1595,-408.8335 1608.3583,-408.8335 1613.2192,-392.1086 1609.5829,-374.6171"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="1612.903,-373.5029 1606.6885,-364.9221 1606.1955,-375.5055 1612.903,-373.5029"/>
+<text text-anchor="start" x="1581" y="-411.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPND2BFRPOINT&#45;&gt;OPND2AFTRPOINT -->
+<g id="edge49" class="edge">
+<title>OPND2BFRPOINT&#45;&gt;OPND2AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M1571.6085,-328.6975C1558.0436,-318.5229 1540.4414,-305.8928 1524,-295.8335 1506.3243,-285.019 1486.191,-274.3239 1468.4421,-265.4041"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="1469.916,-262.2283 1459.4035,-260.9102 1466.7996,-268.4963 1469.916,-262.2283"/>
+<text text-anchor="start" x="1498.5" y="-298.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- NEGOPR&#45;&gt;START -->
+<g id="edge38" class="edge">
+<title>NEGOPR&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M1061.6594,-323.8834C1005.6965,-298.2928 896.9096,-252.1737 799,-231.8335 575.7663,-185.4578 512.1398,-202.7682 286,-231.8335 276.4665,-233.0588 184.8664,-247.733 178,-254.8335 156.8156,-276.74 145.5308,-364.4227 140.9669,-410.3883"/>
+<polygon fill="#000000" stroke="#000000" points="137.4598,-410.2971 139.9972,-420.5836 144.4284,-410.96 137.4598,-410.2971"/>
+<text text-anchor="start" x="535" y="-210.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- NEGOPR&#45;&gt;OPND2ZERO -->
+<g id="edge36" class="edge">
+<title>NEGOPR&#45;&gt;OPND2ZERO</title>
+<path fill="none" stroke="#a020f0" d="M1137.2879,-356.5844C1153.8305,-363.5348 1173.2469,-372.3735 1190,-381.8335 1198.4265,-386.5917 1207.1563,-392.2851 1215.1759,-397.8637"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="1213.3739,-400.8771 1223.5512,-403.8223 1217.4319,-395.1733 1213.3739,-400.8771"/>
+<text text-anchor="start" x="1153.5" y="-384.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- NEGOPR&#45;&gt;OPND2BFRPOINT -->
+<g id="edge35" class="edge">
+<title>NEGOPR&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M1137.0902,-352.5458C1139.7522,-353.0578 1142.4075,-353.4974 1145,-353.8335 1164.834,-356.405 1170.0007,-354.0063 1190,-353.8335 1305.9902,-352.8312 1440.6451,-350.2145 1521.76,-348.4798"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="1521.946,-351.9767 1531.8684,-348.2623 1521.7953,-344.9784 1521.946,-351.9767"/>
+<text text-anchor="start" x="1304" y="-354.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+<!-- NEGOPR&#45;&gt;OPND2AFTRPOINT -->
+<g id="edge37" class="edge">
+<title>NEGOPR&#45;&gt;OPND2AFTRPOINT</title>
+<path fill="none" stroke="#ffa500" d="M1126.4034,-323.7519C1145.6019,-311.6287 1172.4451,-296.2206 1198,-286.8335 1244.908,-269.6028 1299.9759,-258.6524 1343.6524,-251.9852"/>
+<polygon fill="#ffa500" stroke="#ffa500" points="1344.2637,-255.4329 1353.6424,-250.5042 1343.2372,-248.5086 1344.2637,-255.4329"/>
+<text text-anchor="start" x="1235.5" y="-289.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ffa500">dot &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT&#45;&gt;START -->
+<g id="edge50" class="edge">
+<title>OPND2AFTRPOINT&#45;&gt;START</title>
+<path fill="none" stroke="#000000" d="M1387.6979,-224.7546C1374.7946,-217.9514 1359.8246,-210.302 1346,-203.8335 1218.6061,-144.2256 1188.275,-123.6968 1054,-81.8335 742.5986,15.2531 645.1332,15.6812 322,-28.8335 253.9733,-38.2048 218.9886,-29.7391 178,-84.8335 158.6984,-110.7774 144.5688,-330.6409 140.0446,-410.2251"/>
+<polygon fill="#000000" stroke="#000000" points="136.5345,-410.309 139.4704,-420.489 143.5236,-410.7001 136.5345,-410.309"/>
+<text text-anchor="start" x="726" y="-18.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">ce &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge51" class="edge">
+<title>OPND2AFTRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#00ff00" d="M1353.8259,-228.4416C1267.7486,-214.0029 1117.7656,-202.7858 1018,-272.8335 968.2545,-307.7609 947.4349,-380.5292 939.4539,-420.6951"/>
+<polygon fill="#00ff00" stroke="#00ff00" points="935.9934,-420.161 937.6104,-430.6317 942.8759,-421.4379 935.9934,-420.161"/>
+<text text-anchor="start" x="1145" y="-227.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#00ff00">operator &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT&#45;&gt;OPERATORENTERED -->
+<g id="edge52" class="edge">
+<title>OPND2AFTRPOINT&#45;&gt;OPERATORENTERED</title>
+<path fill="none" stroke="#ff0000" d="M1374.7029,-224.7634C1365.3221,-221.678 1355.438,-218.8295 1346,-216.8335 1222.4971,-190.7135 1179.4066,-174.4556 1062,-220.8335 1040.6607,-229.2629 1032.886,-230.3742 1018,-247.8335 973.6094,-299.8977 950.4736,-378.9766 940.7453,-420.7311"/>
+<polygon fill="#ff0000" stroke="#ff0000" points="937.2729,-420.2212 938.5045,-430.7442 944.104,-421.75 937.2729,-420.2212"/>
+<text text-anchor="start" x="1149.5" y="-198.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#ff0000">minus &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT&#45;&gt;OPND2BFRPOINT -->
+<g id="edge54" class="edge">
+<title>OPND2AFTRPOINT&#45;&gt;OPND2BFRPOINT</title>
+<path fill="none" stroke="#a020f0" d="M1488.1989,-250.6242C1500.6492,-253.8567 1513.1384,-258.4139 1524,-264.8335 1546.8477,-278.3372 1566.0579,-301.8258 1578.7107,-320.2123"/>
+<polygon fill="#a020f0" stroke="#a020f0" points="1575.938,-322.3641 1584.3826,-328.7625 1581.7712,-318.4945 1575.938,-322.3641"/>
+<text text-anchor="start" x="1496" y="-267.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#a020f0">zero &#160;&#160;</text>
+</g>
+<!-- OPND2AFTRPOINT&#45;&gt;OPND2AFTRPOINT -->
+<g id="edge53" class="edge">
+<title>OPND2AFTRPOINT&#45;&gt;OPND2AFTRPOINT</title>
+<path fill="none" stroke="#c0c0c0" d="M1405.6642,-260.9338C1401.9662,-272.1548 1407.0781,-282.8335 1421,-282.8335 1430.5713,-282.8335 1435.9785,-277.7861 1437.2217,-270.9853"/>
+<polygon fill="#c0c0c0" stroke="#c0c0c0" points="1440.7003,-270.5879 1436.3358,-260.9338 1433.7273,-271.2025 1440.7003,-270.5879"/>
+<text text-anchor="start" x="1400" y="-285.8335" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#c0c0c0">number &#160;&#160;</text>
+</g>
+</g>
+</svg>
+       </div>
+      </div>
+      <div class="row align-items-start">
+        <div class="col-12">
+					<ul class="nav nav-tabs dsl-title">
+						<li class="nav-item">
+							<a class="nav-link active" href="#">State Machine Description</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Debug</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Actions</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Main</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Graph</a>
+						</li>
+					</ul>
+             <div contenteditable="true" class="dsl" id="dsl">
+							 &nbsp;<span class="initial-state">*START</span>
+							 <span class="input">dot</span>
+							 &nbsp; &nbsp; &nbsp; &nbsp;
+							 <span class="state">OPND1AFTRPOINT</span></br>
+							 &nbsp;<span class="state">START</span>
+							 <span class="input">zero</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <span class="state">OPND1ZERO</span> <br/>
+							 &nbsp;<span class="state">START</span> <span class="input">number</span> &nbsp; <span class="state">OPND1BFRPOINT</span> <br/>
+							 &nbsp;<span class="state">START</span> <span class="input">minus</span> &nbsp;&nbsp; &nbsp;&nbsp;<span class="state">NEG</span> <br/>
+							 &nbsp;<span class="state">START</span> <span class="input">ce</span>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;   <span class="state">START</span> <br/>
+ 				</div>
+        </div>
+      </div>
+    </div>  
+  </div>
+
+	
+<!--- <script src="https://unpkg.com/xstate@4/dist/xstate.js"></script>
+ <script src="js/stateMachine.js"></script>
+ <script src="js/script.js"></script>
+--->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="js/svg-pan-zoom.js"></script>
+<script>
+ window.onload = function() {
+	 window.zoomGraph = svgPanZoom('#graph', {
+		 zoomEnabled: true,
+		 controlIconsEnabled: true,
+		 fit: true,
+		 center: true,
+		});
+		 
+ }
+</script>
+</body>
+</html>
+
+
+
