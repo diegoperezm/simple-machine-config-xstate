@@ -16,6 +16,16 @@ function server() {
 }
 
 
+function surf() {
+		browserSync
+				.init({
+						browser: ["surf"],
+			   		watch: true,
+						server: "./APP"
+				});
+}
+
+
 function graph(done) {
   watcherDiagram.on('change', (path,stats) => {
     let a = path.replace(/diagram.txt/,'');
@@ -82,6 +92,7 @@ function graphMod(done) {
 }
 
 exports.start      = parallel(graph);
+exports.surf       = parallel(surf);
 exports.graphMod   = parallel(graphMod);
 exports.server     = parallel(server);
 
