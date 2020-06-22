@@ -26,6 +26,7 @@ function surf() {
 }
 
 
+
 function graph(done) {
   watcherDiagram.on('change', (path,stats) => {
     let a = path.replace(/diagram.txt/,'');
@@ -35,7 +36,7 @@ function graph(done) {
     if(isFehRunning) {
       forFeh ='cd ../../../; bash refresh.sh';
     } else {
-      forFeh ='feh graph.png;' + 
+      forFeh ='feh --image-bg black -z -. graph.png;' + 
               'cd ../../../; bash refresh.sh';
       isFehRunning = true;
     }
