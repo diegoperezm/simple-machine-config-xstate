@@ -1,0 +1,49 @@
+* to use in the browser
+
+** json 
+#+BEGIN_SRC 
+jison grammar_file.jison 
+#+END_SRC
+
+The above command will generate an JS file:
+
+#+BEGIN_SRC 
+grammar_file.js
+#+END_SRC
+
+Then, in index.html
+
+#+BEGIN_SRC html 
+	<script src="js/grammar.js"></script>
+	<script src="js/grammarGraph.js"></script>
+	<script>
+
+	 const ParserXstate = grammar.Parser;
+   const parserXstate = new ParserXstate(grammar);
+
+	 const ParserSMCat = grammarGraph.Parser;
+   const parserSMCat = new ParserSMCat(grammarGraph);
+
+	 console.log(parserSMCat.parse("A time B B final")); 
+	 console.log(parserXstate.parse("A time B B final")); 
+	</script>
+#+END_SRC
+
+
+** sm-cat
+
+It has an online interpreter:
+
+https:/state-machine-cat.js.org
+
+that use the script:
+
+ smcat-online-interpreter.min.js
+
+
+
+** dagre (?)
+
+seems more complete (easier) to use ?
+
+https://github.com/dagrejs/dagre/wiki
