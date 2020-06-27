@@ -1,1 +1,0 @@
-{"states":[{"kind":"state","id":"GREEN","transitions":[{"target":"YELLOW","event":"time"}]},{"kind":"state","id":"YELLOW","transitions":[{"target":"RED","event":"time"}]},{"kind":"state","id":"RED","transitions":[{"target":"GREEN","event":"time"}]}],"initial":"GREEN"}

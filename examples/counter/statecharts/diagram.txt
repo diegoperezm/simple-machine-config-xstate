@@ -1,5 +1,0 @@
-context:
-  count: 0
-
-   *ACTIVE inc :increment
-    ACTIVE dec :decrement
