@@ -70,5 +70,6 @@ let trafficlight = {
 npm i
 ```
 
+# Demo/Example
 
-
+[Traffic lights](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/trafficlights/index.html)
