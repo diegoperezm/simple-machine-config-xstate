@@ -4,7 +4,7 @@
   "description": "> A simple dsl (?) to write machine configurations for xstate",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/*.js | tap-difflet"
+    "test": "node utils/testrunner.js"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +20,6 @@
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
-    "state-machine-cat": "^7.0.0",
-    "tap-difflet": "^0.7.2",
-    "tape": "^5.0.1"
+    "state-machine-cat": "^7.0.0"
   }
 }
