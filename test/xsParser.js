@@ -64,3 +64,54 @@ test('xspTrafficlightsWithActions and trafficlightsObject',
 });
 
 
+test('xspTrafficlightsExtendedState and trafficlightsExtendedStateObject',
+  function (t) {
+    const sttTrafficlightsExtendedState = 
+    `
+    context:
+      color: "green"
+    
+    *GREEN   time YELLOW 
+     YELLOW  time RED   
+     RED     time GREEN
+    `;
+    
+    const xspTrafficlightsExtendedState = xstateParse(sttTrafficlightsExtendedState);
+    
+    const  trafficlightsExtendedStateObject = {
+      "initial": "GREEN",
+    				"context": {
+    								"color": "green"
+    				},
+      "states": {
+        "GREEN": {
+          "on": {
+            "time": {
+              "target": "YELLOW",
+            }
+          }
+        },
+        "YELLOW": {
+          "on": {
+            "time": {
+              "target": "RED",
+           }
+          }
+        },
+        "RED": {
+          "on": {
+            "time": {
+              "target": "GREEN",
+            }
+          }
+        }
+      }
+    };
+
+    t.plan(1);
+    t.deepEquals(
+      xspTrafficlightsExtendedState,
+			   trafficlightsExtendedStateObject	
+    );
+});
+
