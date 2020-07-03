@@ -10,7 +10,7 @@ const xstateParse = require('../statecharts/grammarXstate.js').parse;
  */
 
 
-test('xspTrafficlightsWithActions and trafficlightsObject',
+test('xspTrafficlightsWithActions and trafficlightsWithActionsObject',
   function (t) {
     const sttTrafficlightsWithActions = 
     `
@@ -21,7 +21,7 @@ test('xspTrafficlightsWithActions and trafficlightsObject',
     
     const xspTrafficlightsWithActions = xstateParse(sttTrafficlightsWithActions);
     
-    const trafficlightsObject = {
+    const trafficlightsWithActionsObject = {
       "initial": "GREEN",
       "context": {},
       "states": {
@@ -60,7 +60,7 @@ test('xspTrafficlightsWithActions and trafficlightsObject',
        t.plan(1);
        t.deepEquals(
           xspTrafficlightsWithActions,
-          trafficlightsObject);
+          trafficlightsWithActionsObject);
 });
 
 
