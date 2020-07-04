@@ -3,13 +3,14 @@ const exec = require("child_process").exec;
 
 /*
  * This is only a draft, first version etc.
- * I need to test, and complete  this code
+ * I need to test and complete  this code
  */
 
-exec("cd test; for t in `ls`; do node $t; done;", (err, stdout, stderr) => {
+exec("cd test; for test in `ls`; do node $test; done;", (err, stdout, stderr) => {
    if(err) {
-    console.log(stderr);
-   }else {
+     console.log('exec error: ', err);
+   } else {
     console.log(stdout);
+    //console.log(stderr);
    }
 });
