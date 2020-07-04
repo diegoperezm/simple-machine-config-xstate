@@ -1085,11 +1085,11 @@ case 9:return 33
 break;
 case 10:return 20
 break;
-case 11:return 7
+case 11:return 8
 break;
-case 12:return 15
+case 12:return 7
 break;
-case 13:return 8
+case 13:return 15
 break;
 case 14:return 10
 break;
@@ -1103,7 +1103,7 @@ case 18:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:\*)/,/^(?:context\b)/,/^(?:invoke:)/,/^(?:id:)/,/^(?:src:)/,/^(?:ondone:)/,/^(?:onerror:)/,/^(?:entry:)/,/^(?:exit:)/,/^(?:final\b)/,/^(?:[a-z]+)/,/^(?:[A-Z0-9]+)/,/^(?:[0-9]+)/,/^(?::)/,/^(?:")/,/^(?:@)/,/^(?:\[)/,/^(?:\])/],
+rules: [/^(?:\s+)/,/^(?:\*)/,/^(?:context\b)/,/^(?:invoke:)/,/^(?:id:)/,/^(?:src:)/,/^(?:ondone:)/,/^(?:onerror:)/,/^(?:entry:)/,/^(?:exit:)/,/^(?:final\b)/,/^(?:[0-9]+)/,/^(?:[a-z]+)/,/^(?:[A-Z0-9]+)/,/^(?::)/,/^(?:")/,/^(?:@)/,/^(?:\[)/,/^(?:\])/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 });
 return lexer;
