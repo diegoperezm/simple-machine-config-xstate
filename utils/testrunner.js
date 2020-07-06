@@ -11,6 +11,6 @@ exec("cd test; for test in `ls`; do node $test; done;", (err, stdout, stderr) =>
      console.log('exec error: ', err);
    } else {
     console.log(stdout);
-    //console.log(stderr);
+    console.log(stderr);
    }
 });
