@@ -440,7 +440,7 @@ states
    z.states[$1] = {};
    z.states[$1].type = "final";
 }
-| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE 
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 {
   let objInvoke             = {}; 
   objInvoke.id              = $3;
@@ -451,7 +451,7 @@ states
   objInvoke.onError.target  = $9;
   invokes.push(objInvoke);
 }
-| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE mactions ONERROR LOWERCASE 
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
 {
   let objInvokeOnDoneAct             = {}; 
   objInvokeOnDoneAct .id              = $3;
@@ -464,7 +464,7 @@ states
   objInvokeOnDoneAct .onError.target  = $10;
   invokes.push(objInvokeOnDoneAct);
 }
-| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE LOWERCASE ONERROR LOWERCASE   mactions
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
 {
   let objInvokeOnErrorAct              = {}; 
   objInvokeOnErrorAct .id              = $3;
@@ -477,7 +477,7 @@ states
   objInvokeOnErrorAct .onError.actions.push(...$10);
   invokes.push(objInvokeOnErrorAct);
 }
-| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  LOWERCASE mactions ONERROR LOWERCASE  mactions
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
 {
   let objInvokeOnDoneErrorAct              = {}; 
   objInvokeOnDoneErrorAct .id              = $3;
