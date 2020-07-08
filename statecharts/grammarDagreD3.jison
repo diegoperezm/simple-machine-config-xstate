@@ -1,8 +1,9 @@
 		/* description:  */
 
 %{
-let states = [];
-let edges  = [];
+let invokes = [];
+let states  = [];
+let edges   = [];
 %}
 
 /* lexical grammar */
@@ -85,6 +86,23 @@ states
   states.push("INITIAL",$2,$4);  
   edges.push(["INITIAL",$2,""]);
   edges.push([$2,$4,$3]);
+}
+| UPPERCASE  
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+   edges.push([$1, "", ""]);
+}
+| UPPERCASE minvokes 
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+ edges.push([$1,invokes[invokeIndex].onDone,'onDone'],
+            [$1,invokes[invokeIndex].onError,'onError'],
+ );
 }
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
@@ -246,15 +264,37 @@ states
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 {
+    let  objInvoke      = {};
+    objInvoke.id        = $3; 
+    objInvoke.onDone    = $7; 
+    objInvoke.onError   = $9; 
+    invokes.push(objInvoke);
+
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
 {
+  let objInvokeOnDoneAct             = {}; 
+  objInvokeOnDoneAct.id              = $3;
+  objInvokeOnDoneAct.onDone          = $7;
+  objInvokeOnDoneAct.onError         = $10;
+  invokes.push(objInvokeOnDoneAct);
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
 {
-}
+  let objInvokeOnErrorAct              = {}; 
+  objInvokeOnErrorAct.id               = $3;
+  objInvokeOnErrorAct.onDone           = $7;   
+  objInvokeOnErrorAct.onError          = $9; 
+  invokes.push(objInvokeOnErrorAct);
+
+ }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
 {
+  let objInvokeOnDoneErrorAct             = {}; 
+  objInvokeOnDoneErrorAct.id              = $3;
+  objInvokeOnDoneErrorAct.onDone          = $7;
+  objInvokeOnDoneErrorAct.onError         = $10;
+  invokes.push(objInvokeOnDoneErrorAct);
 }
 ;
 
@@ -287,10 +327,10 @@ invokes
 minvokes
 : '@' invokes
 {
-
+  $$=[$2];
 }
 | minvokes invokes  {
-
+  $$=[$1,$2];
 }
 ;
 
