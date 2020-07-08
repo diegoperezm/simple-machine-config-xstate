@@ -133,7 +133,16 @@ states
     z.states[$2].on[$3] = {};
     z.states[$2].on[$3].target = $4;
   }
-
+}
+| UPPERCASE 
+{
+  z.states[$1]    = {};
+}
+| UPPERCASE minvokes  
+{
+  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+  z.states[$1]    = {};
+  z.states[$1].invoke = invokes[invokeIndex]; 
 }
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
@@ -202,7 +211,7 @@ states
    z.states[$2].invoke = invokes[invokeIndex]; 
   }
 }
-| INITIAL UPPERCASE  mentry minvokes mexit
+| INITIAL UPPERCASE mentry minvokes mexit
 {
   z.initial = $2; 
   if(z.states[$2] != undefined) {
@@ -435,7 +444,7 @@ states
    z.states[$1].on[$2].actions = $5;
   }
 }
-| UPPERCASE  FINAL
+| UPPERCASE FINAL
 {
    z.states[$1] = {};
    z.states[$1].type = "final";
@@ -467,14 +476,14 @@ states
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
 {
   let objInvokeOnErrorAct              = {}; 
-  objInvokeOnErrorAct .id              = $3;
-  objInvokeOnErrorAct .src             = $5;
-  objInvokeOnErrorAct .onDone          = {};
-  objInvokeOnErrorAct .onDone.target   = $7;
-  objInvokeOnErrorAct .onError         = {};
-  objInvokeOnErrorAct .onError.target  = $9;
-  objInvokeOnErrorAct .onError.actions = [];
-  objInvokeOnErrorAct .onError.actions.push(...$10);
+  objInvokeOnErrorAct.id               = $3;
+  objInvokeOnErrorAct.src              = $5;
+  objInvokeOnErrorAct.onDone           = {};
+  objInvokeOnErrorAct.onDone.target    = $7;
+  objInvokeOnErrorAct.onError          = {};
+  objInvokeOnErrorAct.onError.target   = $9;
+  objInvokeOnErrorAct.onError.actions  = [];
+  objInvokeOnErrorAct.onError.actions.push(...$10);
   invokes.push(objInvokeOnErrorAct);
 }
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
