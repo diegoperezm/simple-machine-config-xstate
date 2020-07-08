@@ -92,7 +92,7 @@ states
   if(!states.includes($1)) {
     states.push($1);
   }
-   edges.push([$1, "", ""]);
+  
 }
 | UPPERCASE minvokes 
 {

@@ -139,7 +139,7 @@ case 14:
   if(!states.includes($$[$0])) {
     states.push($$[$0]);
   }
-   edges.push([$$[$0], "", ""]);
+  
 
 break;
 case 15:
