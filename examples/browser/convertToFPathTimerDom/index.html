@@ -64,7 +64,7 @@
    function  getInput(ctx,evt)  {
     let value = new Promise(  
                    function(resolve, reject){
-                      setTimeout(resolve, 1000, inputValue.value); 
+                      setTimeout(resolve, 2000, inputValue.value); 
                     }
                );
 
@@ -75,7 +75,7 @@
    function  calcF(ctx,evt)  {
     let value = new Promise(  
                    function(resolve, reject){
-                      setTimeout(resolve, 1000,(ctx.celsius * (9/5) + 32)); 
+                      setTimeout(resolve, 2000,(ctx.celsius * (9/5) + 32)); 
                     }
                );
      
@@ -97,7 +97,7 @@
                           reject();  
                          }
                        },
-                       1000); 
+                       2000); 
                     }
                );
 
