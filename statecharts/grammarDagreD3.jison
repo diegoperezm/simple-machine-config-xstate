@@ -38,11 +38,18 @@ let edges   = [];
 
 %% /* language grammar */
 
+mnumber
+: NUMBER  NUMBER        {$$=[+$1,+$2]}
+| mnumber NUMBER        {$$=[...$1,+$2]}
+;
+
 data
 : '[' ']'              {$$=[[]]}
 | '"' '"'              {$$=[""]}
 | '"' LOWERCASE '"'    {$$=[$2]}
 | NUMBER               {$$=[+$1]}
+| '[' NUMBER ']'       {$$=[[+$2]]}
+| '[' mnumber ']'      {$$=[[$2]]}
 ;
 
 mdata

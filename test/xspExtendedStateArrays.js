@@ -1,0 +1,60 @@
+const test         = require('../utils/utils.js');
+const xstateParse  = require('../statecharts/grammarXstate.js').parse;
+
+/**
+ *             ABBREVIATIONS
+ *
+ *   stt<>     = state  transition  table
+ *   xsp<>     = xstate parsed      machine conf
+ *
+ */
+
+
+  const sttExtendedState =
+`
+ context:
+       a: [] 
+       b: [1] 
+       c: [2 3 4] 
+
+   *A time B
+    B final 
+`;
+
+  const xspExtendedState = xstateParse(sttExtendedState);
+
+  const  ExtendedStateObject = {
+  "initial": "A",
+  "context": {
+    "a": [],
+    "b": [
+      1
+    ],
+    "c": [
+      [
+        2,
+        3,
+        4
+      ]
+    ]
+  },
+  "states": {
+    "A": {
+      "on": {
+        "time": {
+          "target": "B"
+        }
+      }
+    },
+    "B": {
+      "type": "final"
+    }
+  }
+};
+
+
+
+test('xspExtendedState and ExtendedStateObject',
+      xspExtendedState,
+      ExtendedStateObject);
+
