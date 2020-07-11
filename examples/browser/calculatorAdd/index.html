@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Calculator Add</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="content">
+           <svg width="100%"  class="graph"><g transform="translate(50,100)"/></svg>
+             <div class="calc">
+             	<p id="calc__display" class="calc__display"></p>
+             	<div class="calc__keys">
+             		<button class="key"          id="seven">7</button>
+             		<button class="key"          id="eight">8</button>
+             		<button class="key"          id="nine">9</button>
+                        <button class="key key--big" id="add">+</button>
+             		<button class="key"          id="four">4</button>
+             		<button class="key"          id="five">5</button>
+             		<button class="key"          id="six">6</button>
+             		<button class="key key--big" id="equals">=</button>
+             		<button class="key"          id="one">1</button>
+             		<button class="key"          id="two">2</button>
+             		<button class="key"          id="three">3</button>
+             		<button class="key"          id="zero">0</button>
+             		<button class="key"                   ></button>
+             	</div>
+            </div>
+      </div>
+    </div>
+
+  <script src="js/xstate.js"></script> 
+  <script src="js/d3.v5.min.js"></script>
+  <script src="js/dagre-d3.min.js"></script>
+  <script src="js/grammarXstate.js"></script>
+  <script src="js/grammarDagreD3.js"></script>
+  <script src="js/utils.js"></script>
+
+  <script>
+
+/**
+ *     
+ *                      SETUP
+ *  
+ *
+ **/
+
+   const { Machine,  interpret, assign } = XState; 
+   const ParserXstate                    = grammarXstate.Parser;
+   const parserXstate                    = new ParserXstate(grammarXstate);
+   const createMachineConf               = input => parserXstate.parse(input);
+   const ParserDagredD3                  = grammarDagreD3.Parser;
+   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
+   const prevStateCurrState              = ['INITIAL'];
+
+   const calcDisplay                     = document.getElementById("calc__display");
+   const seven                           = document.getElementById("seven");
+   const eight                           = document.getElementById("eight");
+   const nine                            = document.getElementById("nine");
+   const add                             = document.getElementById("add" );
+   const four                            = document.getElementById("four");
+   const five                            = document.getElementById("five");
+   const six                             = document.getElementById("six" );
+   const one                             = document.getElementById("one");
+   const two                             = document.getElementById("two");
+   const three                           = document.getElementById("three");
+   const zero                            = document.getElementById("zero");
+   const equals                          = document.getElementById("equals");
+
+
+/**
+ *     
+ *                                   FINITE STATE  MACHINE
+ *  
+ *
+ **/
+
+function calculate(ctx) {
+  let oprnd1   = ctx.oprnd1.join("");
+  let operator = ctx.operator.join("");
+  let oprnd2   = ctx.oprnd2.join("");
+
+  switch (operator) {
+    case "+":
+      return [(+oprnd1 + +oprnd2)];
+    default:
+      return "error";
+  }
+}
+
+
+  
+  const options = {
+    actions: {
+      setctxdata:          assign({data:     (ctx,evt) => ctx.data.concat(evt.payload)}),
+      setctxoprnd1:        assign({oprnd1:   (ctx,evt) => ctx.oprnd1.concat(evt.payload)}),
+      setctxoperator:      assign({operator: (ctx,evt) => ctx.operator.concat(evt.payload)}),
+      setctxoprnd2:        assign({oprnd2:   (ctx,evt) => ctx.oprnd2.concat(evt.payload)}),
+      calculate:           assign({data:   (ctx,evt) => calculate(ctx)}),
+      displaydata:         (ctx) => calcDisplay.textContent = ctx.data.join(""), 
+
+    },
+     services: {}
+   };
+
+   const stateTransitionTable =
+`
+context:
+          data: []
+        oprnd1: []
+      operator: []
+        oprnd2: []
+
+ *START           number       OPND1              :setctxdata :setctxoprnd1   :displaydata
+
+  OPND1           number       OPND1              :setctxdata :setctxoprnd1   :displaydata
+  OPND1           operator     OPRTRENTERED       :setctxdata :setctxoperator :displaydata
+
+  OPRTRENTERED    number       OPND2              :setctxdata :setctxoprnd2   :displaydata 
+
+  OPND2           number       OPND2              :setctxdata :setctxoprnd2   :displaydata
+  OPND2           equals       RESULT             :calculate  :displaydata
+
+  RESULT         
+
+`;
+
+   const calcMachineConf      = createMachineConf(stateTransitionTable); 
+
+   const calcMachine          = Machine(calcMachineConf,options);
+
+   const calcMachineService   = interpret(calcMachine)
+        .onTransition(state => {
+          console.log('current state:   ',state.value);
+          console.log('data         :   ',state.context.data);
+          console.log('oprnd1       :   ',state.context.oprnd1);
+          console.log('operator     :   ',state.context.operator);
+          console.log('oprnd2       :   ',state.context.oprnd2);
+          console.log('---------------------------------');
+          highlightCurrentPath(state,prevStateCurrState);
+        }
+    );
+
+/**
+ *                                  EVENTS
+ **/
+   seven.addEventListener('click', () => calcMachineService.send({type: "number",   payload: 7  }));
+   eight.addEventListener('click', () => calcMachineService.send({type: "number",   payload: 8  }));
+   nine.addEventListener('click',  () => calcMachineService.send({type: "number",   payload: 9  }));
+   add.addEventListener('click',   () => calcMachineService.send({type: "operator", payload:"+" }));
+   four.addEventListener('click',  () => calcMachineService.send({type: "number",   payload: 4  }));
+   five.addEventListener('click',  () => calcMachineService.send({type: "number",   payload: 5  }));
+   six.addEventListener('click',   () => calcMachineService.send({type: "number",   payload: 6  }));
+   one.addEventListener('click',   () => calcMachineService.send({type: "number",   payload: 1  }));
+   two.addEventListener('click',   () => calcMachineService.send({type: "number",   payload: 2  }));
+   three.addEventListener('click', () => calcMachineService.send({type: "number",   payload: 3  }));
+   zero.addEventListener('click',  () => calcMachineService.send({type: "number",   payload: 0  }));
+   equals.addEventListener('click',() => calcMachineService.send({type: "equals",   payload: "="}));
+
+/**
+ *     
+ *                                  GRAPH
+ *  
+ *
+ **/
+
+   var g = new dagreD3.graphlib.Graph().setGraph({rankdir: 'LR'});
+
+   let arr = parserDagredD3.parse(stateTransitionTable); 
+   let states = arr[0];
+   let edges  = arr[1];
+
+  
+   states.forEach(function(state) {
+       if(state === "FINAL" || state === "INITIAL"  ) {
+         g.setNode(state, { label: "" }); 
+         g.node(state).style = "fill: #333";
+       } else {
+         g.setNode(state, { label: state }); 
+       }
+   });
+
+   edges.forEach( function(ele) { g.setEdge(ele[0], ele[1], { label: ele[2]}); });
+
+   // Set some general styles
+   g.nodes().forEach(function(v) {
+     var node = g.node(v);
+     node.rx = node.ry = 10;
+   });
+
+ 
+   var svg = d3.select("svg"), inner = svg.select("g");
+   
+   // Set up zoom support
+   var zoom = d3.zoom().on("zoom", function() {
+         inner.attr("transform", d3.event.transform);
+       });
+
+   svg.call(zoom);
+   
+   // Create the renderer
+   var render = new dagreD3.render();
+   
+   // Run the renderer. This is what draws the final graph.
+   render(inner, g);
+   
+ 
+  var initialScale = 1.2;
+  svg.attr('height', g.graph().height * initialScale + 40);
+
+
+
+
+/**
+ *     
+ *      MAIN 
+ *  
+ *  
+ *   Examples:
+ *   number + number =  
+ *   
+ *   1          + 1      =     2
+ *   10         + 10     =    20
+ *   123        + 123    =   226
+ *   123456789  + 1      =  123456790 
+ *
+ **/
+
+   calcMachineService.start();
+  
+  </script>
+</body>
+</html>
+
+
+
