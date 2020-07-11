@@ -13,22 +13,22 @@
       <div class="content">
            <svg width="100%"  class="graph"><g transform="translate(50,100)"/></svg>
              <div class="calc">
-             	<p id="calc__display" class="calc__display"></p>
-             	<div class="calc__keys">
-             		<button class="key"          id="seven">7</button>
-             		<button class="key"          id="eight">8</button>
-             		<button class="key"          id="nine">9</button>
-                        <button class="key key--big" id="add">+</button>
-             		<button class="key"          id="four">4</button>
-             		<button class="key"          id="five">5</button>
-             		<button class="key"          id="six">6</button>
-             		<button class="key key--big" id="equals">=</button>
-             		<button class="key"          id="one">1</button>
-             		<button class="key"          id="two">2</button>
-             		<button class="key"          id="three">3</button>
-             		<button class="key"          id="zero">0</button>
-             		<button class="key"                   ></button>
-             	</div>
+              <p id="display" class="calc__display"></p>
+              <div class="calc__keys">
+               <button class="key"          id="seven">7</button>
+               <button class="key"          id="eight">8</button>
+               <button class="key"          id="nine">9</button>
+               <button class="key key--big" id="add">+</button>
+               <button class="key"          id="four">4</button>
+               <button class="key"          id="five">5</button>
+               <button class="key"          id="six">6</button>
+               <button class="key key--big" id="equals">=</button>
+               <button class="key"          id="one">1</button>
+               <button class="key"          id="two">2</button>
+               <button class="key"          id="three">3</button>
+               <button class="key"          id="zero">0</button>
+               <button class="key"                   ></button>
+              </div>
             </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
    const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
    const prevStateCurrState              = ['INITIAL'];
 
-   const calcDisplay                     = document.getElementById("calc__display");
+   const calcDisplay                     = document.getElementById("display");
    const seven                           = document.getElementById("seven");
    const eight                           = document.getElementById("eight");
    const nine                            = document.getElementById("nine");
@@ -100,7 +100,7 @@ function calculate(ctx) {
       setctxoprnd1:        assign({oprnd1:   (ctx,evt) => ctx.oprnd1.concat(evt.payload)}),
       setctxoperator:      assign({operator: (ctx,evt) => ctx.operator.concat(evt.payload)}),
       setctxoprnd2:        assign({oprnd2:   (ctx,evt) => ctx.oprnd2.concat(evt.payload)}),
-      calculate:           assign({data:   (ctx,evt) => calculate(ctx)}),
+      calculate:           assign({data:     (ctx,evt) => calculate(ctx)}),
       displaydata:         (ctx) => calcDisplay.textContent = ctx.data.join(""), 
 
     },
