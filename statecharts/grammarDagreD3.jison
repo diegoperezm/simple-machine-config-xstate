@@ -66,32 +66,32 @@ states
 : INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL    UPPERCASE   LOWERCASE  mactions
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | UPPERCASE  
@@ -154,64 +154,64 @@ states
 | INITIAL UPPERCASE  mentry minvokes 
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 }
 | INITIAL UPPERCASE  mentry minvokes mexit
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 | INITIAL UPPERCASE   minvokes
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 | INITIAL UPPERCASE   minvokes mexit
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
   states.push("INITIAL",$2,$4);  
-  edges.push(["INITIAL",$2,""]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
   edges.push([$2,$4,$3]);
 }
 | UPPERCASE  LOWERCASE  mactions

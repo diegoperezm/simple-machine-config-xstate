@@ -113,21 +113,21 @@ break;
 case 13:
 
   states.push("INITIAL",$$[$0-2],$$[$0]);  
-  edges.push(["INITIAL",$$[$0-2],""]);
+  edges.push(["INITIAL",$$[$0-2],"xstate.init"]);
   edges.push([$$[$0-2],$$[$0],$$[$0-1]]);
 
 break;
 case 14:
 
   states.push("INITIAL",$$[$0-2]);  
-  edges.push(["INITIAL",$$[$0-2],""]);
+  edges.push(["INITIAL",$$[$0-2],"xstate.init"]);
 
 
 break;
 case 15:
 
   states.push("INITIAL",$$[$0-3],$$[$0-1]);  
-  edges.push(["INITIAL",$$[$0-3],""]);
+  edges.push(["INITIAL",$$[$0-3],"xstate.init"]);
   edges.push([$$[$0-3],$$[$0-1],$$[$0-2]]);
 
 
@@ -135,14 +135,14 @@ break;
 case 16: case 31:
 
   states.push("INITIAL",$$[$0-3],$$[$0-1]);  
-  edges.push(["INITIAL",$$[$0-3],""]);
+  edges.push(["INITIAL",$$[$0-3],"xstate.init"]);
   edges.push([$$[$0-3],$$[$0-1],$$[$0-2]]);
 
 break;
 case 17: case 28: case 29: case 32: case 33:
 
   states.push("INITIAL",$$[$0-4],$$[$0-2]);  
-  edges.push(["INITIAL",$$[$0-4],""]);
+  edges.push(["INITIAL",$$[$0-4],"xstate.init"]);
   edges.push([$$[$0-4],$$[$0-2],$$[$0-3]]);
 
 break;
@@ -201,25 +201,25 @@ break;
 case 24: case 27:
 
   states.push("INITIAL",$$[$0-2]);  
-  edges.push(["INITIAL",$$[$0-2],""]);
+  edges.push(["INITIAL",$$[$0-2],"xstate.init"]);
 
 break;
 case 25:
 
   states.push("INITIAL",$$[$0-3]);  
-  edges.push(["INITIAL",$$[$0-3],""]);
+  edges.push(["INITIAL",$$[$0-3],"xstate.init"]);
 
 break;
 case 26:
 
   states.push("INITIAL",$$[$0-1]);  
-  edges.push(["INITIAL",$$[$0-1],""]);
+  edges.push(["INITIAL",$$[$0-1],"xstate.init"]);
 
 break;
 case 30: case 34:
 
   states.push("INITIAL",$$[$0-5],$$[$0-3]);  
-  edges.push(["INITIAL",$$[$0-5],""]);
+  edges.push(["INITIAL",$$[$0-5],"xstate.init"]);
   edges.push([$$[$0-5],$$[$0-3],$$[$0-4]]);
 
 break;
