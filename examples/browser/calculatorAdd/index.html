@@ -107,6 +107,15 @@ function calculate(ctx) {
      services: {}
    };
 
+
+/**
+ *   https://xstate.js.org/docs/guides/actions.html#action-order
+ *  
+ *   "The order of actions should not necessarily matter ... However,  
+ *    the order of actions in the state.actions array is:  
+ *    1 exit actions - 2 transition - 3 entry actions"
+ * 
+ */ 
    const stateTransitionTable =
 `
 context:
@@ -115,14 +124,14 @@ context:
       operator: []
         oprnd2: []
 
- *START           number       OPND1              :setctxdata :setctxoprnd1   :displaydata
+ *START           number       OPND1              :setctxdata :setctxoprnd1    exit: displaydata
 
-  OPND1           number       OPND1              :setctxdata :setctxoprnd1   :displaydata
-  OPND1           operator     OPRTRENTERED       :setctxdata :setctxoperator :displaydata
+  OPND1           number       OPND1              :setctxdata :setctxoprnd1    exit: displaydata
+  OPND1           operator     OPRTRENTERED       :setctxdata :setctxoperator  exit: displaydata
 
-  OPRTRENTERED    number       OPND2              :setctxdata :setctxoprnd2   :displaydata 
+  OPRTRENTERED    number       OPND2              :setctxdata :setctxoprnd2    exit: displaydata 
 
-  OPND2           number       OPND2              :setctxdata :setctxoprnd2   :displaydata
+  OPND2           number       OPND2              :setctxdata :setctxoprnd2    exit: displaydata
   OPND2           equals       RESULT             :calculate  :displaydata
 
   RESULT         
