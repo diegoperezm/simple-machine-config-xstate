@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Traffic Lights</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="container">
+      <div class="content">
+          <svg class="graph" width="960" height="600"><g/></svg>
+      </div>
+	</div>
+
+  <script src="../../../../statecharts/libraries/xstate.js"></script>
+  <script src="../../../../statecharts/libraries/d3.v5.min.js"></script>
+  <script src="../../../../statecharts/libraries/dagre-d3.min.js"></script>
+  <script src="../../../../statecharts/parser/grammarXstate.js"></script>
+  <script src="../../../../statecharts/parser/grammarDagreD3.js"></script>
+  <script src="../../../../statecharts/libraries/utils.js"></script>
+
+  <script> 
+    
+/**
+ *     
+ *                      SETUP
+ *  
+ *
+ **/
+
+   const { Machine,  interpret, assign } = XState; 
+   const createMachineConf               = input => parserXstate.parse(input);
+   const ParserXstate                    = grammarXstate.Parser;
+   const parserXstate                    = new ParserXstate(grammarXstate);
+   const ParserDagredD3                  = grammarDagreD3.Parser;
+   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
+   const prevEdges                       = [];
+
+/**
+ *     
+ *                      STATECHARTS
+ *  
+ *
+ **/
+
+   const stateTransitionTable = 
+   `
+    *GREEN  time YELLOW :printgreen
+     YELLOW time RED    :printyellow 
+     RED    time GREEN  :printred 
+   `;
+
+   const printGreen           = () => console.log('=> green');
+   const printYellow          = () => console.log('=> yellow');
+   const printRed             = () => console.log('=> red');
+
+
+	 
+// xstate expects an object
+   const trafficlightsActions = {
+	  actions: {
+        	printgreen  : printGreen,
+      		printyellow : printYellow,
+                printred    : printRed
+          }
+  };
+
+// Create a machine conf for xstate
+   const trafficlightsMachineConf   = createMachineConf(stateTransitionTable);
+
+// Pass the machine conf to xstate
+   const trafficlightsMachine       = Machine(trafficlightsMachineConf,trafficlightsActions);
+	 
+/**
+ *
+ * Using xstate's interpreter to run the statecharts.
+ * An interpreted, running instance of a statecharts is called a service (xstate docs).
+ * 
+ * https://xstate.js.org/docs/guides/interpretation.html#transitions  
+ * Listeners for state transitions are registered via the .onTransition(...) method
+ *
+ */
+    const trafficlightsService       = interpret(trafficlightsMachine)
+ 	                                          .onTransition( state => highlightCurrentPath(state,prevEdges));
+
+																				 
+/**
+ *     
+ *      GRAPH
+ *  
+ *
+ **/
+   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'TB'});
+
+   let arr = parserDagredD3.parse(stateTransitionTable); 
+   let states = arr[0];
+   let edges  = arr[1];
+	 
+   states.forEach(function(state) {
+       if(state === "FINAL" || state === "INITIAL"  ) {
+         g.setNode(state, { label: "" }); 
+         g.node(state).style = "fill: #333";
+       } else {
+         g.setNode(state, { label: state }); 
+       }
+   });
+
+
+  edges.forEach(
+     function(ele) {
+       g.setEdge(
+         {v: ele[0],
+          w: ele[1],
+          name: (ele[0]+ele[1]+ele[2]) },
+         {label: ele[2]});});
+    
+   // Set some general styles
+   g.nodes().forEach(function(v) {
+     var node = g.node(v);
+     node.rx = node.ry = 10;
+   });
+
+	 
+   var svg = d3.select("svg"), inner = svg.select("g");
+   
+   // Set up zoom support
+   var zoom = d3.zoom().on("zoom", function() {
+         inner.attr("transform", d3.event.transform);
+       });
+   svg.call(zoom);
+   
+   // Create the renderer
+   var render = new dagreD3.render();
+   
+   // Run the renderer. This is what draws the final graph.
+   render(inner, g);
+   
+   // Center the graph
+   //var initialScale = 0.75;
+   var initialScale = 2;
+   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 20).scale(initialScale));
+   
+   svg.attr('height', g.graph().height * initialScale + 40);
+
+
+/**
+ *     
+ *      MAIN 
+ *  
+ *
+ **/
+
+   trafficlightsService.start();
+
+   </script>
+</body>
+</html>
+
+
+

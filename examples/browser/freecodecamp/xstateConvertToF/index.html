@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Convert To F</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="content">
+           <div>
+            <form  class="convertToF">
+              <label class="label-input"     for="inputValue"> Celsius</label>
+              <input class="inputValue"      type="text"  id="inputValue" name="input" size="10" value=" ">
+              <input class="buttonCalculate" id="buttonCalculate"   name="buttonCalculate" type="button" value="calculate"/>
+              <label class="label-output"    for="output">Fahrenheit</label>
+              <output class="outputDisplay"  id="outputDisplay"> </output>
+            </form>
+          </div>
+       </div>
+     </div>
+
+  <script src="../../../../statecharts/libraries/xstate.js"></script> 
+
+  <script>
+
+/**
+ *     
+ *                      SETUP
+ *  
+ *
+ **/
+
+   const { Machine,  interpret, assign } = XState; 
+   const buttonCalculate                 = document.getElementById('buttonCalculate');
+   const inputValue                      = document.getElementById('inputValue');
+   const ouputDisplay                    = document.getElementById('outputDisplay');
+
+   buttonCalculate.addEventListener('click', () => convertToFMachineService.send('calculate') );
+
+
+   function  getinput(ctx,evt)  {
+     let value  =  Promise.resolve(inputValue.value); 
+     return value.then(celsius => celsius);
+   }
+
+   function  calcf(ctx,evt)  {
+     let value  =  Promise.resolve(ctx.celsius * (9/5) + 32); 
+     return value.then( fahrenheit => fahrenheit);
+   }
+
+   function  displayresult(ctx,evt)  {
+      outputDisplay.textContent = ctx.result; 
+      return Promise.resolve();
+   }
+
+
+
+   let convertToFMachineConf = {
+     "initial": "IDLE",
+    "context": {
+          "celsius": "",
+          "result":  ""
+    },
+     "states": {
+    "IDLE": {
+      "on": {
+            "calculate": {
+              "target": "READINPUT",
+            }
+          } 
+        },
+       "READINPUT": {
+         "invoke": {
+           "id": "getinput",
+           "src": getinput,
+           "onDone": {
+             "target": "CALCF",
+             "actions": [assign({celsius: (ctx,evt) => evt.data}),
+             ] 
+           },
+           "onError": {
+             "target": "ERROR"
+           }
+         }
+       },
+       "CALCF": {
+         "invoke": {
+           "id": "calcf",
+           "src": calcf,
+           "onDone": {
+             "target": "DISPLAYRESULT",
+             "actions": [assign({result: (ctx,evt) => evt.data}),
+             ] 
+           },
+           "onError": {
+             "target": "ERROR"
+           }
+         }
+        },
+      "ERROR":           {},
+      "DISPLAYRESULT":   {
+          "invoke": {
+           "id": "displayresult",
+           "src": displayresult,
+           "onDone": {
+             "target": "IDLE",
+             "actions": [assign({result: (ctx,evt) =>  ""}),
+                         assign({celsius: (ctx,evt) => ""})
+             ] 
+           },
+           "onError": {
+             "target": "ERROR"
+           }
+         }
+          
+        },
+      }
+    };
+
+  
+  let convertToFMachine = Machine(convertToFMachineConf);
+
+  convertToFMachineService   = interpret(convertToFMachine)
+     .onTransition(state => {
+       console.log('state   ',state.value);
+       console.log('celsius ',state.context.celsius);
+       console.log('result ', state.context.result);
+       console.log('---------------------------------');
+       }
+  );
+
+  convertToFMachineService.start();
+
+/**
+   convertToF(0)    should return a number
+   convertToF(-30)  should return a value of   -22
+   convertToF(-10)  should return a value of   14
+   convertToF(0)    should return a value of   32
+   convertToF(20)   should return a value of   68
+   convertToF(30)   should return a value of   86
+*/
+
+  </script>
+</body>
+</html>
+
+
+
