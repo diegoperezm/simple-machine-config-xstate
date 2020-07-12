@@ -1,5 +1,5 @@
 const test   = require('../utils/utils.js');
-const xstateParse  = require('../statecharts/grammarXstate.js').parse;
+const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
 
 /**
  *             ABBREVIATIONS
