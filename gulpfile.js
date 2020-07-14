@@ -1,31 +1,47 @@
 
-var path           = require('path');
-var exec           = require("child_process").exec;
-var gulp           = require("gulp");
-var browserSync    = require("browser-sync").create();
-var parallel       = gulp.parallel; 
+var path            = require('path');
+var exec            = require("child_process").exec;
+var gulp            = require("gulp");
+var browserSync     = require("browser-sync").create();
+var parallel        = gulp.parallel; 
+var watcherGrammar  = gulp.watch('./statecharts/parser/*.jison');
+
 var watcherDiagram = gulp.watch('./examples/**/statecharts/*.txt');
 var isFehRunning = false;
 
 function server() {
-		browserSync
-				.init({
-			   		watch: true,
-						server: "./APP"
-				});
+   browserSync
+    .init({
+        watch: true,
+        cors: true,        
+      server: "./examples/browser/calculator/calcAdditionZeroClear/"
+    });
 }
 
 
 function surf() {
-		browserSync
-				.init({
-						browser: ["surf"],
-			   		watch: true,
-						server: "./APP"
-				});
+  browserSync
+    .init({
+      browser: ["surf"],
+        watch: true,
+      server: "./examples/browser/calculatorAdditionStateZero"
+    });
 }
 
-
+function grammar() {
+  watcherGrammar.on('change', (path, stats) => {
+    let commands = `cd ./statecharts/parser/;` +
+                    `bash update_grammar.sh ` ; 
+    exec(commands, (err, stdout, stderr) => {
+      if(err) {
+        console.log(err);
+      } else {
+        console.log(stdout);
+        console.log(stderr);
+      }
+    });
+   });
+}
 
 function graph(done) {
   watcherDiagram.on('change', (path,stats) => {
@@ -49,11 +65,13 @@ function graph(done) {
     `${forFeh}`;  
 
     exec(commands, (err, stdout, stderr) => {
-      if(stderr) {
-	console.log(stderr);
+      if(err) {
+ console.log(err);
       } else {
-	console.log(stdout);
+ console.log(stdout);
+ console.log(stderr);
       }
+
     });
    });
   done();
@@ -83,19 +101,19 @@ function graphMod(done) {
 
     exec(commands, (err, stdout, stderr) => {
       if(stderr) {
-	console.log(stderr);
+ console.log(stderr);
       } else {
-	console.log(stdout);
+ console.log(stdout);
       }
     });
    });
   done();
 }
 
-exports.start      = parallel(graph);
-exports.surf       = parallel(surf);
-exports.graphMod   = parallel(graphMod);
-exports.server     = parallel(server);
-
+exports.start        = parallel(graph);
+exports.surf         = parallel(surf);
+exports.graphMod     = parallel(graphMod);
+exports.server       = parallel(server);
+exports.grammar      = parallel(grammar);
 
 
