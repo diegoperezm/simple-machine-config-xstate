@@ -40,8 +40,29 @@ const BgCyan = "\x1b[46m";
 const BgWhite = "\x1b[47m";
  
 
-function test(testDescription, xsParsedObject, xsConfigObject) {
- let   diff=  difference(xsParsedObject, xsConfigObject); 
+function test(testDescription, parsed, expected) {
+    if(Array.isArray(parsed)){
+
+      if(!isEqual(parsed, expected)) {
+         console.log(FgYellow,'  ',testDescription);
+         console.log(FgRed,'\n     [FAIL] Should be equivalent,', '\n     the (parsed) state transition table is different: ' );
+    console
+     .log(
+       '\n',
+         console.log('\nparsed:\n'), 
+         console.log(JSON.stringify(parsed,null,2)), 
+         console.log('\nexpected:\n'), 
+         console.log(JSON.stringify(expected,null,2)), 
+       '\n',
+     ); 
+         } else {
+           console.log(FgGreen);
+           console.log('   ',testDescription);
+           console.log(FgCyan,'\n     [PASS]  Should be equivalent\n');
+        }
+    } else {
+    
+ let   diff=  difference(parsed, expected); 
 
  if(!isEmpty(diff)) {
     console.log(FgYellow,'  ',testDescription);
@@ -57,8 +78,10 @@ function test(testDescription, xsParsedObject, xsConfigObject) {
     console.log(FgGreen);
     console.log('   ',testDescription);
     console.log(FgCyan,'\n     [PASS]  Should be deeply equivalent\n');
+  }
  }
-}
+};
+
 
 
 

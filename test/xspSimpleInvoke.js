@@ -40,13 +40,13 @@ onerror: ERROR
         }
       }
     },
-			"B": {
-							"on": {
-											"time": {
-															target: "SUCCESS"
-											}
-							}
-			}
+   "B": {
+       "on": {
+           "time": {
+               target: "SUCCESS"
+           }
+       }
+   }
   }
 };
 
