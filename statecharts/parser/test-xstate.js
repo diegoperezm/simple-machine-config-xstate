@@ -4,7 +4,7 @@ const jison       = require('jison');
 const bnf         = fs.readFileSync(
                         path.resolve(
                         __dirname,
-                        '../parser/grammarXstate.jison'),
+                        './grammarXstate.jison'),
                         'utf8');
 
 const parser      = new jison.Parser(bnf);

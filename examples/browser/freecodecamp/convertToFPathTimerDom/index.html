@@ -74,6 +74,7 @@
 
    
    function  calcF(ctx,evt)  {
+
     let value = new Promise(  
                    function(resolve, reject){
                       setTimeout(resolve, 2000,(ctx.celsius * (9/5) + 32)); 
@@ -81,6 +82,7 @@
                );
      
      return value.then(fahrenheit => fahrenheit);
+
    }
 
 
@@ -93,7 +95,7 @@
                        function() {
 // unary plus operator (+) attempts to convert its operand into a number
                          if( +outputDisplay.textContent === ctx.result) {
-                          resolve();
+                          resolve(); 
                          } else {
                           reject();  
                          }
@@ -181,36 +183,9 @@ onerror: ERROR
    var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'LR'});
 
    let arr = parserDagredD3.parse(stateTransitionTable); 
-   let states = arr[0];
-   let edges  = arr[1];
 
-  
-   states.forEach(function(state) {
-       if(state === "FINAL" || state === "INITIAL"  ) {
-         g.setNode(state, { label: "" }); 
-         g.node(state).style = "fill: #333";
-       } else {
-         g.setNode(state, { label: state }); 
-       }
-   });
+   graphSetStatesEdges(arr); 
 
-
-   edges.forEach(
-     function(ele) {
-       g.setEdge(
-         {v: ele[0],
-          w: ele[1],
-          name: (ele[0]+ele[1]+ele[2]) },
-         {label: ele[2]});});
-
-
-   // Set some general styles
-   g.nodes().forEach(function(v) {
-     var node = g.node(v);
-     node.rx = node.ry = 10;
-   });
-
- 
    var svg = d3.select("svg"), inner = svg.select("g");
    
    // Set up zoom support

@@ -212,33 +212,8 @@ context:
 
    let arr = parserDagredD3.parse(stateTransitionTable); 
 
-   let states = arr[0];
-   let edges  = arr[1];
-  
-   states.forEach(function(state) {
-       if(state === "FINAL" || state === 'INITIAL') {
-         g.setNode(state, { label: "" }); 
-         g.node(state).style = "fill: #333";
-       } else {
-         g.setNode(state, { label: state }); 
-       }
-   });
-
-   edges.forEach(
-     function(ele) {
-       g.setEdge(
-         {v: ele[0],
-          w: ele[1],
-          name: (ele[0]+ele[1]+ele[2]) },
-         {label: ele[2]});});
-
-
-   // Set some general styles
-   g.nodes().forEach(function(v) {
-     var node = g.node(v);
-     node.rx = node.ry = 10;
-   });
-
+   graphSetStatesEdges(arr);
+   
  
    var svg = d3.select("svg"), inner = svg.select("g");
    

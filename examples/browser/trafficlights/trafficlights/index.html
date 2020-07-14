@@ -11,7 +11,7 @@
 <body>
 	<div class="container">
       <div class="content">
-          <svg class="graph" width="960" height="600"><g/></svg>
+          <svg class="graph" width="1024" height="600"><g/></svg>
       </div>
 	</div>
 
@@ -20,7 +20,7 @@
   <script src="../../../../statecharts/libraries/dagre-d3.min.js"></script>
   <script src="../../../../statecharts/parser/grammarXstate.js"></script>
   <script src="../../../../statecharts/parser/grammarDagreD3.js"></script>
-
+  <script src="../../../../statecharts/libraries/utils.js"></script>
  
   <script>
 
@@ -37,7 +37,7 @@
    const parserXstate                     = new ParserXstate(grammarXstate);
    const ParserDagredD3                   = grammarDagreD3.Parser;
    const parserDagredD3                   = new ParserDagredD3(grammarDagreD3);
-
+   const prevEdges                        = [];   
 
 /**
  *     
@@ -49,9 +49,10 @@
    const stateTransitionTable = 
    `
     *GREEN   time YELLOW :printgreen
-     YELLOW  time RED    :printyellow
-     RED     time GREEN  :printred 
-   `;
+     YELLOW  time RED    :prinyellow
+     RED     time GREEN  :printred
+
+  `;
 
    const printGreen           = () => console.log('=> green');
    const printYellow          = () => console.log('=> yellow');
@@ -74,21 +75,19 @@
 // Pass the machine conf to xstate
    const trafficlightsMachine       = Machine(trafficlightsMachineConf,trafficlightsActions);
 
+
 /**
  * Using xstate's interpreter to run the statecharts.
  * An interpreted, running instance of a statecharts is called a service (xstate docs).
  */
-const trafficlightsService       = interpret(trafficlightsMachine);
+  const trafficlightsService       = interpret(trafficlightsMachine)
+    .onTransition(state => highlightCurrentPath(state,prevEdges)
+  );
 
 // This will be printed (console)
-   const trafficlightsMachineConfStr = JSON.stringify(trafficlightsMachineConf,null,2);
-   console.log('\n- Machine conf for xstate:\n\n', trafficlightsMachineConfStr,'\n\nOutput\n\n');
+ //  const trafficlightsMachineConfStr = JSON.stringify(trafficlightsMachineConf,null,2);
+// console.log('\n- Machine conf for xstate:\n\n', trafficlightsMachineConfStr,'\n\nOutput\n\n');
 																					 
-   trafficlightsService.start();
-   trafficlightsService.send("time");
-   trafficlightsService.send("time");
-   trafficlightsService.send("time");
-
 
 /**
  *     
@@ -97,43 +96,11 @@ const trafficlightsService       = interpret(trafficlightsMachine);
  *
  **/
 	 
-   var g = new dagreD3.graphlib.Graph().setGraph({rankdir: 'TB'});
+   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'LR'});
 
    let arr = parserDagredD3.parse(stateTransitionTable); 
-   let states = arr[0];
-   let edges  = arr[1];
-	 
-   states.forEach(function(state) {
-       if(state === "FINAL") {
- 	    g.setNode(state, { label: "" }); 
-       } else {
- 	    g.setNode(state, { label: state }); 
-       }
-       if(state === "INITIAL") {
- 	    g.setNode(state, { label: "" }); 
-       } else {
-            g.setNode(state, { label: state }); 
-       }
-   });
 
-   edges.forEach( function(ele) { g.setEdge(ele[0], ele[1], { label: ele[2]}); });
-
-   // Set some general styles
-   g.nodes().forEach(function(v) {
-     var node = g.node(v);
-     node.rx = node.ry = 5;
-   });
-
-   g.node('INITIAL').style = "fill: #000; border-radius: 50%;"
-   g.node('INITIAL').rx = 10;
-   g.node('INITIAL').ry = 10;
-
-	 
-/*
-   g.node('FINAL').style = "fill: #000; border-radius: 50%;"
-   g.node('FINAL').rx = 10;
-   g.node('FINAL').ry = 10;
-*/ 
+   graphSetStatesEdges(arr); 
 
    var svg = d3.select("svg"), inner = svg.select("g");
    
@@ -151,11 +118,18 @@ const trafficlightsService       = interpret(trafficlightsMachine);
    
    // Center the graph
    //var initialScale = 0.75;
-   var initialScale = 2;
+   var initialScale = 1;
    svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 20).scale(initialScale));
    
    svg.attr('height', g.graph().height * initialScale + 40);
- 
+
+
+      trafficlightsService.start();
+//      trafficlightsService.send("time");
+    //  trafficlightsService.send("time");
+    //  trafficlightsService.send("time");
+
+
    </script>
 </body>
 </html>

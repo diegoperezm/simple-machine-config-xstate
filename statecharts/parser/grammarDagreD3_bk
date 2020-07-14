@@ -1,3 +1,5 @@
+		/* description:  */
+
 %{
 let invokes = [];
 let states  = [];
@@ -27,9 +29,10 @@ let edges   = [];
 "@"                       return '@'
 "["                       return '['
 "]"                       return ']'
-//                 return 'EOF'
+//<<EOF>>                 return 'EOF'
 
 /lex
+
 
 %start expressions
 
@@ -39,6 +42,7 @@ mnumber
 : NUMBER  NUMBER        {$$=[+$1,+$2]}
 | mnumber NUMBER        {$$=[...$1,+$2]}
 ;
+
 data
 : '[' ']'              {$$=[[]]}
 | '"' '"'              {$$=[""]}
@@ -47,50 +51,55 @@ data
 | '[' NUMBER ']'       {$$=[[+$2]]}
 | '[' mnumber ']'      {$$=[[$2]]}
 ;
+
 mdata
 : LOWERCASE ':' data    {$$=[$1,...$3]}
 ;
+
 context
 : 
 | CONTEXT ':'
 | context   mdata {}
 ;
+
 states
 : INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | INITIAL    UPPERCASE   LOWERCASE  mactions
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
+
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | UPPERCASE  
 {
   if(!states.includes($1)) {
     states.push($1);
   }
+  
 }
 | UPPERCASE minvokes 
 {
@@ -98,19 +107,8 @@ states
     states.push($1);
   }
  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
- edges.push([
-           $1,
-           invokes[invokeIndex].onDone,
-           'onDone',
-           $1+"-"+ invokes[invokeIndex].onDone+"-"+"done.invoke." + invokes[invokeIndex].id
-          ],
-          [
-           $1,
-           invokes[invokeIndex].onError,
-           'onError',
-           $1+"-"+ invokes[invokeIndex].onError+"-"+"error.platform." + invokes[invokeIndex].id
-
-           ],
+ edges.push([$1,invokes[invokeIndex].onDone,'onDone'],
+            [$1,invokes[invokeIndex].onError,'onError'],
  );
 }
 | UPPERCASE   LOWERCASE  UPPERCASE
@@ -121,7 +119,7 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | UPPERCASE   LOWERCASE  UPPERCASE mentry
 {
@@ -131,9 +129,9 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
-| UPPERCASE LOWERCASE UPPERCASE mentry mexit
+| UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
 {
   if(!states.includes($1)) {
     states.push($1);
@@ -141,9 +139,9 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
-| UPPERCASE LOWERCASE UPPERCASE mexit 
+| UPPERCASE   LOWERCASE  UPPERCASE mexit
 {
   if(!states.includes($1)) {
     states.push($1);
@@ -151,73 +149,78 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | INITIAL UPPERCASE  mentry minvokes 
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
+}
 }
 | INITIAL UPPERCASE  mentry minvokes mexit
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 | INITIAL UPPERCASE   minvokes
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
 | INITIAL UPPERCASE   minvokes mexit
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$2,"xstate.init"]);
 }
-
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
-
+| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
+{
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
+}
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
-  states.push("INITIAL",$2,$4);    
+  states.push("INITIAL",$2,$4);  
   edges.push([1]);
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  //edges.push(["INITIAL",$2,"xstate.init"]);
+  //edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+    states.push("INITIAL",$2,$4);  
+    edges.push(["INITIAL",$2,"xstate.init"]);
+//  edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$2,$4);  
+  edges.push(["INITIAL",$2,"xstate.init"]);
+  edges.push([$2,$4,$3]);
 }
 | UPPERCASE  LOWERCASE  mactions
 {
   if(!states.includes($1)) {
     states.push($1);
   }
-  edges.push([$1,"",$2, $1+"-"+$2]);
+  edges.push([$1, "", $2]);
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
 {
@@ -227,8 +230,7 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
 {
@@ -238,7 +240,7 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
@@ -248,7 +250,7 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
@@ -258,7 +260,7 @@ states
   if(!states.includes($3)) {
     states.push($3);
   }
-  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+  edges.push([$1, $3, $2]);
 }
 | UPPERCASE FINAL
 {
@@ -268,7 +270,6 @@ states
     states.push("FINAL");
     edges.push([$1, "FINAL", ""]);
 }
-
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 {
     let  objInvoke      = {};
@@ -277,7 +278,7 @@ states
     objInvoke.onError   = $9; 
     invokes.push(objInvoke);
 
-} 
+}
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
 {
   let objInvokeOnDoneAct             = {}; 
@@ -347,8 +348,13 @@ entry
 ;
 
 mentry
-: ENTRY entry {}
-| mentry entry  {}
+: ENTRY entry
+{
+ 
+}
+| mentry entry  {
+
+}
 ;
 
 exit
@@ -357,8 +363,13 @@ exit
 ;
 
 mexit
-: EXIT exit {}
-| mexit exit  {}
+: EXIT exit
+{
+
+}
+| mexit exit  {
+
+}
 ;
 expressions
 : context mstates
