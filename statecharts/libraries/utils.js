@@ -5,11 +5,14 @@
  * 
  */
 function highlightCurrentPath(state,prevEdges) {
+    let tspanElements = document.getElementsByTagName('tspan');
+    let tspanArr      = Array.from(tspanElements);  
     let a;
     let input;
     let v;
     let w;
     let name;
+    let labelStyle;
     
    if(state.event.type=== 'xstate.init') {
        input= state.event.type; 
@@ -28,15 +31,23 @@ function highlightCurrentPath(state,prevEdges) {
       a = window.g.edge(v,w,name).elem;
       a.children[0].setAttribute('class', 'edgePath');
       window.g.node(w).elem.style = "fill: black";
-           
+
+      labelStyle = tspanArr.filter( elem => elem.__data__.name === name); 
+      labelStyle[0].classList.remove('active');
+
       v    = w; 
       w    = state.value;
       name = (v+"-"+w+"-"+state.event.type);
       window.g.node(w).elem.style = "fill: red; ";
       a = window.g.edge(v,w, name).elem;
       a.children[0].setAttribute('class', 'edgePath active');
+
+      labelStyle = tspanArr.filter( elem => elem.__data__.name === name); 
+      labelStyle[0].classList.add('active');
+
       prevEdges.shift();
       prevEdges.push([v,w,name]);
+
    }
 }
 
