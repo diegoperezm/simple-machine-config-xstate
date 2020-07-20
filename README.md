@@ -106,4 +106,4 @@ let trafficlight = {
 
 # Demo/Example
 
-[Traffic lights](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calcAddMultDivSubtractionZeroCeDotMinus/index.html)
+[Calculator](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calcAddMultDivSubtractionZeroCeDotMinus/index.html)
