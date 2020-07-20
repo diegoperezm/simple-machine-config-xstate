@@ -37,7 +37,6 @@
    const parserXstate                    = new ParserXstate(grammarXstate);
    const ParserDagredD3                  = grammarDagreD3.Parser;
    const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
-   const prevEdges                       = [];
 
 /**
  *     
@@ -84,7 +83,7 @@
  *
  */
     const trafficlightsService       = interpret(trafficlightsMachine)
- 	                                          .onTransition( state => highlightCurrentPath(state,prevEdges));
+ 	                                          .onTransition( state => highlightCurrentPath(state));
 
 																				 
 /**

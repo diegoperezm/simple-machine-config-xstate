@@ -58,7 +58,6 @@
    const createMachineConf               = input => parserXstate.parse(input);
    const ParserDagredD3                  = grammarDagreD3.Parser;
    const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
-   const prevEdges                       = [];
 
    buttonCalculate.addEventListener('click', () => convertToFMachineService.send('calculate'));
 
@@ -167,7 +166,7 @@ onerror: ERROR
           console.log('celsius ',state.context.celsius);
           console.log('result ', state.context.result);
           console.log('---------------------------------');
-          highlightCurrentPath(state,prevEdges);
+          highlightCurrentPath(state);
         }
     );
 

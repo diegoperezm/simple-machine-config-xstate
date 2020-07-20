@@ -55,7 +55,6 @@
    const createMachineConf               = input => parserXstate.parse(input);
    const ParserDagredD3                  = grammarDagreD3.Parser;
    const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
-   const prevEdges                       = [];
 
    const calcDisplay                     = document.getElementById("display");
    const seven                           = document.getElementById("seven");
@@ -150,7 +149,7 @@ context:
           console.log('operator     :   ',state.context.operator);
           console.log('oprnd2       :   ',state.context.oprnd2);
           console.log('---------------------------------');
-          highlightCurrentPath(state,prevEdges);
+          highlightCurrentPath(state);
         }
     );
 

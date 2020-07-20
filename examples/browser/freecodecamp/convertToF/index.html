@@ -58,7 +58,7 @@
    const createMachineConf               = input => parserXstate.parse(input);
    const ParserDagredD3                  = grammarDagreD3.Parser;
    const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
-   const prevEdges                       = [];
+
 
    buttonCalculate.addEventListener('click', () => convertToFMachineService.send('calculate') );
 

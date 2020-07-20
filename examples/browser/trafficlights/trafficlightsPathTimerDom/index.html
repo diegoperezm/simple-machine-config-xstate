@@ -47,7 +47,7 @@
    const lightGreen                      = document.getElementById('green');
    const lightYellow                     = document.getElementById('yellow');
    const lightRed                        = document.getElementById('red');
-   const prevEdges                       = [];
+   
   
 
 /**
@@ -111,7 +111,7 @@
  *
  */
     const trafficlightsService       = interpret(trafficlightsMachine)
- 	                                        .onTransition( state => highlightCurrentPath(state,prevEdges));
+ 	                                        .onTransition( state => highlightCurrentPath(state));
 
 
 /**

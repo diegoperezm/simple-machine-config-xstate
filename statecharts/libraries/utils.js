@@ -1,10 +1,12 @@
+const prevEdges                       = [];
+
 /**
  * This is a simple/naive implementation, first draft etc.:
  *
  *  is not tested (only "works")
  * 
  */
-function highlightCurrentPath(state,prevEdges) {
+function highlightCurrentPath(state) {
     let tspanElements = document.getElementsByTagName('tspan');
     let tspanArr      = Array.from(tspanElements);  
     let a;
@@ -13,7 +15,8 @@ function highlightCurrentPath(state,prevEdges) {
     let w;
     let name;
     let labelStyle;
-    
+    let arrow; 
+
    if(state.event.type=== 'xstate.init') {
        input= state.event.type; 
        v    = 'INITIAL';
@@ -22,7 +25,12 @@ function highlightCurrentPath(state,prevEdges) {
        window.g.node(w).elem.style = "fill: red; ";
        a = window.g.edge(v,w,name).elem;
        a.children[0].setAttribute('class', 'edgePath active');
+
+       arrow = document.getElementById(a.children[1].children[0].id);
+       arrow.children[0].style = "stroke: red; fill: red";
+
        prevEdges.push([v,w,name]);
+
    }
    if(state.changed) {
       v    = prevEdges[0][0];
@@ -31,6 +39,9 @@ function highlightCurrentPath(state,prevEdges) {
       a = window.g.edge(v,w,name).elem;
       a.children[0].setAttribute('class', 'edgePath');
       window.g.node(w).elem.style = "fill: black";
+
+      arrow = document.getElementById(a.children[1].children[0].id);
+      arrow.children[0].style = "stroke: black; fill: black";
 
       labelStyle = tspanArr.filter( elem => elem.__data__.name === name); 
       labelStyle[0].classList.remove('active');
@@ -41,6 +52,9 @@ function highlightCurrentPath(state,prevEdges) {
       window.g.node(w).elem.style = "fill: red; ";
       a = window.g.edge(v,w, name).elem;
       a.children[0].setAttribute('class', 'edgePath active');
+
+      arrow = document.getElementById(a.children[1].children[0].id);
+      arrow.children[0].style = "stroke: red; fill: red";
 
       labelStyle = tspanArr.filter( elem => elem.__data__.name === name); 
       labelStyle[0].classList.add('active');
