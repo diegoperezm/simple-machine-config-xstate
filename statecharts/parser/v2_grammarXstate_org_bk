@@ -1,0 +1,568 @@
+* commands
+
+
+#+NAME:
+#+BEGIN_SRC js
+
+#+END_SRC
+
+
+* setup
+
+** setup 
+
+#+NAME:setup
+#+BEGIN_SRC js
+		/* description:  */
+
+%{
+let invokes        =[];
+let z              ={};
+z.initial          ="";
+z.context          ={};
+z.states           ={};
+%}
+
+
+/* lexical grammar */
+%lex
+
+%%
+\s+                       /* skip whitespace */
+"*"                       return 'INITIAL'
+"context"                 return 'CONTEXT'
+"invoke:"                 return 'INVOKE'
+"id:"                     return 'ID'
+"src:"                    return 'SRC'
+"ondone:"                 return 'ONDONE'
+"onerror:"                return 'ONERROR'
+"entry:"                  return 'ENTRY'
+"exit:"                   return 'EXIT'
+"final"                   return 'FINAL'
+[0-9]+                    return 'NUMBER'
+[a-z0-9]+                 return 'LOWERCASE'
+[A-Z0-9]+                 return 'UPPERCASE'
+":"                       return ':'
+'"'                       return '"'
+"@"                       return '@'
+"["                       return '['
+"]"                       return ']'
+//<<EOF>>                 return 'EOF'
+
+/lex
+
+%start expressions
+
+%% /* language grammar */
+
+#+END_SRC
+
+** mnumber 
+   
+#+NAME:mnumber
+#+BEGIN_SRC js
+mnumber
+: NUMBER  NUMBER        {$$=[+$1,+$2]}
+| mnumber NUMBER        {$$=[...$1,+$2]}
+;
+#+END_SRC
+
+** data
+
+#+NAME:data
+#+BEGIN_SRC js
+data
+: '[' ']'              {$$=[[]]}
+| '"' '"'              {$$=[""]}
+| '"' LOWERCASE '"'    {$$=[$2]}
+| NUMBER               {$$=[+$1]}
+| '[' NUMBER ']'       {$$=[[+$2]]}
+| '[' mnumber ']'      {$$=[[$2]]}
+;
+#+END_SRC
+
+** mdata
+#+NAME:mdata
+#+BEGIN_SRC js
+mdata
+: LOWERCASE ':' data    {$$=[$1,...$3]}
+;
+#+END_SRC
+
+** context
+
+#+NAME:context
+#+BEGIN_SRC js
+context
+: 
+| CONTEXT ':'
+| context   mdata {z.context[$2[0]] = $2[1]}
+;
+#+END_SRC
+
+
+* non existent
+
+**  INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+#+BEGIN_SRC js :noweb yes
+#+END_SRC
+
+
+* states 
+  
+** states
+
+#+NAME:states
+#+BEGIN_SRC js
+states
+#+END_SRC
+
+
+** INITIAL
+
+*** IUme
+
+#+NAME:INITIAL UPPERCASE mentry
+#+BEGIN_SRC js
+: INITIAL UPPERCASE mentry
+{
+    z.initial = $2
+    z.states[$2] = {};
+    z.states[$2].entry = $3;
+    z.states[$2].on = {};
+}
+#+END_SRC
+
+
+*** IUmemex
+
+#+NAME:INITIAL UPPERCASE mentry mexit
+#+BEGIN_SRC js
+| INITIAL    UPPERCASE  mentry  mexit
+{
+    z.initial = $2
+    z.states[$2] = {};
+    z.states[$2].entry = $3;
+    z.states[$2].exit  = $4;
+    z.states[$2].on = {}; 
+}
+#+END_SRC
+
+
+*** IUmex
+#+NAME:INITIAL UPPERCASE mexit
+#+BEGIN_SRC js
+| INITIAL UPPERCASE mexit
+{
+    z.initial = $2
+    z.states[$2] = {};
+    z.states[$2].exit = $3;
+    z.states[$2].on = {};
+
+}
+#+END_SRC
+
+
+
+*** IUlU
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+#+BEGIN_SRC js 
+| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+{
+   z.initial = $2
+   if(z.states[$2] != undefined) {
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].target = $4;
+   }else {
+    z.states[$2] = {};
+    z.states[$2].on = {};
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].target = $4;
+  }
+}
+#+END_SRC
+
+
+*** IULma
+
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  mactions
+#+BEGIN_SRC js
+| INITIAL    UPPERCASE   LOWERCASE  mactions
+{
+   z.initial = $2
+   if(z.states[$2] != undefined) {
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].actions = $4;
+   }else {
+    z.states[$2] = {};
+    z.states[$2].on = {};
+    z.states[$2].on[$3] = {};
+    z.states[$2].on[$3].actions = $4;
+  }
+}
+#+END_SRC
+
+
+
+** UPPERCASE
+
+*** U
+
+#+NAME:UPPERCASE 
+#+BEGIN_SRC js
+| UPPERCASE 
+{
+  z.states[$1]    = {};
+}
+#+END_SRC
+
+
+*** Uminvokes
+
+#+NAME:UPPERCASE minvokes  
+#+BEGIN_SRC js
+| UPPERCASE minvokes  
+{
+  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+  z.states[$1]    = {};
+  z.states[$1].invoke = invokes[invokeIndex]; 
+}
+#+END_SRC
+
+
+*** ULU
+    
+#+NAME:UPPERCASE   LOWERCASE  UPPERCASE
+#+BEGIN_SRC js
+| UPPERCASE   LOWERCASE  UPPERCASE
+{
+  if(z.states[$1] != undefined) {
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }else {
+    z.states[$1] = {};
+    z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }
+}
+#+END_SRC
+
+
+*** IUminvokes
+    
+#+NAME:INITIAL UPPERCASE   minvokes
+#+BEGIN_SRC js
+| INITIAL UPPERCASE   minvokes
+{
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
+   z.states[$2] = {};
+   z.states[$2].invoke = invokes[invokeIndex]; 
+  }
+}
+#+END_SRC
+
+
+*** IULUminvokesmex
+
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes
+#+BEGIN_SRC js
+| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes 
+{
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+  }else {
+   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$5); 
+   z.states[$2] = {};
+   z.states[$2].invoke = invokes[invokeIndex]; 
+   z.states[$2].on = {};
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+  }
+}
+#+END_SRC
+
+
+
+
+
+*** IULUma
+#+NAME:INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+#+BEGIN_SRC js
+| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+{
+  z.initial = $2; 
+  if(z.states[$2] != undefined) {
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+   z.states[$2].on[$3].actions = $5;
+  }else {
+   z.states[$2] = {};
+   z.states[$2].on = {};
+   z.states[$2].on[$3] = {};
+   z.states[$2].on[$3].target = $4;
+   z.states[$2].on[$3].actions = $5;
+  }
+}
+#+END_SRC
+
+
+*** ULma
+    
+#+NAME:UPPERCASE  LOWERCASE  mactions
+#+BEGIN_SRC js
+| UPPERCASE  LOWERCASE  mactions
+{
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }
+}
+#+END_SRC
+
+
+*** ULUma
+
+#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mactions
+#+BEGIN_SRC js
+| UPPERCASE  LOWERCASE  UPPERCASE  mactions
+{
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }
+}
+#+END_SRC
+
+
+*** Ufinal
+    
+#+NAME:UPPERCASE FINAL
+#+BEGIN_SRC js
+| UPPERCASE FINAL
+{
+   z.states[$1] = {};
+   z.states[$1].type = "final";
+}
+#+END_SRC
+
+
+** INVOKE   
+
+***  INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+#+BEGIN_SRC js
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+{
+  let objInvoke             = {}; 
+  objInvoke.id              = $3;
+  objInvoke.src             = $5;
+  objInvoke.onDone          = {};
+  objInvoke.onDone.target   = $7;
+  objInvoke.onError         = {};
+  objInvoke.onError.target  = $9;
+  invokes.push(objInvoke);
+}
+#+END_SRC    
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+    
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+#+BEGIN_SRC js
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+{
+  let objInvokeOnDoneAct             = {}; 
+  objInvokeOnDoneAct .id              = $3;
+  objInvokeOnDoneAct .src             = $5;
+  objInvokeOnDoneAct .onDone          = {};
+  objInvokeOnDoneAct .onDone.target   = $7;
+  objInvokeOnDoneAct .onDone.actions  = [];
+  objInvokeOnDoneAct .onDone.actions.push(...$8);
+  objInvokeOnDoneAct .onError         = {};
+  objInvokeOnDoneAct .onError.target  = $10;
+  invokes.push(objInvokeOnDoneAct);
+}
+#+END_SRC
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+#+BEGIN_SRC js
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+{
+  let objInvokeOnErrorAct              = {}; 
+  objInvokeOnErrorAct.id               = $3;
+  objInvokeOnErrorAct.src              = $5;
+  objInvokeOnErrorAct.onDone           = {};
+  objInvokeOnErrorAct.onDone.target    = $7;
+  objInvokeOnErrorAct.onError          = {};
+  objInvokeOnErrorAct.onError.target   = $9;
+  objInvokeOnErrorAct.onError.actions  = [];
+  objInvokeOnErrorAct.onError.actions.push(...$10);
+  invokes.push(objInvokeOnErrorAct);
+}
+#+END_SRC
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+#+BEGIN_SRC js
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+{
+  let objInvokeOnDoneErrorAct              = {}; 
+  objInvokeOnDoneErrorAct .id              = $3;
+  objInvokeOnDoneErrorAct .src             = $5;
+  objInvokeOnDoneErrorAct .onDone          = {};
+  objInvokeOnDoneErrorAct .onDone.target   = $7;
+  objInvokeOnDoneErrorAct .onDone.actions  = [];
+  objInvokeOnDoneErrorAct .onDone.actions.push(...$8);
+  objInvokeOnDoneErrorAct .onError         = {};
+  objInvokeOnDoneErrorAct .onError.target  = $10;
+  objInvokeOnDoneErrorAct .onError.actions = [];
+  objInvokeOnDoneErrorAct .onError.actions.push(...$11);
+  invokes.push(objInvokeOnDoneErrorAct);
+}
+;
+#+END_SRC
+
+
+* misc
+  
+#+NAME:misc
+#+BEGIN_SRC js
+mstates
+: states
+| mstates states
+;
+
+actions
+: LOWERCASE        {$$=$1}
+| ':' LOWERCASE    {$$=$2}
+;
+
+mactions
+: ':' actions
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| mactions actions
+{
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
+
+invokes
+: LOWERCASE        {$$=$1}
+| '@' LOWERCASE    {$$=$2}
+;
+
+minvokes
+: '@' invokes
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| minvokes invokes  {
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
+
+entry
+: LOWERCASE          {$$=$1}
+| ENTRY LOWERCASE    {$$=$2}
+;
+
+mentry
+: ENTRY entry
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| mentry entry  {
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
+
+exit
+: LOWERCASE          {$$=$1}
+| EXIT LOWERCASE    {$$=$2}
+;
+
+mexit
+: EXIT exit
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| mexit exit  {
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
+
+#+END_SRC
+
+
+* expressions
+  
+#+NAME:expressions
+#+BEGIN_SRC js 
+expressions
+: context mstates
+{
+return z;
+}
+;
+#+END_SRC
+
+
+* grammarXstate.jison
+  
+
+#+BEGIN_SRC js :noweb yes :tangle ./grammarXstate.jison
+<<setup>>
+<<mnumber>>
+<<data>>
+<<mdata>>
+<<context>>
+<<states>>
+<<INITIAL UPPERCASE mentry>>
+<<INITIAL UPPERCASE mentry mexit>>
+<<INITIAL UPPERCASE mexit>>
+<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE>>
+<<INITIAL    UPPERCASE   LOWERCASE  mactions>>
+<<UPPERCASE>>
+<<UPPERCASE minvokes>>
+<<UPPERCASE   LOWERCASE  UPPERCASE>>
+<<INITIAL UPPERCASE   minvokes>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes>>
+<<INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions>>
+<<UPPERCASE  LOWERCASE  mactions>>
+<<UPPERCASE  LOWERCASE  UPPERCASE  mactions>>
+<<UPPERCASE FINAL>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE>> 
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions>>
+<<misc>>
+<<expressions>>
+#+END_SRC

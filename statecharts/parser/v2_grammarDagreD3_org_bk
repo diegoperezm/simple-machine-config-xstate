@@ -1,0 +1,524 @@
+* commands
+
+#+NAME:states24
+#+BEGIN_SRC js
+  states.push("INITIAL",$2,$4);  
+#+END_SRC
+
+
+#+NAME: edgesInitial
+#+BEGIN_SRC js :noweb yes
+edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+#+END_SRC
+
+#+NAME: edgesRest
+#+BEGIN_SRC js
+edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+#+END_SRC
+
+
+
+#+BEGIN_QUOTE
+edges.push(["INITIAL",$2,"xstate.init", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+
+#+END_QUOTE
+
+
+* setup
+  
+  
+** setup
+
+#+NAME:setup
+#+BEGIN_SRC js :noweb yes 
+%{
+let invokes = [];
+let states  = [];
+let edges   = [];
+%}
+
+/* lexical grammar */
+%lex
+
+%%
+\s+                       /* skip whitespace */
+"*"                       return 'INITIAL'
+"context"                 return 'CONTEXT'
+"invoke:"                 return 'INVOKE'
+"id:"                     return 'ID'
+"src:"                    return 'SRC'
+"ondone:"                 return 'ONDONE'
+"onerror:"                return 'ONERROR'
+"entry:"                  return 'ENTRY'
+"exit:"                   return 'EXIT'
+"final"                   return 'FINAL'
+[0-9]+                    return 'NUMBER'
+[a-z0-9]+                 return 'LOWERCASE'
+[A-Z0-9]+                 return 'UPPERCASE'
+":"                       return ':'
+'"'                       return '"'
+"@"                       return '@'
+"["                       return '['
+"]"                       return ']'
+//<<EOF>>                 return 'EOF'
+
+/lex
+
+%start expressions
+
+%% /* language grammar */
+
+#+END_SRC
+
+
+** mnumber
+  
+#+NAME:mnumber
+#+BEGIN_SRC js :noweb yes
+mnumber
+: NUMBER  NUMBER        {$$=[+$1,+$2]}
+| mnumber NUMBER        {$$=[...$1,+$2]}
+;
+#+END_SRC
+
+
+** data
+
+#+NAME:data
+#+BEGIN_SRC js :noweb yes
+data
+: '[' ']'              {$$=[[]]}
+| '"' '"'              {$$=[""]}
+| '"' LOWERCASE '"'    {$$=[$2]}
+| NUMBER               {$$=[+$1]}
+| '[' NUMBER ']'       {$$=[[+$2]]}
+| '[' mnumber ']'      {$$=[[$2]]}
+;
+#+END_SRC
+
+
+**  mdata
+#+NAME:mdata
+#+BEGIN_SRC js :noweb yes
+mdata
+: LOWERCASE ':' data    {$$=[$1,...$3]}
+;
+#+END_SRC
+
+
+** context
+#+NAME:context
+#+BEGIN_SRC js :noweb yes
+context
+: 
+| CONTEXT ':'
+| context   mdata {}
+;
+#+END_SRC
+
+
+* non existent
+
+
+**  INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+#+BEGIN_SRC js :noweb yes
+#+END_SRC
+
+
+* states
+
+
+** states 
+#+NAME:states
+#+BEGIN_SRC js :noweb yes
+states
+#+END_SRC
+
+
+** INITIAL
+
+*** IUme
+
+#+NAME:INITIAL UPPERCASE mentry
+#+BEGIN_SRC js
+: INITIAL UPPERCASE mentry
+{
+
+
+
+
+}
+#+END_SRC
+
+
+*** IUmemex
+
+#+NAME:INITIAL UPPERCASE mentry mexit
+#+BEGIN_SRC js
+| INITIAL    UPPERCASE  mentry  mexit
+{
+
+
+
+
+
+}
+#+END_SRC
+
+
+*** IUmex
+#+NAME:INITIAL UPPERCASE mexit
+#+BEGIN_SRC js
+| INITIAL UPPERCASE mexit
+{
+
+
+
+
+
+}
+#+END_SRC
+
+
+
+  
+
+*** IUlU
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE UPPERCASE 
+#+BEGIN_SRC js :noweb yes
+| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+{
+  <<states24>>  
+  <<edgesInitial>>
+  <<edgesRest>>
+}
+#+END_SRC
+
+
+*** IUlma
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE  mactions
+#+BEGIN_SRC js :noweb yes
+| INITIAL    UPPERCASE   LOWERCASE  mactions
+{
+  states.push("INITIAL",$2);  
+  <<edgesInitial>>
+
+}
+#+END_SRC
+
+
+***  U
+
+#+NAME:UPPERCASE
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE  
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+}
+#+END_SRC
+
+
+
+
+
+***  Uminvokes
+
+#+NAME:UPPERCASE minvokes 
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE minvokes 
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+ edges.push([
+           $1,
+           invokes[invokeIndex].onDone,
+           'onDone',
+           $1+"-"+ invokes[invokeIndex].onDone+"-"+"done.invoke." + invokes[invokeIndex].id
+          ],
+          [
+           $1,
+           invokes[invokeIndex].onError,
+           'onError',
+           $1+"-"+ invokes[invokeIndex].onError+"-"+"error.platform." + invokes[invokeIndex].id
+
+           ],
+ );
+}
+#+END_SRC
+
+
+
+
+
+***  UlU 
+
+#+NAME:UPPERCASE LOWERCASE UPPERCASE 
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE   LOWERCASE  UPPERCASE
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+  if(!states.includes($3)) {
+    states.push($3);
+  }
+  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+}
+#+END_SRC
+
+
+
+
+
+*** IUminvokes
+    
+#+NAME:INITIAL   UPPERCASE minvokes
+#+BEGIN_SRC js :noweb yes
+| INITIAL UPPERCASE   minvokes
+{
+  states.push("INITIAL",$2);  
+  <<edgesInitial>>
+}
+#+END_SRC
+
+
+*** IUlUma
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE UPPERCASE mactions
+#+BEGIN_SRC js :noweb yes
+| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+{
+  <<states24>>  
+  <<edgesInitial>>
+  <<edgesRest>>
+}
+#+END_SRC
+
+
+***  UL mactions
+
+#+NAME:UPPERCASE LOWERCASE  mactions
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE  LOWERCASE  mactions
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+  edges.push([$1,"",$2, $1+"-"+$2]);
+}
+#+END_SRC
+
+
+*** ULUma
+
+#+NAME:UPPERCASE LOWERCASE UPPERCASE mactions
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE  LOWERCASE  UPPERCASE  mactions
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+  if(!states.includes($3)) {
+    states.push($3);
+  }
+
+  edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
+}
+#+END_SRC
+
+
+***  U FINAL 
+
+#+NAME:UPPERCASE FINAL 
+#+BEGIN_SRC js :noweb yes
+| UPPERCASE FINAL
+{
+  if(!states.includes($1)) {
+    states.push($1);
+  }
+    states.push("FINAL");
+    edges.push([$1, "FINAL", ""]);
+}
+#+END_SRC
+
+
+* INVOKE
+  
+** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+#+BEGIN_SRC js :noweb yes
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+{
+    let  objInvoke      = {};
+    objInvoke.id        = $3; 
+    objInvoke.onDone    = $7; 
+    objInvoke.onError   = $9; 
+    invokes.push(objInvoke);
+
+}
+#+END_SRC
+
+
+** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+#+BEGIN_SRC js :noweb yes
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+{
+  let objInvokeOnDoneAct             = {}; 
+  objInvokeOnDoneAct.id              = $3;
+  objInvokeOnDoneAct.onDone          = $7;
+  objInvokeOnDoneAct.onError         = $10;
+  invokes.push(objInvokeOnDoneAct);
+}
+#+END_SRC
+
+
+** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+#+BEGIN_SRC js :noweb yes
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+{
+  let objInvokeOnErrorAct              = {}; 
+  objInvokeOnErrorAct.id               = $3;
+  objInvokeOnErrorAct.onDone           = $7;   
+  objInvokeOnErrorAct.onError          = $9; 
+  invokes.push(objInvokeOnErrorAct);
+
+ }
+#+END_SRC
+
+
+** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+#+BEGIN_SRC js :noweb yes
+| INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+{
+  let objInvokeOnDoneErrorAct             = {}; 
+  objInvokeOnDoneErrorAct.id              = $3;
+  objInvokeOnDoneErrorAct.onDone          = $7;
+  objInvokeOnDoneErrorAct.onError         = $10;
+  invokes.push(objInvokeOnDoneErrorAct);
+}
+;
+#+END_SRC
+
+
+
+* misc
+
+#+NAME:misc
+#+BEGIN_SRC js :noweb yes
+mstates
+: states
+| mstates states
+;
+
+actions
+: LOWERCASE        {$$=$1}
+| ':' LOWERCASE    {$$=$2}
+;
+
+mactions
+: ':' actions
+{
+  $$=[$2].reduce((acc,val) => acc.concat(val),[]);
+}
+| mactions actions
+{
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
+}
+;
+
+invokes
+: LOWERCASE        {$$=$1}
+| '@' LOWERCASE    {$$=$2}
+;
+
+minvokes
+: '@' invokes
+{
+  $$=[$2];
+}
+| minvokes invokes  {
+  $$=[$1,$2];
+}
+;
+
+entry
+: LOWERCASE          {$$=$1}
+| ENTRY LOWERCASE    {$$=$2}
+;
+
+mentry
+: ENTRY entry {}
+| mentry entry  {}
+;
+
+exit
+: LOWERCASE          {$$=$1}
+| EXIT LOWERCASE    {$$=$2}
+;
+
+mexit
+: EXIT exit {}
+| mexit exit  {}
+;
+#+END_SRC
+
+
+* expressions
+
+#+NAME:expressions
+#+BEGIN_SRC js :noweb yes
+expressions
+: context mstates
+{
+return [states, edges]; 
+}
+;
+#+END_SRC
+
+
+* grammarDagreD3.jison
+
+
+
+#+BEGIN_SRC js :noweb yes :tangle ./grammarDagreD3.jison
+<<setup>>
+<<mnumber>>
+<<data>>
+<<mdata>>
+<<context>>
+<<states>>
+<<INITIAL UPPERCASE mentry>>
+<<INITIAL UPPERCASE mentry mexit>>
+<<INITIAL UPPERCASE mexit>>
+<<INITIAL   UPPERCASE LOWERCASE UPPERCASE>>
+<<INITIAL   UPPERCASE LOWERCASE  mactions>>
+<<UPPERCASE>>
+<<UPPERCASE minvokes>>
+<<UPPERCASE LOWERCASE UPPERCASE>>
+<<INITIAL   UPPERCASE minvokes>>
+<<INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes>>
+<<INITIAL   UPPERCASE LOWERCASE UPPERCASE mactions>>
+<<UPPERCASE LOWERCASE  mactions>>
+<<UPPERCASE LOWERCASE UPPERCASE mactions>>
+<<UPPERCASE FINAL>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE>> 
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions>>
+<<misc>>
+<<expressions>>
+#+END_SRC
+
