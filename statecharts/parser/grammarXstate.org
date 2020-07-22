@@ -1,4 +1,19 @@
-/* description:  */
+* commands
+
+
+#+NAME:
+#+BEGIN_SRC js
+
+#+END_SRC
+
+
+* setup
+
+** setup 
+
+#+NAME:setup
+#+BEGIN_SRC js
+		/* description:  */
 
 %{
 let invokes        =[];
@@ -40,10 +55,22 @@ z.states           ={};
 
 %% /* language grammar */
 
+#+END_SRC
+
+** mnumber 
+   
+#+NAME:mnumber
+#+BEGIN_SRC js
 mnumber
 : NUMBER  NUMBER        {$$=[+$1,+$2]}
 | mnumber NUMBER        {$$=[...$1,+$2]}
 ;
+#+END_SRC
+
+** data
+
+#+NAME:data
+#+BEGIN_SRC js
 data
 : '[' ']'              {$$=[[]]}
 | '"' '"'              {$$=[""]}
@@ -52,15 +79,52 @@ data
 | '[' NUMBER ']'       {$$=[[+$2]]}
 | '[' mnumber ']'      {$$=[[$2]]}
 ;
+#+END_SRC
+
+** mdata
+#+NAME:mdata
+#+BEGIN_SRC js
 mdata
 : LOWERCASE ':' data    {$$=[$1,...$3]}
 ;
+#+END_SRC
+
+** context
+
+#+NAME:context
+#+BEGIN_SRC js
 context
 : 
 | CONTEXT ':'
 | context   mdata {z.context[$2[0]] = $2[1]}
 ;
+#+END_SRC
+
+
+* non existent
+
+**  INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+
+#+NAME:INITIAL   UPPERCASE LOWERCASE UPPERCASE minvokes
+#+BEGIN_SRC js :noweb yes
+#+END_SRC
+
+
+* states 
+  
+** states
+
+#+NAME:states
+#+BEGIN_SRC js
 states
+#+END_SRC
+
+
+** INITIAL
+
+*** IUlU
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+#+BEGIN_SRC js 
 : INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
    z.initial = $2
@@ -74,6 +138,13 @@ states
     z.states[$2].on[$3].target = $4;
   }
 }
+#+END_SRC
+
+
+*** IULma
+
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  mactions
+#+BEGIN_SRC js
 | INITIAL    UPPERCASE   LOWERCASE  mactions
 {
    z.initial = $2
@@ -87,6 +158,13 @@ states
     z.states[$2].on[$3].actions = $4;
   }
 }
+#+END_SRC
+
+
+*** IULUmen
+
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
+#+BEGIN_SRC js
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
    z.initial = $2
@@ -103,6 +181,12 @@ states
   }
 
 }
+#+END_SRC
+
+
+*** IULUmex
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
+#+BEGIN_SRC js
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
    z.initial = $2
@@ -119,6 +203,13 @@ states
   }
 
 }
+#+END_SRC
+
+
+*** IULUmemex
+
+#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
+#+BEGIN_SRC js
 | INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
    z.initial = $2
@@ -136,17 +227,39 @@ states
     z.states[$2].on[$3].target = $4;
   }
 }
+#+END_SRC    
+
+
+** UPPERCASE
+
+*** U
+
+#+NAME:UPPERCASE 
+#+BEGIN_SRC js
 | UPPERCASE 
 {
   z.states[$1]    = {};
 }
+#+END_SRC
+
+
+*** Uminvokes
+
+#+NAME:UPPERCASE minvokes  
+#+BEGIN_SRC js
 | UPPERCASE minvokes  
 {
   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
   z.states[$1]    = {};
   z.states[$1].invoke = invokes[invokeIndex]; 
 }
+#+END_SRC
 
+
+*** ULU
+    
+#+NAME:UPPERCASE   LOWERCASE  UPPERCASE
+#+BEGIN_SRC js
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
   if(z.states[$1] != undefined) {
@@ -159,6 +272,12 @@ states
     z.states[$1].on[$2].target = $3;
   }
 }
+#+END_SRC
+
+
+*** ULUme
+#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mentry
+#+BEGIN_SRC js
 | UPPERCASE   LOWERCASE  UPPERCASE mentry
 {
   if(z.states[$1] != undefined) {
@@ -173,6 +292,12 @@ states
     z.states[$1].on[$2].target = $3;
   }
 }
+#+END_SRC
+
+
+*** ULUmemex
+#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
+#+BEGIN_SRC js
 | UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
 {
   if(z.states[$1] != undefined) {
@@ -189,6 +314,13 @@ states
     z.states[$1].on[$2].target = $3;
   }
 }
+#+END_SRC
+
+
+*** ULUmex
+    
+#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mexit
+#+BEGIN_SRC js
 | UPPERCASE   LOWERCASE  UPPERCASE mexit
 {
   if(z.states[$1] != undefined) {
@@ -203,6 +335,13 @@ states
     z.states[$1].on[$2].target = $3;
   }
 }
+#+END_SRC
+
+
+*** IUmeminvokes
+    
+#+NAME:INITIAL UPPERCASE  mentry minvokes 
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  mentry minvokes 
 {
   z.initial = $2; 
@@ -214,6 +353,13 @@ states
    z.states[$2].invoke = invokes[invokeIndex]; 
   }
 }
+#+END_SRC
+
+
+*** IUmenminvokesmex
+    
+#+NAME:INITIAL UPPERCASE mentry minvokes mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE mentry minvokes mexit
 {
   z.initial = $2; 
@@ -226,6 +372,13 @@ states
    z.states[$2].invoke = invokes[invokeIndex]; 
   }
 }
+#+END_SRC
+
+
+*** IUminvokes
+    
+#+NAME:INITIAL UPPERCASE   minvokes
+#+BEGIN_SRC js
 | INITIAL UPPERCASE   minvokes
 {
   z.initial = $2; 
@@ -236,6 +389,13 @@ states
    z.states[$2].invoke = invokes[invokeIndex]; 
   }
 }
+#+END_SRC
+
+
+*** IUminvokesmex
+
+#+NAME:INITIAL UPPERCASE   minvokes mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE   minvokes mexit
 {
   z.initial = $2; 
@@ -247,6 +407,12 @@ states
    z.states[$2].invoke = invokes[invokeIndex]; 
   }
 }
+#+END_SRC
+
+
+*** IULUminvokesmex
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
   z.initial = $2; 
@@ -264,6 +430,12 @@ states
    z.states[$2].on[$3].target = $4;
   }
 }
+#+END_SRC
+
+
+*** IULUmeminvokes
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
 {
   z.initial = $2; 
@@ -281,6 +453,13 @@ states
    z.states[$2].on[$3].target = $4;
   }
 }
+#+END_SRC
+
+
+*** IULUmenminvokesmex
+    
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
   z.initial = $2; 
@@ -300,6 +479,12 @@ states
    z.states[$2].on[$3].target = $4;
   }
 }
+#+END_SRC
+
+
+*** IULUma
+#+NAME:INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+#+BEGIN_SRC js
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
   z.initial = $2; 
@@ -315,6 +500,12 @@ states
    z.states[$2].on[$3].actions = $5;
   }
 }
+#+END_SRC
+
+
+*** IULUmamex
+#+NAME:INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
   z.initial = $2; 
@@ -332,6 +523,13 @@ states
    z.states[$2].on[$3].actions = $5;
   }
 }
+#+END_SRC    
+
+
+*** IULUmema
+    
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
   z.initial = $2; 
@@ -349,6 +547,13 @@ states
    z.states[$2].on[$3].actions = $6;
   }
 }
+#+END_SRC
+
+
+*** IULUmemamex
+
+#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+#+BEGIN_SRC js
 | INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
   z.initial = $2; 
@@ -368,6 +573,13 @@ states
    z.states[$2].on[$3].actions = $6;
   }
 }
+#+END_SRC
+
+
+*** ULma
+    
+#+NAME:UPPERCASE  LOWERCASE  mactions
+#+BEGIN_SRC js
 | UPPERCASE  LOWERCASE  mactions
 {
   if(z.states[$1] != undefined) {
@@ -380,6 +592,13 @@ states
    z.states[$1].on[$2].actions = $3;
   }
 }
+#+END_SRC
+
+
+*** ULUma
+
+#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mactions
+#+BEGIN_SRC js
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
 {
   if(z.states[$1] != undefined) {
@@ -394,6 +613,13 @@ states
    z.states[$1].on[$2].actions = $4;
   }
 }
+#+END_SRC
+
+
+*** ULUmamex
+    
+#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
+#+BEGIN_SRC js
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
 {
   if(z.states[$1] != undefined) {
@@ -410,6 +636,13 @@ states
    z.states[$1].on[$2].actions = $4;
   }
 }
+#+END_SRC
+
+
+*** ULUmema
+    
+#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+#+BEGIN_SRC js
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
   if(z.states[$1] != undefined) {
@@ -426,6 +659,13 @@ states
    z.states[$1].on[$2].actions = $5;
   }
 }
+#+END_SRC
+
+
+*** ULUmemamex
+    
+#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+#+BEGIN_SRC js
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
   if(z.states[$1] != undefined) {
@@ -444,14 +684,27 @@ states
    z.states[$1].on[$2].actions = $5;
   }
 }
+#+END_SRC
 
+
+*** Ufinal
+    
+#+NAME:UPPERCASE FINAL
+#+BEGIN_SRC js
 | UPPERCASE FINAL
 {
    z.states[$1] = {};
    z.states[$1].type = "final";
 }
+#+END_SRC
 
 
+** INVOKE   
+
+***  INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
+#+BEGIN_SRC js
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 {
   let objInvoke             = {}; 
@@ -462,7 +715,14 @@ states
   objInvoke.onError         = {};
   objInvoke.onError.target  = $9;
   invokes.push(objInvoke);
-} 
+}
+#+END_SRC    
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+    
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
+#+BEGIN_SRC js
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
 {
   let objInvokeOnDoneAct             = {}; 
@@ -476,6 +736,13 @@ states
   objInvokeOnDoneAct .onError.target  = $10;
   invokes.push(objInvokeOnDoneAct);
 }
+#+END_SRC
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
+#+BEGIN_SRC js
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions
 {
   let objInvokeOnErrorAct              = {}; 
@@ -489,6 +756,13 @@ states
   objInvokeOnErrorAct.onError.actions.push(...$10);
   invokes.push(objInvokeOnErrorAct);
 }
+#+END_SRC
+
+
+*** INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+
+#+NAME:INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
+#+BEGIN_SRC js
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions
 {
   let objInvokeOnDoneErrorAct              = {}; 
@@ -505,6 +779,13 @@ states
   invokes.push(objInvokeOnDoneErrorAct);
 }
 ;
+#+END_SRC
+
+
+* misc
+  
+#+NAME:misc
+#+BEGIN_SRC js
 mstates
 : states
 | mstates states
@@ -571,9 +852,68 @@ mexit
 }
 ;
 
+#+END_SRC
+
+
+* expressions
+  
+#+NAME:expressions
+#+BEGIN_SRC js 
 expressions
 : context mstates
 {
 return z;
 }
 ;
+#+END_SRC
+
+
+* grammarXstate.jison
+  
+
+#+BEGIN_SRC js :noweb yes :tangle ./grammarXstate.jison
+<<setup>>
+<<mnumber>>
+<<data>>
+<<mdata>>
+<<context>>
+<<states>>
+<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE>>
+<<INITIAL    UPPERCASE   LOWERCASE  mactions>>
+<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry>>
+<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit>>
+<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit>>
+<<UPPERCASE>>
+<<UPPERCASE minvokes>>
+
+<<UPPERCASE   LOWERCASE  UPPERCASE>>
+<<UPPERCASE   LOWERCASE  UPPERCASE mentry>>
+<<UPPERCASE   LOWERCASE  UPPERCASE mentry mexit>>
+<<UPPERCASE   LOWERCASE  UPPERCASE mexit>>
+<<INITIAL UPPERCASE  mentry minvokes>>
+<<INITIAL UPPERCASE mentry minvokes mexit>>
+<<INITIAL UPPERCASE   minvokes>>
+<<INITIAL UPPERCASE   minvokes mexit>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit>>
+<<INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions>>
+<<INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions>>
+<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit>>
+<<UPPERCASE  LOWERCASE  mactions>>
+<<UPPERCASE  LOWERCASE  UPPERCASE  mactions>>
+<<UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit>>
+<<UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions>>
+<<UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit>>
+
+<<UPPERCASE FINAL>>
+
+
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE>> 
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions>>
+<<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE  UPPERCASE mactions ONERROR UPPERCASE  mactions>>
+<<misc>>
+<<expressions>>
+#+END_SRC
