@@ -1,5 +1,45 @@
 const prevEdges                       = [];
 
+// I need to change this name
+var show = 'currentPath';
+
+/**
+ *
+ *  (I need to change this name) 
+ * 
+ * This one is for change the function
+ * (that highlight the edges of the graph) 
+ *  without re-write the function call 
+ *  inside interpret().onTransition() 
+ *  BUG:
+ *   show = 'path'; at the start of execution  
+ *   and later  
+ *   show = 'currentPath';
+ *   leaves initial state permanently highlighted 
+ */
+const showFn = state =>  {
+   switch (show) {
+  case 'currentPath':
+      highlightCurrentPath(state);   
+    break;
+  case 'path':
+      highlightPath(state);   
+    break;
+  case 'hideNodes':
+    break;
+  case 'hideEdgesWithInput':
+    break;
+  case 'changeEdgeColorOfInput':
+    break;
+  default:
+      highlightCurrentPath(state);   
+  }
+}; 
+
+
+
+
+
 /**
  * This is a simple/naive implementation, first draft etc.:
  *

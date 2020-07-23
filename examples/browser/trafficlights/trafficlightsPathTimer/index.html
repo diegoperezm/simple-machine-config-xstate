@@ -83,7 +83,7 @@
  *
  */
     const trafficlightsService       = interpret(trafficlightsMachine)
-                                            .onTransition( state => highlightCurrentPath(state));
+                                            .onTransition( state => showFn(state));
 
 
 /**

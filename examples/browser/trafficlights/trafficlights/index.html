@@ -80,7 +80,7 @@
  * An interpreted, running instance of a statecharts is called a service (xstate docs).
  */
   const trafficlightsService       = interpret(trafficlightsMachine)
-    .onTransition(state => highlightCurrentPath(state)
+    .onTransition(state => showFn(state)
   );
 
 // This will be printed (console)
