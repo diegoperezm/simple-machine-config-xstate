@@ -68,14 +68,15 @@ let trafficlight = {
 
 ### Initial Configuration
 
- Download an example from the `examples/browser/` folder or just use the scripts:
+  Use the scripts:
 
 
-- xstate.js        ([from the original repo](https://github.com/davidkpiano/xstate) )
-- d3.v5.min.js     ([from the original repo](https://github.com/d3/d3/wiki))
-- dagre-d3.min.js  ([from the original repo](https://github.com/dagrejs/dagre-d3/wiki))
-- grammarDagreD3.js (from the ./statecharts folder)
-- grammarXstate.js  (from the ./statecharts folder)
+- xstate.js         ([from the original repo](https://github.com/davidkpiano/xstate) )
+- d3.v5.min.js      ([from the original repo](https://github.com/d3/d3/wiki))
+- dagre-d3.min.js   ([from the original repo](https://github.com/dagrejs/dagre-d3/wiki))
+- grammarDagreD3.js (from the ./statecharts/parser/ folder)
+- grammarXstate.js  (from the ./statecharts/parser/ folder)
+- utils.js          (from the ./statecharts/libraries/ folder)
 
 
 
