@@ -65,6 +65,51 @@ function highlightCurrentPath(state) {
    }
 }
 
+function highlightPath(state) {
+    let tspanElements = document.getElementsByTagName('tspan');
+    let tspanArr      = Array.from(tspanElements);  
+    let a;
+    let input;
+    let v;
+    let w;
+    let name;
+    let labelStyle;
+    let arrow; 
+
+   if(state.event.type=== 'xstate.init') {
+       input= state.event.type; 
+       v    = 'INITIAL';
+       w    = state.value;
+       name = (v+"-"+w+"-"+state.event.type);
+       window.g.node(w).elem.style = "fill: red; ";
+       a = window.g.edge(v,w,name).elem;
+       a.children[0].setAttribute('class', 'edgePath active');
+
+       arrow = document.getElementById(a.children[1].children[0].id);
+       arrow.children[0].style = "stroke: red; fill: red";
+
+       prevEdges.push([v,w,name]);
+
+   }
+   if(state.changed) {
+      v    = prevEdges[0][1];
+      w    = state.value;
+      name = (v+"-"+w+"-"+state.event.type);
+      window.g.node(w).elem.style = "fill: red; ";
+      a = window.g.edge(v,w, name).elem;
+      a.children[0].setAttribute('class', 'edgePath active');
+
+      arrow = document.getElementById(a.children[1].children[0].id);
+      arrow.children[0].style = "stroke: red; fill: red";
+
+      labelStyle = tspanArr.filter( elem => elem.__data__.name === name); 
+      labelStyle[0].classList.add('active');
+
+      prevEdges.shift();
+      prevEdges.push([v,w,name]);
+
+   }
+}
 
 function graphSetStatesEdges(arr) {
  let states = arr[0];
