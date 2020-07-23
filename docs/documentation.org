@@ -1,0 +1,27 @@
+** State-transition table
+
+[State-transition table:](https://en.wikipedia.org/wiki/State-transition_table)
+
+> A state-transition table is a table showing what state ... a finite state machine will move to, based on the current state and other inputs.
+ It is essentially a truth table in which the inputs include the current state along with other inputs, and the outputs include the next state along with other outputs. 
+
+*** Syntax 
+
+
+context:
+  value: [ value "value" [value] ] 
+
+invoke:
+     id:
+    src:
+ ondone:
+onerror:
+
+
+STATE input STATE [@value entry: value  :actions  exit: value]
+
+*** Examples
+
+**** Calculator 
+
+***** Intro 
