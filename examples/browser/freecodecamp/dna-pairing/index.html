@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>DNA pairing</title>
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="content">
+        <svg id="svgGraph" class="graph"><g></g></svg>
+          <div class="extendedState">
+            <table>
+            <tr>
+              <th>State: </th>
+              <td id="table__state"></td>
+            </tr>
+            <tr>
+              <th>Result: </th>
+              <td id="table__result"></td>
+            </tr>
+          </table>
+          </div>
+          <div class="keys">
+            <button class="key"        id="A">A</button>
+            <button class="key"        id="T">T</button>
+            <button class="key"        id="C">C</button>
+            <button class="key"        id="G">G</button>
+            <button class="key--reset" id="reset">reset</button>
+         </div>
+      </div>
+    </div>
+
+  <script src="js/xstate.js"></script> 
+  <script src="js/d3.v5.min.js"></script>
+  <script src="js/dagre-d3.min.js"></script>
+  <script src="js/grammarXstate.js"></script>
+  <script src="js/grammarDagreD3.js"></script>
+  <script src="js/utils.js"></script>
+  <script>
+   
+/**
+ *
+ *                      SETUP
+ *
+ *
+ **/
+
+   const { Machine,  interpret, assign } = XState;
+   const ParserXstate                    = grammarXstate.Parser;
+   const parserXstate                    = new ParserXstate(grammarXstate);
+   const createMachineConf               = input => parserXstate.parse(input);
+   const ParserDagredD3                  = grammarDagreD3.Parser;
+   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
+
+   const svgGraph                        = document.getElementById("svgGraph");
+   const tableState                      = document.getElementById("table__state"); 
+   const tableResult                     = document.getElementById("table__result"); 
+
+   const A                               = document.getElementById("A"); 
+   const T                               = document.getElementById("T"); 
+   const C                               = document.getElementById("C"); 
+   const G                               = document.getElementById("G"); 
+   const reset                           = document.getElementById("reset"); 
+
+   const input = {
+     a:     {type: "a",     payload: "a"},   
+     t:     {type: "t",     payload: "t"},   
+     c:     {type: "c",     payload: "c"},   
+     g:     {type: "g",     payload: "g"},   
+     reset: {type: "reset"              },   
+   };
+
+
+/**
+ *                                  EVENTS
+ *
+ **/
+
+    A.addEventListener('click',     () => pairElementMachineService.send(input.a));
+    T.addEventListener('click',     () => pairElementMachineService.send(input.t));
+    C.addEventListener('click',     () => pairElementMachineService.send(input.c));
+    G.addEventListener('click',     () => pairElementMachineService.send(input.g));
+    reset.addEventListener('click', () => pairElementMachineService.send(input.reset));
+
+/**
+ *
+ *                                   FINITE STATE  MACHINE
+ *
+ *
+ **/
+
+
+  const options = {
+
+     actions: {
+       setresult:  assign({result: (ctx,evt) => {
+         let dat;
+         switch (evt.payload) {
+           case "a":
+              dat = ["A","T"];                           
+            break;
+           case "t":
+              dat = ["T","A"]
+            break;
+           case "c":
+              dat = ["C","G"]
+            break;
+           case "g":
+              dat = ["G","C"]
+            break;
+           default:
+             "error"
+         }
+        return  ctx.result.concat([dat])
+       }
+        }),
+
+       setresultempty: assign({result: (ctx,evt) => []}),
+     },
+
+    services: {}
+   };
+
+
+/**
+ *   https://xstate.js.org/docs/guides/actions.html#action-order
+ *
+ *   "The order of actions should not necessarily matter ... However,
+ *    the order of actions in the state.actions array is:
+ *    1 exit actions - 2 transition - 3 entry actions"
+ *
+ */
+
+   const stateTransitionTable =
+`
+context:
+ result: []
+
+*IDLE    a           AT     :setresult
+ IDLE    t           TA     :setresult
+ IDLE    c           CG     :setresult
+ IDLE    g           GC     :setresult
+
+   AT    a           AT     :setresult
+   AT    t           TA     :setresult
+   AT    c           CG     :setresult
+   AT    g           GC     :setresult
+   AT    reset       IDLE   :setresultempty  
+
+   TA    a           AT     :setresult
+   TA    t           TA     :setresult
+   TA    c           CG     :setresult
+   TA    g           GC     :setresult
+   TA    reset       IDLE   :setresultempty  
+
+   CG    a           AT     :setresult
+   CG    t           TA     :setresult
+   CG    c           CG     :setresult
+   CG    g           GC     :setresult
+   CG    reset       IDLE   :setresultempty 
+
+   GC    a           AT     :setresult
+   GC    t           TA     :setresult
+   GC    c           CG     :setresult
+   GC    g           GC     :setresult
+   GC    reset       IDLE   :setresultempty 
+`;
+
+   const pairElementMachineConf      = createMachineConf(stateTransitionTable);
+   const pairElementMachine          = Machine(pairElementMachineConf,options);
+   const pairElementMachineService   = interpret(pairElementMachine)
+        .onTransition(state => {
+          tableState.textContent    = state.value;
+          tableResult.textContent   = JSON.stringify(state.context.result);
+          showFn(state);
+        }
+    );
+
+   
+/**
+ *
+ *                                  GRAPH
+ *
+ *
+ **/
+
+   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'TB'});
+
+   let edgeList = parserDagredD3.parse(stateTransitionTable);
+
+   graphSetStatesEdges(edgeList);
+
+   var svg = d3.select("svg"), inner = svg.select("g");
+
+   // Set up zoom support
+   var zoom = d3.zoom().on("zoom", function() {
+         inner.attr("transform", d3.event.transform);
+       });
+
+   svg.call(zoom);
+
+   // Create the renderer
+   var render = new dagreD3.render();
+
+   // Run the renderer. This is what draws the final graph.
+   render(inner, g);
+
+    // Center the graph
+   var initialScale = 1.2;
+
+   svgGraphInfo  =  svgGraph.getBBox();
+
+   svg.call(
+     zoom.transform,
+     d3.zoomIdentity.translate((svgGraphInfo.width + 8000) / 100, 50).scale(initialScale));
+     svg.attr('height', svgGraphInfo.height - (window.innerHeight/2.5));
+
+
+/**
+  *                                TESTS
+  */
+
+
+  function testRunner(test) {
+     for(let j = 0; j < test.length; j++) {
+            setTimeout(function() {
+            pairElementMachineService.send(test[j]);
+           }, j * 1500, j)
+     }
+   }
+
+
+//  A T C G A  -> [ ["A","T"], ["T","A"], ["C","G"], ["G","C"], ["A","T"] ]
+   const test1 =
+    [input.reset, input.a, input.t, input.c, input.g, input.a];
+
+//  T T G A G  -> [ ["T","A"],["T","A"],["G","C"],["A","T"],["G","C"] ]
+   const test2 =
+    [input.reset, input.t, input.t,  input.g,  input.a, input.g];
+
+//  C T C T A  -> [ ["C","G"],["T","A"],["C","G"],["T","A"],["A","T"] ]
+   const test3 =
+    [ input.reset, input.c, input.t, input.c, input.t, input.a];
+
+   
+/**
+ *
+ *      MAIN
+ *
+ **/
+
+      pairElementMachineService.start();
+
+
+  </script>
+</body>
+</html>
