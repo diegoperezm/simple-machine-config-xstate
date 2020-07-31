@@ -71,8 +71,7 @@ function highlightCurrentPath(state) {
 
        prevEdges.push([v,w,name]);
 
-   }
-   if(state.changed) {
+   } else {
       v    = prevEdges[0][0];
       w    = prevEdges[0][1];
       name = prevEdges[0][2]; 
@@ -130,8 +129,7 @@ function highlightPath(state) {
 
        prevEdges.push([v,w,name]);
 
-   }
-   if(state.changed) {
+   } else {
       v    = prevEdges[0][1];
       w    = state.value;
       name = (v+"-"+w+"-"+state.event.type);
