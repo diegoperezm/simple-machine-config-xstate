@@ -19,6 +19,18 @@ function server() {
 }
 
 
+function working() {
+   browserSync
+    .init({
+        watch: true,
+        cors: true,        
+      server: "./working/graph/hide-nodes/"
+    });
+}
+
+
+
+
 function surf() {
   browserSync
     .init({
@@ -114,6 +126,7 @@ exports.start        = parallel(graph);
 exports.surf         = parallel(surf);
 exports.graphMod     = parallel(graphMod);
 exports.server       = parallel(server);
+exports.working      = parallel(working);
 exports.grammar      = parallel(grammar);
 
 
