@@ -18,6 +18,7 @@ The idea of this project is to write a simplified version of an xstate machine c
 ``` javascript
 let trafficlight = {
    initial: "GREEN",
+        id: "tl",
     context: {
        color:"green"},
     states: {
@@ -57,7 +58,23 @@ let trafficlight = {
 
   - Code:
 
-![diagram code](diagram_code.png)
+``` javascript
+const statetransitiontable = 
+`
+context:
+ color: "green"
+
+id: tl
+ *GREEN  time YELLOW entry: displaycolor
+                      exit: setcoloryellow
+
+  YELLOW time RED    entry: displaycolor 
+                      exit: setcolorred
+
+  RED    time GREEN  entry: displaycolor
+                      exit: setcolorgreen
+`;
+```
 
   - Graph (png): 
 
