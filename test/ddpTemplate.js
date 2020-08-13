@@ -11,6 +11,7 @@ const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
 
 const sttX = 
 `
+id: someid
 *INITIAL @id
 `;
 

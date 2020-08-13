@@ -11,6 +11,7 @@ const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
 
 const sttddpInUpLowUppMentry   = 
 `
+id: someid
 *A time B entry: a
  B time A
 `;

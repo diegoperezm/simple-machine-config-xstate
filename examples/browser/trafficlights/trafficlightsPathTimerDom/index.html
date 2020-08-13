@@ -11,7 +11,7 @@
 <body>
     <div class="container">
       <div class="content">
-         <svg width="50%"  class="graph"><g transform="translate(100,100)"/></svg>
+         <svg width="50%" id="svgGraph" class="graph"><g transform="translate(100,100)"/></svg>
            <div class="trafficlights">
               <div id="green"   class="light"></div>
               <div id="yellow" class="light"></div>
@@ -39,17 +39,11 @@
  **/
 
    const { Machine,  interpret, assign } = XState; 
-   const createMachineConf               = input => parserXstate.parse(input);
-   const ParserXstate                    = grammarXstate.Parser;
-   const parserXstate                    = new ParserXstate(grammarXstate);
-   const ParserDagredD3                  = grammarDagreD3.Parser;
-   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
    const lightGreen                      = document.getElementById('green');
    const lightYellow                     = document.getElementById('yellow');
    const lightRed                        = document.getElementById('red');
    
-  
-
+ 
 /**
  *     
  *                      STATECHARTS
@@ -59,6 +53,7 @@
 
    const stateTransitionTable = 
    `
+    id: someid
     *GREEN  time YELLOW entry: setstyledomgreen
      YELLOW time RED    entry: setstyledomyellow 
      RED    time GREEN  entry: setstyledomred 
@@ -95,6 +90,27 @@
      }
   };
 
+
+/**
+ *     
+ *      GRAPH
+ *  
+ *
+ **/
+
+ setGraphConf('svgGraph', stateTransitionTable, "TB", 1, 1);
+ const g = createGraph();
+ renderGraph(g); 
+ 
+
+   
+/**
+ *     
+ *      MAIN 
+ *  
+ *
+ **/
+
 // Create a machine conf for xstate
    const trafficlightsMachineConf   = createMachineConf(stateTransitionTable);
 
@@ -111,47 +127,9 @@
  *
  */
     const trafficlightsService       = interpret(trafficlightsMachine)
- 	                                        .onTransition( state => showFn(state));
+ 	                                        .onTransition( state => showFn(state,g));
 
 
-/**
- *     
- *      GRAPH
- *  
- *
- **/
-
-   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'TB'});
-
-   let arr = parserDagredD3.parse(stateTransitionTable); 
-
-   graphSetStatesEdges(arr); 
-   	 
-   var svg = d3.select("svg"), inner = svg.select("g");
-   
-   // Set up zoom support
-   var zoom = d3.zoom().on("zoom", function() {
-         inner.attr("transform", d3.event.transform);
-       });
-
-   svg.call(zoom);
-   
-   // Create the renderer
-   var render = new dagreD3.render();
-   
-   // Run the renderer. This is what draws the final graph.
-   render(inner, g);
-   
- 
-   var initialScale = 2;
-	  svg.attr('height', g.graph().height * initialScale + 40);		
-
-/**
- *     
- *      MAIN 
- *  
- *
- **/
     function trafficlightsRun() {
        trafficlightsService.start();
        setInterval(function() {

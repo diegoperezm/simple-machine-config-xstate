@@ -11,6 +11,7 @@ const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
 
 const sttddpInUppLowMact = 
 `
+id: someid
 *A time :actions
 `;
 

@@ -17,6 +17,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
  ondone: SUCCESS
 onerror: ERROR
 
+id: someid
   *A @someid
    B time SUCCESS
   `;
@@ -26,6 +27,7 @@ onerror: ERROR
   const simpleInvokeObject =
 {
   "initial": "A",
+       "id": "someid",
   "context": {},
   "states": {
     "A": {
@@ -50,11 +52,11 @@ onerror: ERROR
   }
 };
 
-//console.log(JSON.stringify(xspSimpleInvoke,null,2));
+
 test(
   'xspSimpleInvoke and simpleInvokeObject',
   xspSimpleInvoke,
   simpleInvokeObject);
 
-
+// console.log(JSON.stringify(xspSimpleInvoke,null,2));
 

@@ -11,7 +11,7 @@
 <body>
     <div class="container">
       <div class="content">
-           <svg width="100%"  class="graph"><g transform="translate(50,100)"/></svg>
+           <svg width="100%" id="svgGraph" class="graph"><g transform="translate(50,100)"/></svg>
            <div class="content__convertToF">
             <form  class="convertToF">
               <label class="label-input"     for="inputValue"> Celsius</label>
@@ -53,11 +53,6 @@
    const buttonCalculate                 = document.getElementById('buttonCalculate');
    const inputValue                      = document.getElementById('inputValue');
    const ouputDisplay                    = document.getElementById('outputDisplay');
-   const ParserXstate                    = grammarXstate.Parser;
-   const parserXstate                    = new ParserXstate(grammarXstate);
-   const createMachineConf               = input => parserXstate.parse(input);
-   const ParserDagredD3                  = grammarDagreD3.Parser;
-   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
 
    buttonCalculate.addEventListener('click', () => convertToFMachineService.send('calculate'));
 
@@ -132,15 +127,13 @@ onerror: ERROR
  ondone: IDLE              :setctxcelsiusstr :setctxresultstr
 onerror: ERROR
 
+id: converttof
 *IDLE            calculate        READINPUT
  READINPUT       @getinput        
  CALCF           @calcf           
  DISPLAYRESULT   @displayresult  
  ERROR                                 
 `;
-
-
-   const convertToFMachineConf = createMachineConf(stateTransitionTable); 
 
 // xstate expects an object
    const options = {
@@ -158,19 +151,6 @@ onerror: ERROR
  };
 
 
-   const convertToFMachine = Machine(convertToFMachineConf,options);
-
-    convertToFMachineService   = interpret(convertToFMachine)
-        .onTransition(state => {
-          console.log('state   ',state.value);
-          console.log('celsius ',state.context.celsius);
-          console.log('result ', state.context.result);
-          console.log('---------------------------------');
-          showFn(state);
-        }
-    );
-
-
 
 /**
  *     
@@ -178,34 +158,12 @@ onerror: ERROR
  *  
  *
  **/
+ setGraphConf('svgGraph', stateTransitionTable, "LR", 0.9, 1);
 
-   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'LR'});
+ const g = createGraph();
 
-   let arr = parserDagredD3.parse(stateTransitionTable); 
-
-   graphSetStatesEdges(arr); 
-
-   var svg = d3.select("svg"), inner = svg.select("g");
-   
-   // Set up zoom support
-   var zoom = d3.zoom().on("zoom", function() {
-         inner.attr("transform", d3.event.transform);
-       });
-
-   svg.call(zoom);
-   
-   // Create the renderer
-   var render = new dagreD3.render();
-   
-   // Run the renderer. This is what draws the final graph.
-   render(inner, g);
-   
+ renderGraph(g); 
  
-  var initialScale = 2;
-  svg.attr('height', g.graph().height * initialScale + 40);
-
-
-
 
 /**
  *     
@@ -220,6 +178,20 @@ onerror: ERROR
  *  convertToF(30)   should return a value of   86
  *
  **/
+
+   const convertToFMachineConf = createMachineConf(stateTransitionTable); 
+   const convertToFMachine = Machine(convertToFMachineConf,options);
+
+    convertToFMachineService   = interpret(convertToFMachine)
+        .onTransition(state => {
+          console.log('state   ',state.value);
+          console.log('celsius ',state.context.celsius);
+          console.log('result ', state.context.result);
+          console.log('---------------------------------');
+          showFn(state,g);
+        }
+    );
+
 
    convertToFMachineService.start();
   

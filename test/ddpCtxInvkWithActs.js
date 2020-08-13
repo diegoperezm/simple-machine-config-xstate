@@ -33,7 +33,7 @@ onerror: ERROR
  ondone: IDLE              :setctxcelsiusstr :setctxresultstr
 onerror: ERROR
 
-
+id: someid
 *IDLE          calculate        READINPUT
 
  READINPUT     @getinput       

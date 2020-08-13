@@ -4,6 +4,7 @@
 let invokes        =[];
 let z              ={};
 z.initial          ="";
+z.id               ="";
 z.context          ={};
 z.states           ={};
 %}
@@ -61,397 +62,377 @@ context
 | context   mdata {z.context[$2[0]] = $2[1]}
 ;
 states
-: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+: ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
+ z.initial = $4
+ z.id = $2
+ z.states[$4] = {};
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
 }
-| INITIAL    UPPERCASE   LOWERCASE  mactions
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  mactions
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].actions = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].actions = $4;
-  }
+z.initial = $4
+z.id = $2
+z.states[$4] = {};
+z.states[$4].on = {};
+z.states[$4].on[$5] = {};
+z.states[$4].on[$5].actions = $6;
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].entry = $5;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].entry = $5;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
-
+z.initial = $4; 
+z.id      = $2
+z.states[$4] = {};
+z.states[$4].entry = $7;
+z.states[$4].on = {};
+z.states[$4].on[$5] = {};
+z.states[$4].on[$5].target = $6;
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].exit = $5;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].exit = $5;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
-
+z.initial = $4; 
+z.id      = $2
+z.states[$4] = {};
+z.states[$4].exit = $7;
+z.states[$4].on = {};
+z.states[$4].on[$5] = {};
+z.states[$4].on[$5].target = $6;
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].entry = $5;
-    z.states[$2].exit = $6;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].entry = $5;
-    z.states[$2].exit = $6;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
+z.initial = $4; 
+z.id      = $2
+z.states[$4] = {};
+z.states[$4].entry = $7;
+z.states[$4].exit = $8;
+z.states[$4].on = {};
+z.states[$4].on[$5] = {};
+z.states[$4].on[$5].target = $6;
 }
 | UPPERCASE 
 {
-  z.states[$1]    = {};
+z.states[$1]    = {};
 }
 | UPPERCASE minvokes  
 {
-  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
-  z.states[$1]    = {};
-  z.states[$1].invoke = invokes[invokeIndex]; 
+let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+z.states[$1]    = {};
+z.states[$1].invoke = invokes[invokeIndex]; 
 }
-
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+if(z.states[$1] != undefined) {
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}else {
+  z.states[$1] = {};
+  z.states[$1].on = {};
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}
 }
 | UPPERCASE   LOWERCASE  UPPERCASE mentry
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].entry = $4;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].entry = $4;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+if(z.states[$1] != undefined) {
+  z.states[$1].entry = $4;
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}else {
+  z.states[$1] = {};
+  z.states[$1].entry = $4;
+  z.states[$1].on = {};
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}
 }
 | UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].entry = $4;
-    z.states[$1].exit  = $5;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].entry = $4;
-    z.states[$1].exit  = $5;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+if(z.states[$1] != undefined) {
+  z.states[$1].entry = $4;
+  z.states[$1].exit  = $5;
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}else {
+  z.states[$1] = {};
+  z.states[$1].entry = $4;
+  z.states[$1].exit  = $5;
+  z.states[$1].on = {};
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}
 }
 | UPPERCASE   LOWERCASE  UPPERCASE mexit
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].exit = $4;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].exit = $4;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+if(z.states[$1] != undefined) {
+  z.states[$1].exit = $4;
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
+}else {
+  z.states[$1] = {};
+  z.states[$1].exit = $4;
+  z.states[$1].on = {};
+  z.states[$1].on[$2] = {};
+  z.states[$1].on[$2].target = $3;
 }
-| INITIAL UPPERCASE  mentry minvokes 
-{
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$4); 
-   z.states[$2] = {};
-   z.states[$2].entry = $3;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
 }
-| INITIAL UPPERCASE mentry minvokes mexit
+| ID LOWERCASE INITIAL UPPERCASE  mentry minvokes 
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$4); 
-   z.states[$2] = {};
-   z.states[$2].entry = $3;
-   z.states[$2].exit = $5;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+z.initial = $4; 
+z.id = $2; 
+if(z.states[$4] != undefined) {
+}else {
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$6);
+ z.states[$4] = {};
+ z.states[$4].entry  = $5;
+ z.states[$4].invoke = invokes[invokeIndex]; 
 }
-| INITIAL UPPERCASE   minvokes
-{
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
-   z.states[$2] = {};
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
 }
-| INITIAL UPPERCASE   minvokes mexit
+|ID LOWERCASE INITIAL UPPERCASE mentry minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
-   z.states[$2] = {};
-   z.states[$2].exit = $4;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+z.initial = $4; 
+z.id = $2; 
+if(z.states[$4] != undefined) {
+}else {
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$6);
+ z.states[$4] = {};
+ z.states[$4].entry  = $5;
+ z.states[$4].exit   = $7;
+ z.states[$4].invoke = invokes[invokeIndex]; 
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
-{
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].exit = $6;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$5); 
-   z.states[$2] = {};
-   z.states[$2].exit = $6;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
+| ID LOWERCASE INITIAL UPPERCASE   minvokes
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry =  $5;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$6); 
-   z.states[$2] = {};
-   z.states[$2].entry =  $5;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
+z.initial = $4; 
+z.id = $2; 
+if(z.states[$4] != undefined) {
+}else {
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$5); 
+ z.states[$4] = {};
+ z.states[$4].invoke = invokes[invokeIndex]; 
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
-{
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry  =  $5;
-   z.states[$2].exit   =  $7;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$6); 
-   z.states[$2] = {};
-   z.states[$2].entry =  $5;
-   z.states[$2].exit  =  $7;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
 }
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+| ID LOWERCASE INITIAL UPPERCASE   minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }
+z.initial = $4; 
+z.id = $2; 
+if(z.states[$4] != undefined) {
+}else {
+ let invokeIndex = invokes.map(ele => ele.id).indexOf(...$5); 
+ z.states[$4] = {};
+ z.states[$4].exit = $6;
+ z.states[$4].invoke = invokes[invokeIndex]; 
 }
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
-{
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].exit = $6;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].exit = $6;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry = $5;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].entry = $5;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }
+z.initial = $4; 
+z.id = $2; 
+
+if(z.states[$4] != undefined) {
+ z.states[$4].exit = $8;
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $4;
+}else {
+ let invokeIndex = invokes.map( ele => ele.id).indexOf(...$7); 
+ z.states[$4] = {};
+ z.states[$4].exit = $8;
+ z.states[$4].invoke = invokes[invokeIndex]; 
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+}
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry = $5;
-   z.states[$2].exit = $7;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].entry = $5;
-   z.states[$2].exit = $7;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }
+z.initial = $4; 
+z.id = $2; 
+if(z.states[$4] != undefined) {
+ z.states[$4].entry =  $7;
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+}else {
+ let invokeIndex = invokes.map( ele => ele.id).indexOf(...$8); 
+ z.states[$4] = {};
+ z.states[$4].entry =  $7;
+ z.states[$4].invoke = invokes[invokeIndex]; 
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+}
+}
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
+{
+z.initial = $4; 
+z.id = $2; 
+
+if(z.states[$4] != undefined) {
+ z.states[$4].entry  =  $7;
+ z.states[$4].exit   =  $9;
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+}else {
+ let invokeIndex = invokes.map( ele => ele.id).indexOf(...$8); 
+ z.states[$4] = {};
+ z.states[$4].entry =  $7;
+ z.states[$4].exit  =  $9;
+ z.states[$4].invoke = invokes[invokeIndex]; 
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+}
+}
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+{
+z.initial = $4; 
+z.id      = $2
+z.states[$4] = {};
+z.states[$4].on = {};
+z.states[$4].on[$5] = {};
+z.states[$4].on[$5].target = $6;
+z.states[$4].on[$5].actions = $7;
+}
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
+{
+z.initial = $4; 
+z.id = $2; 
+
+if(z.states[$4] != undefined) {
+ z.states[$4].exit = $8;
+ z.states[$4].on[$3] = {};
+ z.states[$4].on[$3].target = $6;
+ z.states[$4].on[$3].actions = $7;
+}else {
+ z.states[$4] = {};
+ z.states[$4].exit = $8;
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+ z.states[$4].on[$5].actions = $7;
+}
+}
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+{
+z.initial = $4; 
+z.id = $2; 
+
+if(z.states[$4] != undefined) {
+ z.states[$4].entry = $7;
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+ z.states[$4].on[$5].actions = $8;
+}else {
+ z.states[$4] = {};
+ z.states[$4].entry = $7;
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+ z.states[$4].on[$5].actions = $8;
+}
+}
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+{
+z.initial = $4; 
+z.id = $2; 
+
+if(z.states[$4] != undefined) {
+ z.states[$4].entry = $7;
+ z.states[$4].exit = $9;
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+ z.states[$4].on[$5].actions = $8;
+}else {
+ z.states[$4] = {};
+ z.states[$4].entry = $7;
+ z.states[$4].exit = $9;
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].target = $6;
+ z.states[$4].on[$5].actions = $8;
+}
 }
 | UPPERCASE  LOWERCASE  mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].actions = $3;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].actions = $3;
-  }
+if(z.states[$1] != undefined) {
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].actions = $3;
+}else {
+ z.states[$1] = {};
+ z.states[$1].on = {};
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].actions = $3;
+}
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }
+if(z.states[$1] != undefined) {
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $4;
+}else {
+ z.states[$1] = {};
+ z.states[$1].on = {};
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $4;
+}
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].exit  = $5; 
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].exit  = $5; 
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }
+if(z.states[$1] != undefined) {
+ z.states[$1].on[$2] = {};
+ z.states[$1].exit  = $5; 
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $4;
+}else {
+ z.states[$1] = {};
+ z.states[$1].exit  = $5; 
+ z.states[$1].on = {};
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $4;
+}
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].entry = $4;
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].entry = $4;
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }
+if(z.states[$1] != undefined) {
+ z.states[$1].entry = $4;
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $5;
+}else {
+ z.states[$1] = {};
+ z.states[$1].entry = $4;
+ z.states[$1].on = {};
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $5;
+}
 }
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].entry = $4;
-   z.states[$1].exit = $6;
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].entry = $4;
-   z.states[$1].exit = $6;
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }
+if(z.states[$1] != undefined) {
+ z.states[$1].entry = $4;
+ z.states[$1].exit = $6;
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $5;
+}else {
+ z.states[$1] = {};
+ z.states[$1].entry = $4;
+ z.states[$1].exit = $6;
+ z.states[$1].on = {};
+ z.states[$1].on[$2] = {};
+ z.states[$1].on[$2].target = $3;
+ z.states[$1].on[$2].actions = $5;
 }
-
+}
 | UPPERCASE FINAL
 {
-   z.states[$1] = {};
-   z.states[$1].type = "final";
+z.states[$1] = {};
+z.states[$1].type = "final";
 }
-
-
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 {
   let objInvoke             = {}; 

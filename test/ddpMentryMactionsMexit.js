@@ -12,6 +12,7 @@ const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
 
 const sttddpMentryMactionsMexit = 
 `
+id: someid
 *A time C entry: a :action exit: b 
  C time A
 `;

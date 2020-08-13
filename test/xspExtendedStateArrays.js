@@ -17,14 +17,16 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
        b: [1] 
        c: [2 3 4] 
 
-   *A time B
-    B final 
+id: someid
+*A time B
+ B final 
 `;
 
   const xspExtendedState = xstateParse(sttExtendedState);
 
   const  ExtendedStateObject = {
   "initial": "A",
+      "id": "someid",
   "context": {
     "a": [],
     "b": [

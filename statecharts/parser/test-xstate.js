@@ -11,11 +11,9 @@ const parser      = new jison.Parser(bnf);
 const execParser  = input => parser.parse(input); 
 
 let diagram = `
-context:
-  opnd1: [0]
-
-*A time B
- B final
+id: lowercase
+  *A t B
+   B t A
 `;		
 
 

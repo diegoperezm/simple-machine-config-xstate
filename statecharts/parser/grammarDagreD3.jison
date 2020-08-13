@@ -56,35 +56,35 @@ context
 | context   mdata {}
 ;
 states
-: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+: ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL    UPPERCASE   LOWERCASE  mactions
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  mactions
 {
-  states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  states.push("INITIAL",$4);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | UPPERCASE  
 {
@@ -153,64 +153,64 @@ states
   }
   edges.push([$1, $3, $2,$1+"-"+$3+"-"+$2]);
 }
-| INITIAL UPPERCASE  mentry minvokes 
+| ID LOWERCASE INITIAL UPPERCASE  mentry minvokes 
 {
-  states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  states.push("INITIAL",$4);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
-| INITIAL UPPERCASE  mentry minvokes mexit
+| ID LOWERCASE INITIAL UPPERCASE  mentry minvokes mexit
 {
-  states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  states.push("INITIAL",$4);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
-| INITIAL UPPERCASE   minvokes
+| ID LOWERCASE INITIAL UPPERCASE   minvokes
 {
   states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
-| INITIAL UPPERCASE   minvokes mexit
+| ID LOWERCASE INITIAL UPPERCASE   minvokes mexit
 {
-  states.push("INITIAL",$2);  
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
+  states.push("INITIAL",$4);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
 
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
-  states.push("INITIAL",$2,$4);    
+  states.push("INITIAL",$4,$6);    
   edges.push([1]);
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  states.push("INITIAL",$2,$4);    
-  edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-  edges.push([$2,$4,$3,$2+"-"+$4+"-"+$3 ]);
+  states.push("INITIAL",$4,$6);    
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | UPPERCASE  LOWERCASE  mactions
 {
@@ -363,6 +363,11 @@ mexit
 expressions
 : context mstates
 {
-return [states, edges]; 
+
+let temp = [states, edges]; 
+states   = [];
+edges    = [];
+
+return temp; 
 }
 ;

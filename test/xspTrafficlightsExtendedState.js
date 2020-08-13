@@ -15,6 +15,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
  context:
    color: "green"
 
+id: someid
    *GREEN   time YELLOW
     YELLOW  time RED
     RED     time GREEN
@@ -24,6 +25,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
 
    const  trafficlightsExtendedStateObject = {
       "initial": "GREEN",
+       "id": "someid",
         "context": {
             "color": "green"
         },

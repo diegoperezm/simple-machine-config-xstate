@@ -33,7 +33,7 @@ onerror: ERROR
  ondone: IDLE              :setctxcelsiusstr :setctxresultstr
 onerror: ERROR
 
-
+id: someid
 *IDLE          calculate        READINPUT
 
  READINPUT     @getinput       
@@ -43,12 +43,15 @@ onerror: ERROR
  DISPLAYRESULT @displayresult   
  
  ERROR 
+
 `;
+
 
 const xspConvertToFCtxInvokeWithActions = xstateParse(sttConvertToFCtxInvokeWithActions);
   
 const ConvertToFCtxInvokeWithActionsObject = {
     "initial": "IDLE",
+    "id":      "someid",
     "context": {
           "celsius": "",
           "result":  ""
@@ -111,6 +114,12 @@ test(
   xspConvertToFCtxInvokeWithActions,
   ConvertToFCtxInvokeWithActionsObject);
 
-
-//console.log(JSON.stringify(xspConvertToFCtxInvokeWithActions,null,2));
-
+/*
+console.log('---',
+  JSON
+    .stringify(
+      xspConvertToFCtxInvokeWithActions,
+      null,
+      2)
+);
+*/

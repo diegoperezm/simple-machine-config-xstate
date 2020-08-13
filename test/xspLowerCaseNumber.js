@@ -15,6 +15,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
 context:
   opnd1: [0]
 
+id: someid
 *A time B
  B final
 `;
@@ -24,6 +25,7 @@ context:
  const  lowerCaseNumberObject = {
 
   "initial": "A",
+       "id":      "someid",
   "context": {
     "opnd1": [
       0

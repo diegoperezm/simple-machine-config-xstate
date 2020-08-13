@@ -1,9 +1,410 @@
 * commands
 
-
-#+NAME:
+#+NAME:c-states
 #+BEGIN_SRC js
+  z.states[$1]    = {};
+#+END_SRC
 
+#+NAME:initial-id-target
+#+BEGIN_SRC js
+    z.initial = $4
+    z.id = $2
+    z.states[$4] = {};
+    z.states[$4].on = {};
+    z.states[$4].on[$5] = {};
+    z.states[$4].on[$5].target = $6;
+#+END_SRC
+
+#+NAME:initial-id-actions
+#+BEGIN_SRC js
+ z.initial = $4
+ z.id = $2
+ z.states[$4] = {};
+ z.states[$4].on = {};
+ z.states[$4].on[$5] = {};
+ z.states[$4].on[$5].actions = $6;
+#+END_SRC
+
+#+NAME:initial-id-entry-target
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id      = $2
+  z.states[$4] = {};
+  z.states[$4].entry = $7;
+  z.states[$4].on = {};
+  z.states[$4].on[$5] = {};
+  z.states[$4].on[$5].target = $6;
+#+END_SRC
+
+#+NAME:initial-id-exit-target
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id      = $2
+  z.states[$4] = {};
+  z.states[$4].exit = $7;
+  z.states[$4].on = {};
+  z.states[$4].on[$5] = {};
+  z.states[$4].on[$5].target = $6;
+#+END_SRC
+
+#+NAME:initial-id-entry-exit-target
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id      = $2
+  z.states[$4] = {};
+  z.states[$4].entry = $7;
+  z.states[$4].exit = $8;
+  z.states[$4].on = {};
+  z.states[$4].on[$5] = {};
+  z.states[$4].on[$5].target = $6;
+#+END_SRC
+
+#+NAME:minvokes
+#+BEGIN_SRC js
+  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
+  z.states[$1]    = {};
+  z.states[$1].invoke = invokes[invokeIndex]; 
+#+END_SRC
+
+#+NAME:target
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }else {
+    z.states[$1] = {};
+    z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }
+#+END_SRC
+
+#+NAME:entry-target
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+    z.states[$1].entry = $4;
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }else {
+    z.states[$1] = {};
+    z.states[$1].entry = $4;
+    z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }
+#+END_SRC
+
+#+NAME:entry-exit-target
+#+BEGIN_SRC js :noweb yes
+  if(z.states[$1] != undefined) {
+    z.states[$1].entry = $4;
+    z.states[$1].exit  = $5;
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }else {
+    z.states[$1] = {};
+    z.states[$1].entry = $4;
+    z.states[$1].exit  = $5;
+    z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }
+#+END_SRC
+
+#+NAME:exit-target
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+    z.states[$1].exit = $4;
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }else {
+    z.states[$1] = {};
+    z.states[$1].exit = $4;
+    z.states[$1].on = {};
+    z.states[$1].on[$2] = {};
+    z.states[$1].on[$2].target = $3;
+  }
+#+END_SRC
+
+#+NAME:initial-id-entry-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  if(z.states[$4] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$6);
+   z.states[$4] = {};
+   z.states[$4].entry  = $5;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+  }
+#+END_SRC
+
+#+NAME:initial-id-entry-exit-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  if(z.states[$4] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$6);
+   z.states[$4] = {};
+   z.states[$4].entry  = $5;
+   z.states[$4].exit   = $7;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+  }
+#+END_SRC
+
+#+NAME:initial-id-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  if(z.states[$4] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$5); 
+   z.states[$4] = {};
+   z.states[$4].invoke = invokes[invokeIndex]; 
+  }
+#+END_SRC
+
+#+NAME:initial-id-exit-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  if(z.states[$4] != undefined) {
+  }else {
+   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$5); 
+   z.states[$4] = {};
+   z.states[$4].exit = $6;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+  }
+#+END_SRC
+
+
+#+NAME:initial-id-exit-target-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  
+  if(z.states[$4] != undefined) {
+   z.states[$4].exit = $8;
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $4;
+  }else {
+   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$7); 
+   z.states[$4] = {};
+   z.states[$4].exit = $8;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+  }
+#+END_SRC
+
+#+NAME:initial-id-entry-target-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  if(z.states[$4] != undefined) {
+   z.states[$4].entry =  $7;
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+  }else {
+   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$8); 
+   z.states[$4] = {};
+   z.states[$4].entry =  $7;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+  }
+#+END_SRC
+
+
+#+NAME:initial-id-entry-exit-target-invokes
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+  
+  if(z.states[$4] != undefined) {
+   z.states[$4].entry  =  $7;
+   z.states[$4].exit   =  $9;
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+  }else {
+   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$8); 
+   z.states[$4] = {};
+   z.states[$4].entry =  $7;
+   z.states[$4].exit  =  $9;
+   z.states[$4].invoke = invokes[invokeIndex]; 
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+  }
+#+END_SRC
+
+#+NAME:initial-id-target-actions
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id      = $2
+  z.states[$4] = {};
+  z.states[$4].on = {};
+  z.states[$4].on[$5] = {};
+  z.states[$4].on[$5].target = $6;
+  z.states[$4].on[$5].actions = $7;
+#+END_SRC
+
+
+#+NAME:initial-id-exit-target-actions
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+
+  if(z.states[$4] != undefined) {
+   z.states[$4].exit = $8;
+   z.states[$4].on[$3] = {};
+   z.states[$4].on[$3].target = $6;
+   z.states[$4].on[$3].actions = $7;
+  }else {
+   z.states[$4] = {};
+   z.states[$4].exit = $8;
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+   z.states[$4].on[$5].actions = $7;
+  }
+#+END_SRC
+
+
+#+NAME:initial-id-entry-target-actions
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+
+  if(z.states[$4] != undefined) {
+   z.states[$4].entry = $7;
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+   z.states[$4].on[$5].actions = $8;
+  }else {
+   z.states[$4] = {};
+   z.states[$4].entry = $7;
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+   z.states[$4].on[$5].actions = $8;
+  }
+#+END_SRC
+
+
+#+NAME:initial-id-entry-exit-target-actions
+#+BEGIN_SRC js
+  z.initial = $4; 
+  z.id = $2; 
+
+  if(z.states[$4] != undefined) {
+   z.states[$4].entry = $7;
+   z.states[$4].exit = $9;
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+   z.states[$4].on[$5].actions = $8;
+  }else {
+   z.states[$4] = {};
+   z.states[$4].entry = $7;
+   z.states[$4].exit = $9;
+   z.states[$4].on = {};
+   z.states[$4].on[$5] = {};
+   z.states[$4].on[$5].target = $6;
+   z.states[$4].on[$5].actions = $8;
+  }
+#+END_SRC
+
+
+#+NAME:actions
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].actions = $3;
+  }
+#+END_SRC 
+
+#+NAME:target-actions
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }
+#+END_SRC
+
+
+#+NAME:exit-target-actions
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+   z.states[$1].on[$2] = {};
+   z.states[$1].exit  = $5; 
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].exit  = $5; 
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $4;
+  }
+#+END_SRC
+
+#+NAME:entry-target-actions
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+   z.states[$1].entry = $4;
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $5;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].entry = $4;
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $5;
+  }
+#+END_SRC
+
+#+NAME:entry-exit-target-actions
+#+BEGIN_SRC js
+  if(z.states[$1] != undefined) {
+   z.states[$1].entry = $4;
+   z.states[$1].exit = $6;
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $5;
+  }else {
+   z.states[$1] = {};
+   z.states[$1].entry = $4;
+   z.states[$1].exit = $6;
+   z.states[$1].on = {};
+   z.states[$1].on[$2] = {};
+   z.states[$1].on[$2].target = $3;
+   z.states[$1].on[$2].actions = $5;
+  }
+#+END_SRC
+
+
+#+NAME:type
+#+BEGIN_SRC js
+   z.states[$1] = {};
+   z.states[$1].type = "final";
 #+END_SRC
 
 
@@ -19,6 +420,7 @@
 let invokes        =[];
 let z              ={};
 z.initial          ="";
+z.id               ="";
 z.context          ={};
 z.states           ={};
 %}
@@ -122,584 +524,317 @@ states
 
 ** INITIAL
 
+
 *** IUlU
-#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
-#+BEGIN_SRC js 
-: INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
+
+#+NAME:IULU
+#+BEGIN_SRC js  :noweb yes
+: ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
+ <<initial-id-target>>
 }
 #+END_SRC
 
 
 *** IULma
 
-#+NAME:INITIAL    UPPERCASE   LOWERCASE  mactions
-#+BEGIN_SRC js
-| INITIAL    UPPERCASE   LOWERCASE  mactions
+#+NAME:IULmactions
+#+BEGIN_SRC js :noweb yes 
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  mactions
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].actions = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].actions = $4;
-  }
+<<initial-id-actions>>
 }
 #+END_SRC
 
 
 *** IULUmen
 
-#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
-#+BEGIN_SRC js
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
+#+NAME:IULUmentry 
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].entry = $5;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].entry = $5;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
-
+<<initial-id-entry-target>>
 }
 #+END_SRC
 
 
 *** IULUmex
-#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
-#+BEGIN_SRC js
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
+#+NAME:IULUmexit 
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].exit = $5;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].exit = $5;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
-
+<<initial-id-exit-target>>
 }
 #+END_SRC
 
 
 *** IULUmemex
 
-#+NAME:INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
-#+BEGIN_SRC js
-| INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
+#+NAME:IULUmentrymexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-   z.initial = $2
-   if(z.states[$2] != undefined) {
-    z.states[$2].entry = $5;
-    z.states[$2].exit = $6;
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-   }else {
-    z.states[$2] = {};
-    z.states[$2].entry = $5;
-    z.states[$2].exit = $6;
-    z.states[$2].on = {};
-    z.states[$2].on[$3] = {};
-    z.states[$2].on[$3].target = $4;
-  }
+<<initial-id-entry-exit-target>>
 }
 #+END_SRC    
 
 
 ** UPPERCASE
 
+
 *** U
 
-#+NAME:UPPERCASE 
-#+BEGIN_SRC js
+#+NAME:U 
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE 
 {
-  z.states[$1]    = {};
+<<c-states>>
 }
 #+END_SRC
 
 
 *** Uminvokes
 
-#+NAME:UPPERCASE minvokes  
-#+BEGIN_SRC js
+#+NAME:Uminvokes  
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE minvokes  
 {
-  let invokeIndex = invokes.map(ele => ele.id).indexOf(...$2);
-  z.states[$1]    = {};
-  z.states[$1].invoke = invokes[invokeIndex]; 
+<<minvokes>>
 }
 #+END_SRC
 
 
 *** ULU
     
-#+NAME:UPPERCASE   LOWERCASE  UPPERCASE
-#+BEGIN_SRC js
+#+NAME:ULU
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE   LOWERCASE  UPPERCASE
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+<<target>>
 }
 #+END_SRC
 
 
 *** ULUme
-#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mentry
-#+BEGIN_SRC js
+#+NAME:ULUmentry
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE   LOWERCASE  UPPERCASE mentry
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].entry = $4;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].entry = $4;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+<<entry-target>>
 }
 #+END_SRC
 
 
 *** ULUmemex
-#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
-#+BEGIN_SRC js
+#+NAME:ULUmentrymexit
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE   LOWERCASE  UPPERCASE mentry mexit
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].entry = $4;
-    z.states[$1].exit  = $5;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].entry = $4;
-    z.states[$1].exit  = $5;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+<<entry-exit-target>>
 }
 #+END_SRC
 
 
 *** ULUmex
     
-#+NAME:UPPERCASE   LOWERCASE  UPPERCASE mexit
-#+BEGIN_SRC js
+#+NAME:ULUmexit
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE   LOWERCASE  UPPERCASE mexit
 {
-  if(z.states[$1] != undefined) {
-    z.states[$1].exit = $4;
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }else {
-    z.states[$1] = {};
-    z.states[$1].exit = $4;
-    z.states[$1].on = {};
-    z.states[$1].on[$2] = {};
-    z.states[$1].on[$2].target = $3;
-  }
+<<exit-target>>
 }
 #+END_SRC
 
 
 *** IUmeminvokes
     
-#+NAME:INITIAL UPPERCASE  mentry minvokes 
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  mentry minvokes 
+#+NAME:IUmentryminvokes 
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  mentry minvokes 
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$4); 
-   z.states[$2] = {};
-   z.states[$2].entry = $3;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+<<initial-id-entry-invokes>>
 }
 #+END_SRC
 
 
 *** IUmenminvokesmex
     
-#+NAME:INITIAL UPPERCASE mentry minvokes mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE mentry minvokes mexit
+#+NAME:IUmentryminvokesmexit
+#+BEGIN_SRC js :noweb yes
+|ID LOWERCASE INITIAL UPPERCASE mentry minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$4); 
-   z.states[$2] = {};
-   z.states[$2].entry = $3;
-   z.states[$2].exit = $5;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+<<initial-id-entry-exit-invokes>>
 }
 #+END_SRC
 
 
 *** IUminvokes
     
-#+NAME:INITIAL UPPERCASE   minvokes
-#+BEGIN_SRC js
-| INITIAL UPPERCASE   minvokes
+#+NAME:IUminvokes
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE   minvokes
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
-   z.states[$2] = {};
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+<<initial-id-invokes>>
 }
 #+END_SRC
 
 
 *** IUminvokesmex
 
-#+NAME:INITIAL UPPERCASE   minvokes mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE   minvokes mexit
+#+NAME:IUminvokesmexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE   minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-  }else {
-   let invokeIndex = invokes.map(ele => ele.id).indexOf(...$3); 
-   z.states[$2] = {};
-   z.states[$2].exit = $4;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-  }
+<<initial-id-exit-invokes>>
 }
 #+END_SRC
 
 
 *** IULUminvokesmex
-#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
+
+#+NAME:IULUminvokesmexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].exit = $6;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$5); 
-   z.states[$2] = {};
-   z.states[$2].exit = $6;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
+<<initial-id-exit-target-invokes>>
 }
 #+END_SRC
 
 
 *** IULUmeminvokes
-#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
+
+#+NAME:IULUmentryminvokes
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry =  $5;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$6); 
-   z.states[$2] = {};
-   z.states[$2].entry =  $5;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
+<<initial-id-entry-target-invokes>>
 }
 #+END_SRC
 
 
 *** IULUmenminvokesmex
     
-#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
+#+NAME:IULUmentryminvokesmexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry  =  $5;
-   z.states[$2].exit   =  $7;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }else {
-   let invokeIndex = invokes.map( ele => ele.id).indexOf(...$6); 
-   z.states[$2] = {};
-   z.states[$2].entry =  $5;
-   z.states[$2].exit  =  $7;
-   z.states[$2].invoke = invokes[invokeIndex]; 
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-  }
+<<initial-id-entry-exit-target-invokes>>
 }
 #+END_SRC
 
 
 *** IULUma
-#+NAME:INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
-#+BEGIN_SRC js
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
+
+#+NAME:IULUmactions
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }
+<<initial-id-target-actions>>
 }
 #+END_SRC
 
 
 *** IULUmamex
-#+NAME:INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
+
+#+NAME:IULUmactionsmexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].exit = $6;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].exit = $6;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $5;
-  }
+<<initial-id-exit-target-actions>>
 }
 #+END_SRC    
 
 
 *** IULUmema
     
-#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
+#+NAME:IULUmentrymactions
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry = $5;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].entry = $5;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }
+<<initial-id-entry-target-actions>>
 }
 #+END_SRC
 
 
 *** IULUmemamex
 
-#+NAME:INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
-#+BEGIN_SRC js
-| INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
+#+NAME:IULUmentrymactionsmexit
+#+BEGIN_SRC js :noweb yes
+| ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  z.initial = $2; 
-  if(z.states[$2] != undefined) {
-   z.states[$2].entry = $5;
-   z.states[$2].exit = $7;
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }else {
-   z.states[$2] = {};
-   z.states[$2].entry = $5;
-   z.states[$2].exit = $7;
-   z.states[$2].on = {};
-   z.states[$2].on[$3] = {};
-   z.states[$2].on[$3].target = $4;
-   z.states[$2].on[$3].actions = $6;
-  }
+<<initial-id-entry-exit-target-actions>>
 }
 #+END_SRC
 
 
 *** ULma
     
-#+NAME:UPPERCASE  LOWERCASE  mactions
-#+BEGIN_SRC js
+#+NAME:ULmactions
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE  LOWERCASE  mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].actions = $3;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].actions = $3;
-  }
+<<actions>>
 }
 #+END_SRC
 
 
 *** ULUma
 
-#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mactions
-#+BEGIN_SRC js
+#+NAME:ULUmactions
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }
+<<target-actions>>
 }
 #+END_SRC
 
 
 *** ULUmamex
     
-#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
-#+BEGIN_SRC js
+#+NAME:ULUmactionsmexit
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].on[$2] = {};
-   z.states[$1].exit  = $5; 
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].exit  = $5; 
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $4;
-  }
+<<exit-target-actions>>
 }
 #+END_SRC
 
 
 *** ULUmema
     
-#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
-#+BEGIN_SRC js
+#+NAME:ULUmentrymactions
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].entry = $4;
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].entry = $4;
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }
+<<entry-target-actions>>
 }
 #+END_SRC
 
 
 *** ULUmemamex
     
-#+NAME:UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
-#+BEGIN_SRC js
+#+NAME:ULUmentrymactionsmexit
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  if(z.states[$1] != undefined) {
-   z.states[$1].entry = $4;
-   z.states[$1].exit = $6;
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }else {
-   z.states[$1] = {};
-   z.states[$1].entry = $4;
-   z.states[$1].exit = $6;
-   z.states[$1].on = {};
-   z.states[$1].on[$2] = {};
-   z.states[$1].on[$2].target = $3;
-   z.states[$1].on[$2].actions = $5;
-  }
+<<entry-exit-target-actions>>
 }
 #+END_SRC
 
 
 *** Ufinal
     
-#+NAME:UPPERCASE FINAL
-#+BEGIN_SRC js
+#+NAME:UFINAL
+#+BEGIN_SRC js :noweb yes
 | UPPERCASE FINAL
 {
-   z.states[$1] = {};
-   z.states[$1].type = "final";
+<<type>>
 }
 #+END_SRC
 
 
 ** INVOKE   
+
 
 ***  INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE 
 
@@ -780,6 +915,8 @@ states
 }
 ;
 #+END_SRC
+
+
 
 
 * misc
@@ -878,38 +1015,34 @@ return z;
 <<mdata>>
 <<context>>
 <<states>>
-<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE>>
-<<INITIAL    UPPERCASE   LOWERCASE  mactions>>
-<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry>>
-<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit>>
-<<INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit>>
-<<UPPERCASE>>
-<<UPPERCASE minvokes>>
-
-<<UPPERCASE   LOWERCASE  UPPERCASE>>
-<<UPPERCASE   LOWERCASE  UPPERCASE mentry>>
-<<UPPERCASE   LOWERCASE  UPPERCASE mentry mexit>>
-<<UPPERCASE   LOWERCASE  UPPERCASE mexit>>
-<<INITIAL UPPERCASE  mentry minvokes>>
-<<INITIAL UPPERCASE mentry minvokes mexit>>
-<<INITIAL UPPERCASE   minvokes>>
-<<INITIAL UPPERCASE   minvokes mexit>>
-<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit>>
-<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes>>
-<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit>>
-<<INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions>>
-<<INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit>>
-<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions>>
-<<INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit>>
-<<UPPERCASE  LOWERCASE  mactions>>
-<<UPPERCASE  LOWERCASE  UPPERCASE  mactions>>
-<<UPPERCASE  LOWERCASE  UPPERCASE  mactions  mexit>>
-<<UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions>>
-<<UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit>>
-
-<<UPPERCASE FINAL>>
-
-
+<<IULU>>
+<<IULmactions>>
+<<IULUmentry>>
+<<IULUmexit>>
+<<IULUmentrymexit>>
+<<U>>
+<<Uminvokes>>
+<<ULU>>
+<<ULUmentry>>
+<<ULUmentrymexit>>
+<<ULUmexit>>
+<<IUmentryminvokes>>
+<<IUmentryminvokesmexit>>
+<<IUminvokes>>
+<<IUminvokesmexit>>
+<<IULUminvokesmexit>>
+<<IULUmentryminvokes>>
+<<IULUmentryminvokesmexit>>
+<<IULUmactions>>
+<<IULUmactionsmexit>>
+<<IULUmentrymactions>>
+<<IULUmentrymactionsmexit>>
+<<ULmactions>>
+<<ULUmactions>>
+<<ULUmactionsmexit>>
+<<ULUmentrymactions>>
+<<ULUmentrymactionsmexit>>
+<<UFINAL>>
 <<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE>> 
 <<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE>>
 <<INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE ONERROR UPPERCASE   mactions>>

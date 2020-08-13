@@ -12,6 +12,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
 
   const sttTrafficlightsWithActions = 
   `
+ id: someid
   *GREEN   time YELLOW :printgreen
    YELLOW  time RED    :printyellow
    RED     time GREEN  :printred 
@@ -21,6 +22,7 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
   
   const trafficlightsWithActionsObject = {
     "initial": "GREEN",
+         "id": "someid",
     "context": {},
     "states": {
       "GREEN": {

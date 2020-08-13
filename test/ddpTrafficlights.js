@@ -11,6 +11,7 @@ const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
 
 const sttTRAFFICLIGHTS = 
 `
+id: someid
  *GREEN   time YELLOW :printgreen
   YELLOW  time RED    :prinyellow
   RED     time GREEN  :printred

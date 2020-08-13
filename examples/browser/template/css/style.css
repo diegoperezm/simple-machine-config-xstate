@@ -22,7 +22,7 @@ body {
 .content {
   display: grid; 
   grid-template-columns: repeat(4, minmax(0, 1fr) );
-  grid-template-rows:    repeat(12, minmax(0, 0.112fr));
+  grid-template-rows:    repeat(9, minmax(0, 10vh));
   grid-gap: 0;
   width:   100%;  
 }

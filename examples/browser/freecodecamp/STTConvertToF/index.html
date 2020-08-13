@@ -25,6 +25,7 @@
 
   <script src="../../../../statecharts/libraries/xstate.js"></script> 
   <script src="../../../../statecharts/parser/grammarXstate.js"></script>
+  <script src="../../../../statecharts/libraries/utils.js"></script>
      
   <script>
 
@@ -39,9 +40,6 @@
    const buttonCalculate                 = document.getElementById('buttonCalculate');
    const inputValue                      = document.getElementById('inputValue');
    const ouputDisplay                    = document.getElementById('outputDisplay');
-   const ParserXstate                    = grammarXstate.Parser;
-   const parserXstate                    = new ParserXstate(grammarXstate);
-   const createMachineConf               = input => parserXstate.parse(input);
 
    buttonCalculate.addEventListener('click', () => convertToFMachineService.send('calculate') );
 
@@ -85,6 +83,8 @@ onerror: ERROR
  ondone: IDLE              :setctxcelsiusstr :setctxresultstr
 onerror: ERROR
 
+
+id: sstconverttf
 *IDLE            calculate        READINPUT
  READINPUT       @getinput        
  CALCF           @calcf           

@@ -6,13 +6,6 @@
  **/
 
    const { Machine,  interpret, assign } = XState;
-   const ParserXstate                    = grammarXstate.Parser;
-   const parserXstate                    = new ParserXstate(grammarXstate);
-   const createMachineConf               = input => parserXstate.parse(input);
-   const ParserDagredD3                  = grammarDagreD3.Parser;
-   const parserDagredD3                  = new ParserDagredD3(grammarDagreD3);
-
-   const svgGraph                       = document.getElementById("svgGraph");
 
    const calcDisplay                     = document.getElementById("display");
    const seven                           = document.getElementById("seven");
@@ -139,7 +132,7 @@ function calculate(ctx) {
  *   - OPRTR              OPERATOR
  *
  */
-   const stateTransitionTable =
+  const stateTransitionTable =
 `
 context:
       data: [ 0 ]
@@ -147,6 +140,7 @@ context:
      oprtr: []
      opnd2: []
 
+id: calc
  *START           number       OPND1         entry: displaydata   :setlastdata     :setopnd1             exit: displaydata
   START           zero         OPND1ZERO                          :setlastdata     :setopnd1             exit: displaydata
   START           minus        OPND1MINUS                         :setlastdata     :setopnd1             exit: displaydata
@@ -236,23 +230,6 @@ context:
  `;
 
 
-
-
-   const calcMachineConf      = createMachineConf(stateTransitionTable);
-
-   const calcMachine          = Machine(calcMachineConf,options);
-
-   const calcMachineService   = interpret(calcMachine)
-        .onTransition(state => {
-          tableState.textContent    = state.value;
-          tableData.textContent     = state.context.data;
-          tableOpnd1.textContent    = state.context.opnd1;
-          tableOperator.textContent = state.context.oprtr;
-          tableOpnd2.textContent    = state.context.opnd2;
-          showFn(state);
-        }
-    );
-
 /**
  *                                  EVENTS
  *
@@ -282,36 +259,10 @@ context:
  *
  **/
 
-   var g = new dagreD3.graphlib.Graph({multigraph: true}).setGraph({rankdir: 'LR'});
+ setGraphConf('svgGraph', stateTransitionTable, "LR", 0.4, 2.5);
+ const g = createGraph();
+ renderGraph(g); 
 
-   let edgeList = parserDagredD3.parse(stateTransitionTable);
-
-   graphSetStatesEdges(edgeList);
-
-   var svg = d3.select("svg"), inner = svg.select("g");
-
-   // Set up zoom support
-   var zoom = d3.zoom().on("zoom", function() {
-         inner.attr("transform", d3.event.transform);
-       });
-
-   svg.call(zoom);
-
-   // Create the renderer
-   var render = new dagreD3.render();
-
-   // Run the renderer. This is what draws the final graph.
-   render(inner, g);
-
-    // Center the graph
-   var initialScale = 0.7;
-
-   svgGraphInfo  =  svgGraph.getBBox();
-
-   svg.call(
-     zoom.transform,
-     d3.zoomIdentity.translate((svgGraphInfo.width) / 100, 50).scale(initialScale));
-     svg.attr('height', svgGraphInfo.height - (window.innerHeight/2.5));
 
 /**
  *
@@ -319,7 +270,24 @@ context:
  *
  **/
 
- calcMachineService.start();
+   const calcMachineConf      = createMachineConf(stateTransitionTable);
+
+   const calcMachine          = Machine(calcMachineConf,options);
+
+   const calcMachineService   = interpret(calcMachine)
+        .onTransition(state => {
+          tableState.textContent    = state.value;
+          tableData.textContent     = state.context.data;
+          tableOpnd1.textContent    = state.context.opnd1;
+          tableOperator.textContent = state.context.oprtr;
+          tableOpnd2.textContent    = state.context.opnd2;
+          showFn(state,g);
+        }
+    );
+
+
+
+calcMachineService.start();
 
 
 
