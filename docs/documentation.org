@@ -7,21 +7,63 @@
 
 *** Syntax 
 
+**** Initial state 
 
+#+BEGIN_SRC js
+`
+*STATE
+`;
+#+END_SRC
+
+ The character "*" marks the state as the initial-state. 
+
+
+**** context 
+
+
+#+BEGIN_SRC js
+`
 context:
-  value: [ value "value" [value] ] 
+  value: [ value "value" [value] ]
+`;
+#+END_SRC
 
-invoke:
-     id:
-    src:
- ondone:
-onerror:
+
+**** invoke
+
+
+#+BEGIN_SRC js
+`invoke:
+     id: someid
+    src: somesrc
+ ondone: SUCCESS
+onerror: ERROR
+`;
+#+END_SRC
+
+****  actions
+
+#+BEGIN_SRC js
+:action
+#+END_SRC     
+
+
+**** entry 
+
+#+BEGIN_SRC js
+entry: fn
+#+END_SRC
+
+**** exit
+
+
+#+BEGIN_SRC js
+exit: fn
+#+END_SRC
 
 
 STATE input STATE [@value entry: value  :actions  exit: value]
 
-*** Examples
 
-**** Calculator 
 
-***** Intro 
+     

@@ -47,3 +47,14 @@ that use the script:
 seems more complete (easier) to use ?
 
 https://github.com/dagrejs/dagre/wiki
+
+* if you want update the info (update button)
+
+
+- don't  forget to add `prevEdges = []`, otherwise the `v` variable will never will correct;
+
+- at the moment the problem is that when rendering the graph:
+ the arrow is null, because:
+  arrow 16 -> arrow 32 -> arrow 64
+  everytime is 'updated' the arrow id is changed,
+  
