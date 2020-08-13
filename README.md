@@ -107,7 +107,7 @@ let trafficlight = {
 
 # Demo/Example
 
-[Calculator](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calcbasicoperations/index.html)
+[Calculator](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calculator/index.html)
 
 
 
