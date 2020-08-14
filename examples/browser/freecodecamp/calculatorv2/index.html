@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Calculator Addition, Multiply, Divide, Subtraction,Zero as Special case, Clear, dot, minus (negative numbers)</title>
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="content">
+        <svg id="svgGraph" class="graph"><g></g></svg>
+           <div class="calc">
+            <p id="display" class="calc__display"></p>
+            <div class="calc__keys">
+             <button class="key"                  id="seven">7</button>
+             <button class="key"                  id="eight">8</button>
+             <button class="key"                   id="nine">9</button>
+             <button class="key key--minus"       id="subtract">-</button>
+             <button class="key key--divide"     id="divide">/</button>
+             <button class="key key--add"           id="add">+</button>
+             <button class="key key--multiply" id="multiply">X</button>
+             <button class="key"                   id="four">4</button>
+             <button class="key"                   id="five">5</button>
+             <button class="key"                    id="six">6</button>
+             <button class="key"                    id="one">1</button>
+             <button class="key"                    id="two">2</button>
+             <button class="key"                  id="three">3</button>
+             <button class="key"                   id="zero">0</button>
+             <button class="key"                id="decimal">.</button>
+             <button class="key key--ce"        id="clear"  >ce</button>
+             <button class="key key--equals"     id="equals">=</button>
+            </div>
+          </div>
+          <div class="extendedState">
+            <table>
+            <tr>
+              <th>State: </th>
+              <td id="table__state"></td>
+            </tr>
+            <tr>
+              <th>data: </th>
+              <td id="table__data"></td>
+            </tr>
+            <tr>
+              <th>opnd1: </th>
+              <td id="table__opnd1"></td>
+            </tr>
+            <tr>
+              <th>oprtr: </th>
+              <td id="table__operator"></td>
+            </tr>
+            <tr>
+              <th>opnd2:</th>
+              <td id="table__opnd2"></td>
+            </tr>
+           </table>
+          </div>
+      </div>
+    </div>
+  <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="../../../../statecharts/libraries/xstate.js"></script> 
+  <script src="../../../../statecharts/libraries/d3.v5.min.js"></script>
+  <script src="../../../../statecharts/libraries/dagre-d3.min.js"></script>
+  <script src="../../../../statecharts/parser/grammarXstate.js"></script>
+  <script src="../../../../statecharts/parser/grammarDagreD3.js"></script>
+  <script src="../../../../statecharts/libraries/utils.js"></script>
+  <script src="js/script.js"></script>
+
+</body>
+</html>
