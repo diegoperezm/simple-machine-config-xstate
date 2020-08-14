@@ -48,6 +48,7 @@ seems more complete (easier) to use ?
 
 https://github.com/dagrejs/dagre/wiki
 
+
 * if you want update the info (update button)
 
 
@@ -58,3 +59,11 @@ https://github.com/dagrejs/dagre/wiki
   arrow 16 -> arrow 32 -> arrow 64
   everytime is 'updated' the arrow id is changed,
   
+
+* reg ex
+
+([a-z\-\.]+[A-Z]|[a-z]+)
+ camelCase
+ camelcase 
+ camel-case 
+ camelcase2
