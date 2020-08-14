@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Actors</title>
+    <link rel="stylesheet" href="css/normalize.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+      <div class="content">
+         <svg id="svgGraphServer" class="graphServer"><g></g></svg> 
+         <svg id="svgGraphClient" class="graphClient"><g></g></svg> 
+           <div class=""> </div>
+          <div class="extendedState" >
+            <table>
+               <tr>
+                 <th>State Server: </th>
+                 <td id="table__state--server"></td>
+               </tr>
+               <tr>
+                 <th>State client: </th>
+                 <td id="table__state--client"></td>
+               </tr>
+         </table>
+          </div>
+      </div>
+    </div>
+
+  <script src="../../../statecharts/libraries/xstate.js"></script> 
+  <script src="../../../statecharts/libraries/d3.v5.min.js"></script>
+  <script src="../../../statecharts/libraries/dagre-d3.min.js"></script>
+  <script src="../../../statecharts/parser/grammarXstate.js"></script>
+  <script src="../../../statecharts/parser/grammarDagreD3.js"></script>
+  <script src="../../../statecharts/libraries/utils.js"></script>
+
+  <script>
+
+/**
+ *
+ *                      SETUP
+ *
+ *
+ **/
+
+   const { Machine,  interpret, assign, send, spawn, sendParent, actions } = XState;
+   const {raise}               = actions;
+
+   const tableStateServer      = document.getElementById("table__state--server"); 
+   const tableStateClient      = document.getElementById("table__state--client"); 
+   const tableContextServer    = document.getElementById("table__context--server"); 
+   const tableContextClient    = document.getElementById("table__context--client"); 
+ 
+
+/**
+ *                                  FINITE STATE  MACHINE
+ **/
+
+const optionsServer = {
+     actions: {
+       sendparentpong: sendParent('pong'),
+       raisesuccess:   raise('success'),
+     } 
+   };
+    
+const optionsClient = {
+     actions: {
+       setserver: assign({server: () => spawn(serverMachine)}), 
+
+       raisesuccess: raise('success'),
+        sendpingtoctxserver:   send('ping', {to: ctx => ctx.server }),  
+        
+     }
+   };
+
+   
+const stateTransitionTableServer =
+`
+id: server
+*WAITPING   ping      SENDPONG 
+ SENDPONG   success   WAITPING   entry:  sendparentpong raisesuccess
+`;   
+
+
+const stateTransitionTableClient =
+
+`
+context:
+  server: ""
+
+id: client
+*INIT     success SENDPING  entry: setserver            raisesuccess
+ SENDPING success WAITPONG  entry: sendpingtoctxserver  raisesuccess
+ WAITPONG pong    COMPLETE
+ COMPLETE final 
+`;     
+ 
+   
+/**
+ *                                  GRAPH
+ **/
+
+let serverGraphConf   = createGraphConf('svgGraphServer', stateTransitionTableServer, "TB", 1, 1);
+let clientGraphConf   = createGraphConf('svgGraphClient', stateTransitionTableClient, "TB", 1, 1);
+
+const gServer = createGraph(serverGraphConf);
+const gClient = createGraph(clientGraphConf);
+
+renderGraph(gServer.g, gServer.data); 
+renderGraph(gClient.g, gClient.data); 
+ 
+   
+/**
+ *      MAIN
+ **/
+
+ const serverMachineConf      = createMachineConf(stateTransitionTableServer);
+ const serverMachine          = Machine(serverMachineConf,optionsServer);
+
+ const serverMachineService   = interpret(serverMachine)
+        .onTransition(state => {
+          tableStateServer.textContent      = state.value;
+          console.log('server state: ',state.value);
+        }
+      );
+
+ const clientMachineConf      = createMachineConf(stateTransitionTableClient);
+ const clientMachine          = Machine(clientMachineConf, optionsClient);
+
+ const clientMachineService   = interpret(clientMachine)
+        .onTransition(state => {
+          tableStateClient.textContent    = state.value;
+          console.log('client state: ',state.value);
+        }
+      );
+
+serverMachineService.start();
+clientMachineService.start();
+   
+  </script>
+</body>
+</html>

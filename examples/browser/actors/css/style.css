@@ -1,0 +1,86 @@
+html {
+ box-sizing: border-box;
+ min-width:  100%;
+ min-height: 90%;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+ font: 300 14px 'Helvetica Neue', Helvetica;
+ width: 100%;
+}
+
+.container {
+  border:     3px solid black;
+  margin:     2% auto; 
+  max-width:  90%;
+}
+
+.content {
+  display: grid; 
+  grid-template-columns: repeat(12, minmax(0, 1fr) );
+  grid-template-rows:    repeat(8, minmax(0, 10vh));
+  grid-gap: 0;
+  width:   100%;  
+}
+
+.graphServer{
+  grid-column:   1/7; 
+  grid-row:      1/8;
+  justify-self: center; 
+  height: 100%;
+  width: 100%;
+}
+
+.graphClient {
+  grid-column:   7/13; 
+  grid-row:      1/8;
+  justify-self: center; 
+  height: 100%;
+  width: 100%;
+}
+
+
+.extendedState {
+ border-top: 2px dashed black;
+ grid-column: 1/13; 
+ grid-row:    8/13;
+ height: 90%;
+ align-self: center;
+}
+
+
+table {
+ height: 100%;
+}
+
+th {
+ text-align: right;
+ padding-left: 5%;
+ width: 20%;
+}
+
+td {
+ font-size:   1rem; 
+ padding-left: 8%;
+ width: 80%;
+}
+
+.node rect {
+  stroke: #333;
+  fill: #fff;
+}
+
+.edgePath path {
+  stroke: #333;
+  fill: #333;
+  stroke-width: 3px;
+}
+
+.active {
+  stroke: red!important; 
+}
+
