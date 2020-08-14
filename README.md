@@ -126,6 +126,6 @@ id: tl
 
 [Calculator](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calculator/index.html)
 
-[CalculatorV2](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/calculator/calculatorv2/index.html)
+[CalculatorV2](https://diegoperezm.github.io/simple-machine-config-xstate/examples/browser/freecodecamp/calculatorv2/index.html)
 
 
