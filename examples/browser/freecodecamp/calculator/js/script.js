@@ -259,9 +259,9 @@ id: calc
  *
  **/
 
- setGraphConf('svgGraph', stateTransitionTable, "LR", 0.4, 2.5);
- const g = createGraph();
- renderGraph(g); 
+ let calcGraphConf = createGraphConf('svgGraph', stateTransitionTable, "LR", 0.4, 2.5);
+ const g = createGraph(calcGraphConf);
+ renderGraph(g.g, g.data); 
 
 
 /**
@@ -281,7 +281,7 @@ id: calc
           tableOpnd1.textContent    = state.context.opnd1;
           tableOperator.textContent = state.context.oprtr;
           tableOpnd2.textContent    = state.context.opnd2;
-          showFn(state,g);
+          showFn(state,g.g);
         }
     );
 

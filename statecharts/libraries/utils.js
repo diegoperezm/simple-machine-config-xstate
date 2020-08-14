@@ -1,7 +1,6 @@
 "use strict";
 
 let prevEdges = [];
-let graphData;
 
 // I need to change this name
 var show          = 'currentPath';
@@ -38,7 +37,7 @@ function setShow(str) {
  *   show='currentPath';
  *   leaves the edges highlighted  
  */
-const showFn = (state,g) =>  {
+const showFn = (state, g, graphData) =>  {
 
     let input = state.event.type;
     let v     = prevEdges.length === 0 ? "INITIAL" : prevEdges[0][1] ; 
@@ -48,7 +47,7 @@ const showFn = (state,g) =>  {
     if(checkIfTransitionIsValid(v,w,name, g) ) { 
        if(show === 'currentPath') {
          highlightNodes(input,w,g);
-         highlightCurrentPath(input,w,g);     
+         highlightCurrentPath(input,w,g, graphData);     
        } else if(show === 'path'){
          highlightNodes(input,w,g);
          highlightPath(input,w,g);   
@@ -75,7 +74,9 @@ function currentPathInitialState(input,w,g) {
 
  arrow = document.getElementById(a.children[1].children[0].id);
  arrow.children[0].style = "stroke: red; fill: red";
+
  prevEdges.push([v,w,name]);
+
 }
 
 function currentPathRestOfState(input,w,g) {
@@ -178,7 +179,7 @@ function highlightPath(input,w,g) {
    }
 }
 
-function setGraphConf(
+function createGraphConf(
     svgDOMId,
     stateTransitionTable,
     rankdir       = {rankdir: "LR"},
@@ -188,7 +189,7 @@ function setGraphConf(
     b             =  50,
     ) {
 
-    graphData = {
+    let graphData = {
         svgDOMId:               svgDOMId,
         stateTransitionTable:   stateTransitionTable,
         rankdir:                {rankdir: rankdir},
@@ -198,9 +199,10 @@ function setGraphConf(
         initialScaleH:          initialScaleH
     };     
     
+    return graphData;
 }
 
-function createGraph() {
+function createGraph(graphData) {
   const ParserDagredD3  = grammarDagreD3.Parser;
   const parserDagredD3  = new ParserDagredD3(grammarDagreD3);
 
@@ -211,7 +213,6 @@ function createGraph() {
 
   let  edgeList         = parserDagredD3
                               .parse(graphData.stateTransitionTable);
-
  let states = edgeList[0];
  let edges  = edgeList[1];
 
@@ -238,15 +239,17 @@ function createGraph() {
      node.rx = node.ry = 10;
    });
 
-    return g;   
+    return {g: g, data: graphData};   
 }
 
-function renderGraph(g) {
+function renderGraph(g,graphData) {
 
    let svgGraph        = document.getElementById(graphData.svgDOMId);
    let svgGraphInfo;
 
-   var svg = d3.select("svg"), inner = svg.select("g");
+    var svg =   d3.select("#" + graphData.svgDOMId);
+    var inner = svg.select("g");
+
    // Set up zoom support
    var zoom = d3.zoom().on("zoom", function() {
          inner.attr("transform", d3.event.transform);
@@ -292,7 +295,7 @@ function checkIfTransitionIsValid (v,w,name,g) {
      let transition = g.edge(v,w, name).elem;
   } catch(e) {
      if(e instanceof TypeError) {
-         return false;
+      return false;
      } 
   }
  return true;

@@ -99,10 +99,10 @@ id: someid
  **/
 
 
- setGraphConf('svgGraph', stateTransitionTable, "LR", 1, 1);
+let templateGraphConf =  createGraphConf('svgGraph', stateTransitionTable, "LR", 1, 1);
+const g = createGraph(templateGraphConf);
 
- const g = createGraph();
- renderGraph(g); 
+renderGraph(g.g, g.data); 
  
 
    
@@ -118,7 +118,7 @@ id: someid
    const templateMachineService   = interpret(templateMachine)
         .onTransition(state => {
           tableState.textContent    = state.value;
-          showFn(state,g);
+          showFn(state,g.g);
         }
     );
 

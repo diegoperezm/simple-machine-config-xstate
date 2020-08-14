@@ -174,11 +174,10 @@ id: dnapairing
  *
  **/
 
- setGraphConf('svgGraph', stateTransitionTable, "LR", 0.9, 2);
+let dnaPairingGraphConf =  createGraphConf('svgGraph', stateTransitionTable, "LR", 0.9, 2);
+const g = createGraph(dnaPairingGraphConf);
 
- const g = createGraph();
-
- renderGraph(g); 
+renderGraph(g.g, g.data); 
  
    
 /**
@@ -220,7 +219,7 @@ id: dnapairing
         .onTransition(state => {
           tableState.textContent    = state.value;
           tableResult.textContent   = JSON.stringify(state.context.result);
-          showFn(state,g);
+          showFn(state,g.g);
         }
     );
 

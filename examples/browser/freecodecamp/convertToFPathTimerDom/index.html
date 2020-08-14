@@ -158,11 +158,10 @@ id: converttof
  *  
  *
  **/
- setGraphConf('svgGraph', stateTransitionTable, "LR", 0.9, 1);
+let convertToFGraphConf =  createGraphConf('svgGraph', stateTransitionTable, "LR", 0.9, 1);
+const g = createGraph(convertToFGraphConf);
 
- const g = createGraph();
-
- renderGraph(g); 
+renderGraph(g.g, g.data); 
  
 
 /**
@@ -188,7 +187,7 @@ id: converttof
           console.log('celsius ',state.context.celsius);
           console.log('result ', state.context.result);
           console.log('---------------------------------');
-          showFn(state,g);
+          showFn(state,g.g);
         }
     );
 

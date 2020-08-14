@@ -98,9 +98,9 @@
  *
  **/
 
- setGraphConf('svgGraph', stateTransitionTable, "TB", 1, 1);
- const g = createGraph();
- renderGraph(g); 
+let trafficlightsGraphConf =  createGraphConf('svgGraph', stateTransitionTable, "TB", 1, 1);
+const g = createGraph(trafficlightsGraphConf);
+renderGraph(g.g, g.data); 
  
 
    
@@ -127,7 +127,7 @@
  *
  */
     const trafficlightsService       = interpret(trafficlightsMachine)
- 	                                        .onTransition( state => showFn(state,g));
+ 	                                        .onTransition( state => showFn(state,g.g));
 
 
     function trafficlightsRun() {

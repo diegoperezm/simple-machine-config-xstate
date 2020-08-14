@@ -313,11 +313,11 @@ id: calc
  *
  **/
 
- setGraphConf('svgGraph', stateTransitionTable, "LR", 0.5, 2.4);
+ let calcGraphConf  = createGraphConf('svgGraph', stateTransitionTable, "LR", 0.5, 2.4);
 
- const g = createGraph();
+ const g = createGraph(calcGraphConf);
 
- renderGraph(g); 
+ renderGraph(g.g, g.data); 
    
 /**
   *                                TESTS
@@ -420,7 +420,7 @@ const test17 =
           tableOpnd1.textContent    = state.context.opnd1
           tableOperator.textContent = state.context.oprtr
           tableOpnd2.textContent    = state.context.opnd2
-          showFn(state,g);
+          showFn(state,g.g);
         }
     );
    
