@@ -583,7 +583,15 @@ case 50: case 54: case 58: case 62:
 break;
 case 63:
 
-return z;
+a              = z;
+invokes        =[];
+z              ={};
+z.initial      ="";
+z.id           ="";
+z.context      ={};
+z.states       ={};
+
+return a;
 
 break;
 }
@@ -737,6 +745,7 @@ parse: function parse(input) {
     return true;
 }};
 
+let a              ={};
 let invokes        =[];
 let z              ={};
 z.initial          ="";

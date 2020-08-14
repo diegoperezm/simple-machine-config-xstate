@@ -1,6 +1,7 @@
 /* description:  */
 
 %{
+let a              ={};
 let invokes        =[];
 let z              ={};
 z.initial          ="";
@@ -555,6 +556,14 @@ mexit
 expressions
 : context mstates
 {
-return z;
+a              = z;
+invokes        =[];
+z              ={};
+z.initial      ="";
+z.id           ="";
+z.context      ={};
+z.states       ={};
+
+return a;
 }
 ;
