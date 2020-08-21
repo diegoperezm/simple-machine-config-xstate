@@ -1,63 +1,23 @@
 html {
- box-sizing: border-box;
- min-width:  100%;
- min-height: 90%;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
+ width: 100%;
+ height: 100%;
 }
 
 body {
  font: 300 14px 'Helvetica Neue', Helvetica;
- width: 100%;
-}
-
-.container {
-  border:     3px solid black;
-  margin:     2% auto; 
-  max-width:  90%;
-}
-
-.content {
-  display: grid; 
-  grid-template-columns: repeat(4, minmax(0, 1fr) );
-  grid-template-rows:    repeat(9, minmax(0, 10vh));
-  grid-gap: 0;
-  width:   100%;  
-}
-
-.graph{
-  border-bottom: 3px dashed black;
-  grid-column:   1/5; 
-  grid-row:      1/8;
-  height: 100%;
-}
-
-.extendedState {
- border-left: 2px dashed black;
- grid-column: 3/5; 
- grid-row:    8/13;
- height: 90%;
- margin-left: 6%;
- align-self: center;
-}
-
-
-table {
  height: 100%;
+ overflow-y: hidden;
+}
+.content {
+ border: 1px solid white;
+ margin: 5% auto;
+ height: 90%;
 }
 
-th {
- text-align: right;
- padding-left: 5%;
- width: 20%;
-}
-
-td {
- font-size:   1rem; 
- padding-left: 8%;
- width: 80%;
+.graph {
+ border: 1px solid white;
+ height: 100%;
+ width: 100%;
 }
 
 .node rect {
