@@ -4,7 +4,8 @@
   "description": "> A simple dsl (?) to write machine configurations for xstate",
   "main": "index.js",
   "scripts": {
-    "test": "node utils/testrunner.js"
+    "test_misc": "node utils/testrunnermisc.js",
+    "test_graph_parser": "node utils/testrunnergraphparser.js"
   },
   "keywords": [],
   "author": "",

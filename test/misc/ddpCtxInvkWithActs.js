@@ -1,5 +1,5 @@
-const test         = require('../utils/utils.js');
-const dagreParser  = require('../statecharts/parser/grammarDagreD3.js').parse;
+const test         = require('../../utils/utils.js');
+const dagreParser  = require('../../statecharts/parser/grammarDagreD3.js').parse;
 
 /**
  *             ABBREVIATIONS

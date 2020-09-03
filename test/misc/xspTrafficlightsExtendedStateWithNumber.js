@@ -1,5 +1,5 @@
-const test   = require('../utils/utils.js');
-const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
+const test   = require('../../utils/utils.js');
+const xstateParse  = require('../../statecharts/parser/grammarXstate.js').parse;
 
 /**
  *             ABBREVIATIONS
@@ -10,10 +10,10 @@ const xstateParse  = require('../statecharts/parser/grammarXstate.js').parse;
  */
 
 
-  const sttTrafficlightsExtendedState =
+  const sttTrafficlightsExtendedStateWithNumber =
 `
  context:
-   color: "green"
+   color: 0 
 
 id: someid
    *GREEN   time YELLOW
@@ -21,13 +21,13 @@ id: someid
     RED     time GREEN
 `;
 
-  const xspTrafficlightsExtendedState = xstateParse(sttTrafficlightsExtendedState);
+  const xspTrafficlightsExtendedStateWithNumber = xstateParse(sttTrafficlightsExtendedStateWithNumber);
 
-   const  trafficlightsExtendedStateObject = {
+   const  trafficlightsExtendedStateWithNumberObject = {
       "initial": "GREEN",
-       "id": "someid",
+           "id": "someid",
         "context": {
-            "color": "green"
+            "color": 0 
         },
       "states": {
         "GREEN": {
@@ -57,7 +57,7 @@ id: someid
 
 
 
-test('xspTrafficlightsExtendedState and trafficlightsExtendedStateObject',
-      xspTrafficlightsExtendedState,
-      trafficlightsExtendedStateObject);
+test('xspTrafficlightsExtendedStateWithNumber and trafficlightsExtendedStateWithNumberObject',
+      xspTrafficlightsExtendedStateWithNumber,
+      trafficlightsExtendedStateWithNumberObject);
 

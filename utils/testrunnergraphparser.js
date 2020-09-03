@@ -6,7 +6,7 @@ const exec = require("child_process").exec;
  * I need to test and complete  this code
  */
 
-exec("cd test; for test in `ls`; do node $test; done;", (err, stdout, stderr) => {
+exec("cd test/graphParser; for test in `ls`; do node $test; done;", (err, stdout, stderr) => {
    if(err) {
      console.log('exec error: ', err);
    } else {
