@@ -104,13 +104,13 @@ body {
    const stateTransitionTable =
 `
 invoke:
-     id: q
-    src: q 
+     id: fetch
+    src: fetchfn
  ondone: SUCCESS   
 onerror: ERROR 
 
 id: someid
-*A @q
+*FETCH @fetch
 `;
    
 /**
