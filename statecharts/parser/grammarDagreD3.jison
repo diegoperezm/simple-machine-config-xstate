@@ -165,8 +165,27 @@ states
 }
 | ID LOWERCASE INITIAL UPPERCASE   minvokes
 {
-  states.push("INITIAL",$2);  
+  let invokeIndexS = invokes.map(ele => ele.id).indexOf(...$5);
+  states.push("INITIAL");  
+  states.push($4);  
+  states.push(invokes[invokeIndexS].onDone);
+  states.push(invokes[invokeIndexS].onError);
+  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([
+           $4,
+           invokes[invokeIndexS].onDone,
+           'onDone',
+           $4 + "-" + invokes[invokeIndexS].onDone+"-"+"done.invoke." + invokes[invokeIndexS].id
+          ],
+          [
+           $4,
+           invokes[invokeIndexS].onError,
+           'onError',
+           $4  + "-" + invokes[invokeIndexS].onError+"-"+"error.platform." + invokes[invokeIndexS].id
+           ],
+ );
+
 }
 | ID LOWERCASE INITIAL UPPERCASE   minvokes mexit
 {
@@ -276,7 +295,6 @@ states
     objInvoke.onDone    = $7; 
     objInvoke.onError   = $9; 
     invokes.push(objInvoke);
-
 } 
 | INVOKE  ID  LOWERCASE SRC LOWERCASE ONDONE UPPERCASE mactions ONERROR UPPERCASE 
 {
@@ -334,10 +352,10 @@ invokes
 minvokes
 : '@' invokes
 {
-  $$=[$2];
+ $$=[$2].reduce((acc,val) => acc.concat(val),[]);
 }
 | minvokes invokes  {
-  $$=[$1,$2];
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
 }
 ;
 

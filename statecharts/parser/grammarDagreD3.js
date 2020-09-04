@@ -214,8 +214,27 @@ case 25:
 break;
 case 26:
 
-  states.push("INITIAL",$$[$0-3]);  
+  let invokeIndexS = invokes.map(ele => ele.id).indexOf(...$$[$0]);
+  states.push("INITIAL");  
+  states.push($$[$0-1]);  
+  states.push(invokes[invokeIndexS].onDone);
+  states.push(invokes[invokeIndexS].onError);
+  
   edges.push(["INITIAL",$$[$0-1],"", "INITIAL"+"-"+$$[$0-1]+"-"+"xstate.init"]);
+  edges.push([
+           $$[$0-1],
+           invokes[invokeIndexS].onDone,
+           'onDone',
+           $$[$0-1] + "-" + invokes[invokeIndexS].onDone+"-"+"done.invoke." + invokes[invokeIndexS].id
+          ],
+          [
+           $$[$0-1],
+           invokes[invokeIndexS].onError,
+           'onError',
+           $$[$0-1]  + "-" + invokes[invokeIndexS].onError+"-"+"error.platform." + invokes[invokeIndexS].id
+           ],
+ );
+
 
 break;
 case 29:
@@ -281,7 +300,6 @@ case 40:
     objInvoke.onError   = $$[$0]; 
     invokes.push(objInvoke);
 
-
 break;
 case 41:
 
@@ -319,19 +337,14 @@ case 48:
   this.$=[$$[$0]].reduce((acc,val) => acc.concat(val),[]);
 
 break;
-case 49:
+case 49: case 53:
 
   this.$=[$$[$0-1],$$[$0]].reduce((acc,val) => acc.concat(val),[]);
 
 break;
 case 52:
 
-  this.$=[$$[$0]];
-
-break;
-case 53:
-
-  this.$=[$$[$0-1],$$[$0]];
+ this.$=[$$[$0]].reduce((acc,val) => acc.concat(val),[]);
 
 break;
 case 62:

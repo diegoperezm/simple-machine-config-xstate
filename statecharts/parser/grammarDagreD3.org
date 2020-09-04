@@ -212,8 +212,27 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE   minvokes
 {
-  states.push("INITIAL",$2);  
-  <<edgesInitial>>
+  let invokeIndexS = invokes.map(ele => ele.id).indexOf(...$5);
+  states.push("INITIAL");  
+  states.push($4);  
+  states.push(invokes[invokeIndexS].onDone);
+  states.push(invokes[invokeIndexS].onError);
+  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([
+           $4,
+           invokes[invokeIndexS].onDone,
+           'onDone',
+           $4 + "-" + invokes[invokeIndexS].onDone+"-"+"done.invoke." + invokes[invokeIndexS].id
+          ],
+          [
+           $4,
+           invokes[invokeIndexS].onError,
+           'onError',
+           $4  + "-" + invokes[invokeIndexS].onError+"-"+"error.platform." + invokes[invokeIndexS].id
+           ],
+ );
+
 }
 #+END_SRC
 
@@ -572,7 +591,6 @@ states
     objInvoke.onDone    = $7; 
     objInvoke.onError   = $9; 
     invokes.push(objInvoke);
-
 }
 #+END_SRC
 
@@ -655,10 +673,10 @@ invokes
 minvokes
 : '@' invokes
 {
-  $$=[$2];
+ $$=[$2].reduce((acc,val) => acc.concat(val),[]);
 }
 | minvokes invokes  {
-  $$=[$1,$2];
+  $$=[$1,$2].reduce((acc,val) => acc.concat(val),[]);
 }
 ;
 
