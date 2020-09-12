@@ -1,63 +1,18 @@
-html {
- box-sizing: border-box;
- min-width:  100%;
- min-height: 90%;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 body {
  font: 300 14px 'Helvetica Neue', Helvetica;
  width: 100%;
 }
 
-.container {
-  border:     3px solid black;
-  margin:     2% auto; 
-  max-width:  90%;
-}
-
 .content {
-  display: grid; 
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-rows:    repeat(8,  minmax(0, 10vh));
-  grid-gap: 0;
-  width:   100%;  
+ height: 80vh;
 }
 
-.graph{
-  border-bottom: 2px dashed black;
-  grid-column:   1/13; 
-  grid-row:     1/8; 
-  min-height: 100%;
-  max-height: 100%;
+.custom-h {
+  height: 87%; 
 }
 
-.extendedState {
- grid-column:   5/13; 
- grid-row:      8; 
- padding-left: 1%;
- justify-self: start;
- align-self: center;
-}
-
-th {
- text-align: left;
-}
-
-.keys {
- border-right: 1px dashed black;
- grid-column:   1/5; 
- grid-row:      8/9; 
- padding-left: 5%;
- align-self: center;
-}
-
-.key{
- font-size: 1.5rem;
- border-radius: 5px;
+.custom-border-bottom {
+  border-bottom: 1px dashed black;
 }
 
 .node rect {
@@ -68,10 +23,11 @@ th {
 .edgePath path {
   stroke: #333;
   fill: #333;
-  stroke-width: 2.5px;
+  stroke-width: 1.2px;
 }
 
 .active {
   stroke: red!important; 
 }
+
 
