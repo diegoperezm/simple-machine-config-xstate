@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <!-- prevent favicon request -->
+    <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
+    <title>Fetch</title>
+
+<style>
+html {
+ width: 100%;
+ height: 100%;
+}
+
+body {
+ font: 300 14px 'Helvetica Neue', Helvetica;
+ height: 100%;
+ overflow-y: hidden;
+}
+.content {
+ border: 1px solid white;
+ margin: 5% auto;
+ height: 90%;
+}
+
+.graph {
+ border: 1px solid white;
+ height: 100%;
+ width: 100%;
+}
+
+.node rect {
+  stroke: #333;
+  fill: #fff;
+}
+
+.edgePath path {
+  stroke: #333;
+  fill: #333;
+  stroke-width: 3px;
+}
+
+.active {
+  stroke: red!important; 
+}
+</style>
+
+</head>
+<body>
+    <div class="content">
+       <svg id="svgGraph" class="graph"><g></g></svg>
+   </div>  
+
+  <script src="libraries/xstate.js"></script> 
+  <script src="libraries/d3.v5.min.js"></script>
+  <script src="libraries/dagre-d3.min.js"></script>
+  <script src="parser/grammarXstate.js"></script>
+  <script src="parser/grammarDagreD3.js"></script>
+  <script src="libraries/utils.js"></script>
+  <script>
+
+/**
+ *
+ *                      SETUP
+ *
+ *
+ **/
+
+   const { Machine,  interpret, assign } = XState;
+   const input = {
+     // input: {type: type, payload: data}
+   };
+
+
+/**
+ *                                  EVENTS
+ *
+ **/
+
+   // elem.addEventListener('click',   () => templateMachineService.send(input.event    ));
+
+
+   
+
+/**
+ *
+ *                                   FINITE STATE  MACHINE
+ *
+ *
+ **/
+
+
+  const options = {
+    actions: {},
+    services: {}
+   };
+
+
+
+   const stateTransitionTable =
+`
+invoke:
+     id: fetch
+    src: fetchfn
+ ondone: DISPLAY 
+onerror: ALERT
+id: someid
+*FETCH @fetch
+
+`;
+   
+/**
+ *
+ *                                  GRAPH
+ *
+ *
+ **/
+
+
+let templateGraphConf =  createGraphConf('svgGraph', stateTransitionTable, "LR", 1, 1);
+
+const g = createGraph(templateGraphConf);
+
+renderGraph(g.g, g.data); 
+ 
+  
+/**
+ *
+ *      MAIN
+ *
+ **/
+
+   const templateMachineConf      = createMachineConf(stateTransitionTable);
+   const templateMachine          = Machine(templateMachineConf,options);
+
+   const templateMachineService   = interpret(templateMachine)
+        .onTransition(state => {
+          showFn(state,g.g);
+        }
+    );
+
+
+   
+ //templateMachineService.start();
+
+  </script>
+</body>
+</html>
