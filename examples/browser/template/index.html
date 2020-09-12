@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <!-- prevent favicon request -->
     <link href="data:;base64,iVBORw0KGgo=" rel="icon" />
-    <title>Template</title>
+    <title>Drum Machine</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -17,17 +17,31 @@
             <svg id="svgGraph" class="graph"><g></g></svg>
           </div>         <!-- col-9 --> 
           <div class="col-3">
-            <p>lorem</p>
+            <div id="drum-machine">
+              <div id="display"> </div>
+              <div class="pad">
+                <button class="drum-pad"> <audio src="">Q</audio> </button>
+                <button class="drum-pad"><audio src="">W</audio></button>
+                <button class="drum-pad"><audio src="">E</audio></button>
+                <button class="drum-pad"><audio src="">A</audio></button>
+                <button class="drum-pad"><audio src="">S</audio></button>
+                <button class="drum-pad"><audio src="">D</audio></button>
+                <button class="drum-pad"><audio src="">Z</audio></button>
+                <button class="drum-pad"><audio src="">X</audio></button>
+                <button class="drum-pad"><audio src="">C</audio></button>
+              </div> 
+            </div>
           </div>        <!-- col-3 --> 
         </div>       <!-- row --> 
       </div>     <!-- container-fluid -->  
     </div>    <!-- content -->  
-  <script src="../../../statecharts/libraries/xstate.js"></script> 
-  <script src="../../../statecharts/libraries/d3.v5.min.js"></script>
-  <script src="../../../statecharts/libraries/dagre-d3.min.js"></script>
-  <script src="../../../statecharts/parser/grammarXstate.js"></script>
-  <script src="../../../statecharts/parser/grammarDagreD3.js"></script>
-  <script src="../../../statecharts/libraries/utils.js"></script>
+      <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+  <script src="js/xstate.js"></script> 
+  <script src="js/d3.v5.min.js"></script>
+  <script src="js/dagre-d3.min.js"></script>
+  <script src="js/grammarXstate.js"></script>
+  <script src="js/grammarDagreD3.js"></script>
+  <script src="js/utils.js"></script>
   <script>
 
 /**
