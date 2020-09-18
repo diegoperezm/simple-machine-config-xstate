@@ -58,7 +58,7 @@ context
 states
 : ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
@@ -66,23 +66,22 @@ states
 {
   states.push("INITIAL",$4);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
-
 }
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
@@ -195,39 +194,39 @@ states
 
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push([1]);
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  states.push("INITIAL",$4,$6);    
+  states.push("INITIAL",$4,$6);  
   edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
   edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }

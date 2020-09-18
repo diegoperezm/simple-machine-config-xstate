@@ -112,28 +112,27 @@ this.$=[$$[$0-2],...$$[$0]]
 break;
 case 13:
 
-  states.push("INITIAL",$$[$0-2],$$[$0]);    
+  states.push("INITIAL",$$[$0-2],$$[$0]);  
   edges.push(["INITIAL",$$[$0-2],"", "INITIAL"+"-"+$$[$0-2]+"-"+"xstate.init"]);
   edges.push([$$[$0-2],$$[$0],$$[$0-1],$$[$0-2]+"-"+$$[$0]+"-"+$$[$0-1] ]);
 
 break;
-case 14:
+case 14: case 24: case 27:
 
   states.push("INITIAL",$$[$0-2]);  
   edges.push(["INITIAL",$$[$0-2],"", "INITIAL"+"-"+$$[$0-2]+"-"+"xstate.init"]);
 
-
 break;
 case 15: case 16: case 30:
 
-  states.push("INITIAL",$$[$0-3],$$[$0-1]);    
+  states.push("INITIAL",$$[$0-3],$$[$0-1]);  
   edges.push(["INITIAL",$$[$0-3],"", "INITIAL"+"-"+$$[$0-3]+"-"+"xstate.init"]);
   edges.push([$$[$0-3],$$[$0-1],$$[$0-2],$$[$0-3]+"-"+$$[$0-1]+"-"+$$[$0-2] ]);
 
 break;
 case 17: case 28: case 31: case 32:
 
-  states.push("INITIAL",$$[$0-4],$$[$0-2]);    
+  states.push("INITIAL",$$[$0-4],$$[$0-2]);  
   edges.push(["INITIAL",$$[$0-4],"", "INITIAL"+"-"+$$[$0-4]+"-"+"xstate.init"]);
   edges.push([$$[$0-4],$$[$0-2],$$[$0-3],$$[$0-4]+"-"+$$[$0-2]+"-"+$$[$0-3] ]);
 
@@ -200,12 +199,6 @@ case 22: case 36: case 37:
   edges.push([$$[$0-4], $$[$0-2], $$[$0-3],$$[$0-4]+"-"+$$[$0-2]+"-"+$$[$0-3]]);
 
 break;
-case 24: case 27:
-
-  states.push("INITIAL",$$[$0-2]);  
-  edges.push(["INITIAL",$$[$0-2],"", "INITIAL"+"-"+$$[$0-2]+"-"+"xstate.init"]);
-
-break;
 case 25:
 
   states.push("INITIAL",$$[$0-3]);  
@@ -239,7 +232,7 @@ case 26:
 break;
 case 29:
 
-  states.push("INITIAL",$$[$0-5],$$[$0-3]);    
+  states.push("INITIAL",$$[$0-5],$$[$0-3]);  
   edges.push([1]);
   edges.push(["INITIAL",$$[$0-5],"", "INITIAL"+"-"+$$[$0-5]+"-"+"xstate.init"]);
   edges.push([$$[$0-5],$$[$0-3],$$[$0-4],$$[$0-5]+"-"+$$[$0-3]+"-"+$$[$0-4] ]);
@@ -247,7 +240,7 @@ case 29:
 break;
 case 33:
 
-  states.push("INITIAL",$$[$0-5],$$[$0-3]);    
+  states.push("INITIAL",$$[$0-5],$$[$0-3]);  
   edges.push(["INITIAL",$$[$0-5],"", "INITIAL"+"-"+$$[$0-5]+"-"+"xstate.init"]);
   edges.push([$$[$0-5],$$[$0-3],$$[$0-4],$$[$0-5]+"-"+$$[$0-3]+"-"+$$[$0-4] ]);
 

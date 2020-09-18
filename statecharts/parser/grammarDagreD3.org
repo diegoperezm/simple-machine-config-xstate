@@ -1,27 +1,14 @@
 * commands
 
-#+NAME:states24
-#+BEGIN_SRC js
-states.push("INITIAL",$4,$6);  
-#+END_SRC
-
-
-#+NAME: edgesInitial
-#+BEGIN_SRC js :noweb yes
-edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
-#+END_SRC
-
-#+NAME: edgesRest
-#+BEGIN_SRC js
-edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
-#+END_SRC
-
-
-
 #+BEGIN_QUOTE
+states24
+states.push("INITIAL",$4,$6);  
+edgesInitial
+edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+edgesRest
+edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 edges.push(["INITIAL",$2,"xstate.init", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
 edges.push(["INITIAL",$2,"", "INITIAL"+"-"+$2+"-"+"xstate.init"]);
-
 #+END_QUOTE
 
 
@@ -147,9 +134,9 @@ states
 #+BEGIN_SRC js :noweb yes
 : ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -161,8 +148,7 @@ states
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  mactions
 {
   states.push("INITIAL",$4);  
-  <<edgesInitial>>
-
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
 #+END_SRC
 
@@ -173,9 +159,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry 
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -186,9 +172,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mexit 
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -199,9 +185,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL    UPPERCASE   LOWERCASE  UPPERCASE mentry  mexit
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -244,7 +230,7 @@ states
 | ID LOWERCASE INITIAL UPPERCASE   minvokes mexit
 {
   states.push("INITIAL",$4);  
-  <<edgesInitial>>
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
 #+END_SRC
 
@@ -256,7 +242,7 @@ states
 | ID LOWERCASE INITIAL UPPERCASE  mentry minvokes 
 {
   states.push("INITIAL",$4);  
-  <<edgesInitial>>
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
 #+END_SRC
 
@@ -268,7 +254,7 @@ states
 | ID LOWERCASE INITIAL UPPERCASE  mentry minvokes mexit
 {
   states.push("INITIAL",$4);  
-  <<edgesInitial>>
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
 }
 #+END_SRC
 
@@ -280,9 +266,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  minvokes mexit
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -293,9 +279,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -306,10 +292,10 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry minvokes mexit
 {
-  <<states24>>  
+  states.push("INITIAL",$4,$6);  
   edges.push([1]);
-  <<edgesInitial>>
-  <<edgesRest>>
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -320,9 +306,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -333,9 +319,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE     LOWERCASE  UPPERCASE  mactions mexit
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -346,9 +332,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
@@ -359,9 +345,9 @@ states
 #+BEGIN_SRC js :noweb yes
 | ID LOWERCASE INITIAL UPPERCASE  LOWERCASE  UPPERCASE  mentry mactions mexit
 {
-  <<states24>>  
-  <<edgesInitial>>
-  <<edgesRest>>
+  states.push("INITIAL",$4,$6);  
+  edges.push(["INITIAL",$4,"", "INITIAL"+"-"+$4+"-"+"xstate.init"]);
+  edges.push([$4,$6,$5,$4+"-"+$6+"-"+$5 ]);
 }
 #+END_SRC
 
